@@ -1,0 +1,166 @@
+html,
+body {
+  overflow: hidden;
+}
+
+.homepage {
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  width: 100vw;
+  z-index: 1300;
+  position: relative;
+  height: 10vh;
+  order: 1;
+}
+
+.content {
+  margin: 0;
+  padding: 0;
+  z-index: 5 !important;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+
+.sideNav {
+  margin: 0;
+  padding: 0;
+  width: 350px;
+  height: 100%;
+  order: 1;
+}
+
+.contentRight {
+  order: 2;
+  width: 100%;
+}
+
+.pageHeader {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5% 0 10px;
+  margin-left: -3%;
+}
+
+.pageName {
+  font-weight: 900;
+}
+
+.profileCorner {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.profileNames {
+  display: flex;
+  flex-direction: column;
+}
+
+.profileNames .ownerName {
+  font-size: larger;
+}
+
+.profileNames .petName {
+  font-size: smaller;
+}
+
+.mainContainer {
+  padding: 50px;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.filterArea {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.filterArea div {
+  width: 150px;
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: scroll;
+  height: 100%;
+}
+
+.profileCard {
+  display: flex;
+  padding: 20px;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 15px;
+}
+
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.titleRow h2:first-child {
+  flex: 0;
+}
+
+.titleRow h2:last-child {
+  flex: 1;
+  text-align: center;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 55%;
+}
+
+.field-line {
+  flex-basis: 48%;
+  display: flex;
+  gap: 10px;
+  margin: 0 10px 22px 0;
+}
+
+.tags {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-style: italic;
+}
+
+.desc-placeholder {
+  font-style: italic;
+  font-size: smaller;
+}
+.desc-paragraph {
+  font-size: smaller;
+}
+
+.userProfile {
+  height: 100%;
+  overflow: scroll;
+}

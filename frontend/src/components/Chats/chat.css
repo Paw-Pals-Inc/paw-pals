@@ -1,0 +1,79 @@
+.chatWindow {
+  display: flex;
+  flex-direction: row;
+  height: 90vh;
+  overflow: hidden;
+  margin-left: -3%;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  font-weight: 900;
+}
+
+.usersList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 18%;
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 30px 15px;
+}
+
+.chatUser {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.chatRoom {
+  width: 80%;
+  padding: 0 25px 25px 25px;
+}
+
+.chatContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.selectedUserProfile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow: scroll;
+  margin-bottom: 50px;
+}
+
+.messages .my-msg {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.messages .their-msg {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.message-form {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+
+.message-form input {
+  padding: 12px;
+  width: 90%;
+  border-radius: 10px;
+  border: thin lightgray solid;
+}
+
+.message-form button {
+  margin: auto;
+}
