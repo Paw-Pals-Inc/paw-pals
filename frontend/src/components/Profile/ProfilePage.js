@@ -11,6 +11,20 @@ const ProfilePage = ({
   userProfile,
   updateUserProfile,
   userData,
+  profilePic,
+  petGallery,
+  petGalleries,
+  userProfiles,
+  updateUserProfiles,
+  updateProfilePics,
+  updateProfilePic,
+  updatePetGallery,
+  updatePetGalleries,
+  favoriteProfiles,
+  updateFavoriteProfiles,
+  addFavorite,
+  removeFavorite,
+  compatibilityScores,
 }) => {
   const location = useLocation();
   useEffect(() => {
@@ -28,7 +42,10 @@ const ProfilePage = ({
         });
         if (response.ok) {
           response.json().then((data) => {
+            // localStorage.setItem("userProfile", JSON.stringify(data));
             updateUserProfile(data);
+            updatePetGallery(data);
+            updateProfilePic(data);
           });
         } else {
           onLogout();
@@ -44,11 +61,17 @@ const ProfilePage = ({
           <SideNavbar onLogout={onLogout} userProfile={userProfile} />
         </div>
         <div className="contentRight">
-          <PageHeader pageName={location.pathname} profile={userProfile} />
+          <PageHeader
+            pageName={location.pathname}
+            profile={userProfile}
+            profilePic={profilePic}
+          />
           <div className="mainContainer">
             <UserProfile
               updateUserProfile={updateUserProfile}
               userProfile={userProfile}
+              profilePic={profilePic}
+              petGallery={petGallery}
             />
           </div>
         </div>

@@ -182,7 +182,7 @@ const DogProfileModal = ({
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ ...userProfile, ...formData }),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {

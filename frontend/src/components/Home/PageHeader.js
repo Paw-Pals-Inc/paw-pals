@@ -2,7 +2,7 @@ import { Avatar } from "@mui/material";
 import React from "react";
 
 function PageHeader(props) {
-  const { pageName, profile } = props;
+  const { pageName, profile, profilePic } = props;
   const { firstName, petName } = profile ? profile : "";
 
   let pageTitle = pageName.slice(1);
@@ -24,7 +24,7 @@ function PageHeader(props) {
           <span className="petName">{petName}</span>
         </div>
         <div className="profilePic">
-          <Avatar src={profile.profilePic}>{firstName[0]}</Avatar>
+          <Avatar src={profilePic}>{profile && firstName[0]}</Avatar>
         </div>
       </div>
     </div>

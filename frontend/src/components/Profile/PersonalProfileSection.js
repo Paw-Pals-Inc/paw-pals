@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import EditIcon from "@mui/icons-material/EditOutlined";
+import { saveUserProfileLocalStorage } from "../../utils/functions";
 
 function PersonalProfileSection() {
   const [editMode, setEditMode] = useState(false);
@@ -43,7 +44,8 @@ function PersonalProfileSection() {
           let prevProfile = JSON.parse(localStorage.getItem("userProfile"));
           let newData = { ...prevProfile, ...data };
           console.log("new data: ", newData);
-          localStorage.setItem("userProfile", JSON.stringify(newData));
+          saveUserProfileLocalStorage(newData);
+          // localStorage.setItem("userProfile", JSON.stringify(newData));
           toggleEditMode();
         } else {
           console.error("Error creating user:", resp.statusText);

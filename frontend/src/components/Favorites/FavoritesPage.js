@@ -15,6 +15,16 @@ const FavoritesPage = ({
   userProfiles,
   compatibilityScores,
   favoriteProfiles,
+  profilePic,
+  petGallery,
+  petGalleries,
+  updateUserProfile,
+  updateUserProfiles,
+  updateProfilePics,
+  updateProfilePic,
+  updatePetGallery,
+  updatePetGalleries,
+  updateFavoriteProfiles,
 }) => {
   const location = useLocation();
   const [profileSelected, setProfileSelected] = useState(false); // used to render a specific profile page or homepage stuff
@@ -26,6 +36,69 @@ const FavoritesPage = ({
   const [favorites, setFavorites] = useState(
     JSON.parse(localStorage.getItem("favoriteProfiles"))
   );
+
+  useEffect(() => {
+    // on homepage load, get user profile data
+    const getUserProfile = async () => {
+      if (localStorage.getItem("user") !== null) {
+        let userID = JSON.parse(localStorage.getItem("user")).id;
+        const jwt = localStorage.getItem("token");
+        const response = await fetch(`http://localhost:4000/users/${userID}`, {
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt}`,
+          },
+        });
+        if (response.ok) {
+          response.json().then((data) => {
+            // localStorage.setItem("userProfile", JSON.stringify(data));
+            updateUserProfile(data);
+            updatePetGallery(data);
+            updateProfilePic(data);
+          });
+        } else {
+          onLogout();
+        }
+      }
+    };
+    getUserProfile();
+  }, []);
+
+  useEffect(() => {
+    // get favorites data on favorites page load
+    const getFavorites = async () => {
+      if (localStorage.getItem("user") !== null) {
+        let userAccount = JSON.parse(localStorage.getItem("user"));
+        const jwt = localStorage.getItem("token");
+        const favorites = await fetch(
+          `http://localhost:4000/favorites/${userAccount.id}`,
+          {
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${jwt}`,
+            },
+          }
+        );
+
+        if (favorites.ok) {
+          let favResp = await favorites.json();
+          let favProfiles = favResp.favorites ? favResp.favorites : [];
+          updateFavoriteProfiles(favProfiles);
+          localStorage.setItem(
+            "favoriteProfiles",
+            JSON.stringify([...favProfiles])
+          );
+        } else {
+          let error = await favorites.json();
+          console.log(error.message);
+        }
+      }
+    };
+
+    getFavorites();
+  }, []);
 
   const getSizeBoundsArr = (sizeFilterArr) => {
     console.log(sizeFilterArr);
@@ -192,7 +265,11 @@ const FavoritesPage = ({
           <SideNavbar onLogout={onLogout} userProfile={userProfile} />
         </div>
         <div className="contentRight">
-          <PageHeader pageName={location.pathname} profile={userProfile} />
+          <PageHeader
+            pageName={location.pathname}
+            profile={userProfile}
+            profilePic={profilePic}
+          />
           {profileSelected ? (
             <OtherProfilePage
               userProfile={userProfiles.filter(
@@ -232,6 +309,7 @@ const FavoritesPage = ({
                         removeFavorite={removeFavorite}
                         enterProfile={enterProfile}
                         compatibilityScore={compatibilityScore}
+                        petGallery={petGallery}
                       />
                     );
                   })

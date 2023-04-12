@@ -5,16 +5,21 @@ import ProfileCard from "./ProfileCard";
 import OtherProfilePage from "../Profile/OtherProfilePage";
 import PageHeader from "./PageHeader";
 import FilterBar from "../Filters/FilterBar";
-import { DOG_WEIGHTS, DOG_AGES } from "../../utils/constants";
+import { getSizeBoundsArr, getAgeBoundsArr } from "../../utils/functions";
 import "./home.css";
 
 const HomePage = ({
-  isLoggedIn,
   onLogout,
   userProfile,
+  profilePic,
+  petGalleries,
   userProfiles,
   updateUserProfile,
   updateUserProfiles,
+  updateProfilePics,
+  updateProfilePic,
+  updatePetGallery,
+  updatePetGalleries,
   favoriteProfiles,
   updateFavoriteProfiles,
   addFavorite,
@@ -42,8 +47,10 @@ const HomePage = ({
         });
         if (response.ok) {
           response.json().then((data) => {
-            localStorage.setItem("userProfile", JSON.stringify(data));
+            // localStorage.setItem("userProfile", JSON.stringify(data));
             updateUserProfile(data);
+            updatePetGallery(data);
+            updateProfilePic(data);
           });
         } else {
           onLogout();
@@ -72,6 +79,9 @@ const HomePage = ({
                 profile.userID !== JSON.parse(localStorage.getItem("user")).id
             );
             updateUserProfiles(filteredData);
+            updateProfilePics(filteredData);
+            updatePetGalleries(filteredData);
+            console.log(petGalleries);
           });
         }
       }
@@ -82,9 +92,11 @@ const HomePage = ({
 
   useEffect(() => {
     console.log("grabbing other profiles and re-rendering");
-    userProfiles.forEach((profile) => {
-      console.log(profile.petGallery[0]);
-    });
+    if (userProfiles) {
+      userProfiles.forEach((profile) => {
+        console.log(profile.petGallery[0]);
+      });
+    }
   }, [userProfiles]);
 
   useEffect(() => {
@@ -122,69 +134,9 @@ const HomePage = ({
     getFavorites();
   }, []);
 
-  const getSizeBoundsArr = (sizeFilterArr) => {
-    console.log(sizeFilterArr);
-
-    let minWeight;
-    let maxWeight;
-    // manipulate array
-    if (sizeFilterArr.includes("Small")) {
-      minWeight = DOG_WEIGHTS.SMALL.MIN;
-      if (sizeFilterArr.includes("Medium")) {
-        if (sizeFilterArr.includes("Large")) {
-          maxWeight = DOG_WEIGHTS.LARGE.MAX;
-        } else {
-          maxWeight = DOG_WEIGHTS.MEDIUM.MAX;
-        }
-      } else {
-        maxWeight = DOG_WEIGHTS.SMALL.MAX;
-      }
-    } else if (sizeFilterArr.includes("Medium")) {
-      minWeight = DOG_WEIGHTS.MEDIUM.MIN;
-      if (sizeFilterArr.includes("Large")) {
-        maxWeight = DOG_WEIGHTS.LARGE.MAX;
-      } else {
-        maxWeight = DOG_WEIGHTS.MEDIUM.MAX;
-      }
-    } else if (sizeFilterArr.includes("Large")) {
-      minWeight = DOG_WEIGHTS.LARGE.MIN;
-      maxWeight = DOG_WEIGHTS.LARGE.MAX;
-    }
-
-    return [minWeight, maxWeight];
-  };
-
-  const getAgeBoundsArr = (ageFilterArr) => {
-    console.log(ageFilterArr);
-
-    let minAge;
-    let maxAge;
-    // manipulate array
-    if (ageFilterArr.includes("Puppy")) {
-      minAge = DOG_AGES.PUPPY.MIN;
-      if (ageFilterArr.includes("Adult")) {
-        if (ageFilterArr.includes("Senior")) {
-          maxAge = DOG_AGES.SENIOR.MAX;
-        } else {
-          maxAge = DOG_AGES.ADULT.MAX;
-        }
-      } else {
-        maxAge = DOG_AGES.PUPPY.MAX;
-      }
-    } else if (ageFilterArr.includes("Adult")) {
-      minAge = DOG_AGES.ADULT.MIN;
-      if (ageFilterArr.includes("Senior")) {
-        maxAge = DOG_AGES.SENIOR.MAX;
-      } else {
-        maxAge = DOG_AGES.ADULT.MAX;
-      }
-    } else if (ageFilterArr.includes("Senior")) {
-      minAge = DOG_AGES.SENIOR.MIN;
-      maxAge = DOG_AGES.SENIOR.MAX;
-    }
-
-    return [minAge, maxAge];
-  };
+  useEffect(() => {
+    console.log("galleries: ", petGalleries);
+  }, [petGalleries]);
 
   const handleFilter = (selectedFilters) => {
     const { sizeFilter, genderFilter, personalityFilter, ageFilter } =
@@ -211,7 +163,7 @@ const HomePage = ({
       .filter((profile) => {
         if (profile.petGender === "") return true;
         if (genderFilter.length > 0) {
-          return genderFilter.includes(profile.gender);
+          return genderFilter.includes(profile.petGender);
         }
         return true;
       })
@@ -282,7 +234,11 @@ const HomePage = ({
         </div>
 
         <div className="contentRight">
-          <PageHeader pageName={location.pathname} profile={userProfile} />
+          <PageHeader
+            pageName={location.pathname}
+            profile={userProfile}
+            profilePic={profilePic}
+          />
           {profileSelected ? (
             <OtherProfilePage
               userProfile={
@@ -308,12 +264,24 @@ const HomePage = ({
                 resetClearFilter={resetClearFilter}
               />
               <div className="data">
-                {!userProfiles || !filteredProfiles ? (
+                {!userProfiles ||
+                !filteredProfiles ||
+                !petGalleries.length > 0 ? (
                   <div>No data yet!</div>
                 ) : (
                   filteredProfiles.map((profile, idx) => {
                     let isFavorite = favoriteProfiles.includes(profile.userID);
                     let compatibilityScore = getCompatibilityScore(profile);
+                    console.log("pet galleries: ", petGalleries);
+                    let petGallery;
+                    if (petGalleries.length > 0) {
+                      console.log("pet galleries: ", petGalleries);
+                      petGallery = petGalleries.filter(
+                        (prof) => prof.userID === profile.userID
+                      );
+                      petGallery = petGallery[0].petGallery;
+                      console.log("pet gallery chosen: ", petGallery);
+                    }
 
                     return (
                       <ProfileCard
@@ -324,6 +292,7 @@ const HomePage = ({
                         removeFavorite={removeFavorite}
                         enterProfile={enterProfile}
                         compatibilityScore={compatibilityScore}
+                        petGallery={petGallery}
                       />
                     );
                   })

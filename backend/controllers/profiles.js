@@ -61,7 +61,29 @@ const editProfile = async (req, res) => {
   // const { firstName, lastName } = req.body;
 
   try {
-    const [updated] = await Profile.update(req.body, {
+    // specify what to update
+    const fieldsToUpdate = {};
+    if (req.body.firstName) fieldsToUpdate.firstName = req.body.firstName;
+    if (req.body.lastName) fieldsToUpdate.lastName = req.body.lastName;
+    if (req.body.city) fieldsToUpdate.city = req.body.city;
+    if (req.body.state) fieldsToUpdate.state = req.body.state;
+    if (req.body.phoneNumber) fieldsToUpdate.phoneNumber = req.body.phoneNumber;
+    if (req.body.profilePic) fieldsToUpdate.profilePic = req.body.profilePic;
+    if (req.body.description) fieldsToUpdate.description = req.body.description;
+    if (req.body.petName) fieldsToUpdate.petName = req.body.petName;
+    if (req.body.petAge) fieldsToUpdate.petAge = req.body.petAge;
+    if (req.body.petGender) fieldsToUpdate.petGender = req.body.petGender;
+    if (req.body.petBreed) fieldsToUpdate.petBreed = req.body.petBreed;
+    if (req.body.petWeight) fieldsToUpdate.petWeight = req.body.petWeight;
+    if (req.body.petVaccinated)
+      fieldsToUpdate.petVaccinated = req.body.petVaccinated;
+    if (req.body.petNeutered) fieldsToUpdate.petNeutered = req.body.petNeutered;
+    if (req.body.petGallery) fieldsToUpdate.petGallery = req.body.petGallery;
+    if (req.body.petTags) fieldsToUpdate.petTags = req.body.petTags;
+    if (req.body.petDescription)
+      fieldsToUpdate.petDescription = req.body.petDescription;
+
+    const [updated] = await Profile.update(fieldsToUpdate, {
       where: { userId: id },
     });
 

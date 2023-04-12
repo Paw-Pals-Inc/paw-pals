@@ -11,6 +11,11 @@ import SignupPage from "./components/Signup/SignupPage";
 import ProfilePage from "./components/Profile/ProfilePage";
 import ChatPage from "./components/Chats/ChatPage";
 import FavoritesPage from "./components/Favorites/FavoritesPage";
+import {
+  saveUserProfileLocalStorage,
+  saveUserProfilesLocalStorage,
+  calculateCompatibility,
+} from "./utils/functions";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -24,9 +29,13 @@ function App() {
   const [userProfile, setUserProfile] = useState(
     JSON.parse(localStorage.getItem("userProfile"))
   );
+  const [profilePic, setProfilePic] = useState("");
+  const [petGallery, setPetGallery] = useState([]);
   const [userProfiles, setUserProfiles] = useState(
     JSON.parse(localStorage.getItem("userProfiles"))
   );
+  const [profilePics, setProfilePics] = useState([]); // userID, profilePic
+  const [petGalleries, setPetGalleries] = useState([]); // [{userID, petGallery}, ...]
   const [favoriteProfiles, setFavoriteProfiles] = useState([]);
   const [compatibilityScores, setCompatibilityScores] = useState([]);
 
@@ -109,22 +118,6 @@ function App() {
     }
   };
 
-  const calculateCompatibility = (userTags, otherUserTags, otherUserId) => {
-    console.log("user tags: ", userTags);
-    console.log("other user tags: ", otherUserTags);
-    let compatibilityScore;
-    if (userTags && otherUserTags) {
-      const [userTagsArr, otherUserTagsArr] = [userTags, otherUserTags];
-      const matchingTags = userTagsArr.filter((tag) =>
-        otherUserTagsArr.includes(tag)
-      );
-      compatibilityScore = matchingTags.length;
-    } else {
-      compatibilityScore = 0;
-    }
-    return { userId: otherUserId, score: compatibilityScore };
-  };
-
   const handleLogin = () => {
     setIsLoggedIn(true);
     setUserData(JSON.parse(localStorage.getItem("user")));
@@ -152,11 +145,45 @@ function App() {
   };
   const updateUserProfile = (newData) => {
     setUserProfile((prev) => ({ ...prev, ...newData }));
-    localStorage.setItem("userProfile", JSON.stringify(newData));
+    saveUserProfileLocalStorage(newData);
   };
   const updateUserProfiles = (newData) => {
     setUserProfiles((prev) => newData);
-    localStorage.setItem("userProfiles", JSON.stringify(newData));
+    saveUserProfilesLocalStorage(newData);
+  };
+
+  const updateProfilePic = (profile) => {
+    setProfilePic((prev) => profile.profilePic);
+  };
+
+  const updateProfilePics = (profiles) => {
+    let profilePicArr = [];
+    let profilePicObject;
+    profiles.forEach((profile) => {
+      profilePicObject = {
+        userID: profile.userID,
+        profilePic: profile.profilePic,
+      };
+      profilePicArr.push(profilePicObject);
+    });
+    setProfilePics((prev) => profilePicArr);
+  };
+
+  const updatePetGallery = (profile) => {
+    setPetGallery((prev) => profile.petGallery);
+  };
+
+  const updatePetGalleries = (profiles) => {
+    let petGalleryArrays = [];
+    let petGalleryObject;
+    profiles.forEach((profile) => {
+      petGalleryObject = {
+        userID: profile.userID,
+        petGallery: profile.petGallery,
+      };
+      petGalleryArrays.push(petGalleryObject);
+    });
+    setPetGalleries((prev) => petGalleryArrays);
   };
   const updateFavoriteProfiles = (newData) => {
     updateFavoritesDB([...newData]);
@@ -204,6 +231,20 @@ function App() {
               isLoggedIn={isLoggedIn}
               userData={userData}
               updateToken={updateToken}
+              userProfiles={userProfiles}
+              updateUserProfiles={updateUserProfiles}
+              updateProfilePic={updateProfilePic}
+              updateProfilePics={updateProfilePics}
+              updatePetGallery={updatePetGallery}
+              updatePetGalleries={updatePetGalleries}
+              favoriteProfiles={favoriteProfiles}
+              updateFavoriteProfiles={updateFavoriteProfiles}
+              addFavorite={addFavorite}
+              removeFavorite={removeFavorite}
+              compatibilityScores={compatibilityScores}
+              petGalleries={petGalleries}
+              profilePic={profilePic}
+              petGallery={petGallery}
             />
           }
         ></Route>
@@ -219,11 +260,18 @@ function App() {
                 userProfiles={userProfiles}
                 updateUserProfile={updateUserProfile}
                 updateUserProfiles={updateUserProfiles}
+                updateProfilePic={updateProfilePic}
+                updateProfilePics={updateProfilePics}
+                updatePetGallery={updatePetGallery}
+                updatePetGalleries={updatePetGalleries}
                 favoriteProfiles={favoriteProfiles}
                 updateFavoriteProfiles={updateFavoriteProfiles}
                 addFavorite={addFavorite}
                 removeFavorite={removeFavorite}
                 compatibilityScores={compatibilityScores}
+                petGalleries={petGalleries}
+                profilePic={profilePic}
+                petGallery={petGallery}
               />
             ) : (
               <Navigate replace to={"/"} />
@@ -240,7 +288,21 @@ function App() {
                 onLogout={handleLogout}
                 userProfile={userProfile}
                 updateUserProfile={updateUserProfile}
+                updateUserProfiles={updateUserProfiles}
                 userProfiles={userProfiles}
+                profilePics={profilePics}
+                profilePic={profilePic}
+                updateProfilePic={updateProfilePic}
+                updateProfilePics={updateProfilePics}
+                updatePetGallery={updatePetGallery}
+                updatePetGalleries={updatePetGalleries}
+                favoriteProfiles={favoriteProfiles}
+                updateFavoriteProfiles={updateFavoriteProfiles}
+                addFavorite={addFavorite}
+                removeFavorite={removeFavorite}
+                compatibilityScores={compatibilityScores}
+                petGalleries={petGalleries}
+                petGallery={petGallery}
               />
             ) : (
               <Navigate replace to={"/"} />
@@ -260,7 +322,17 @@ function App() {
                 userProfiles={userProfiles}
                 addFavorite={addFavorite}
                 removeFavorite={removeFavorite}
+                profilePic={profilePic}
                 compatibilityScores={compatibilityScores}
+                updateUserProfile={updateUserProfile}
+                updateUserProfiles={updateUserProfiles}
+                updateProfilePic={updateProfilePic}
+                updateProfilePics={updateProfilePics}
+                updatePetGallery={updatePetGallery}
+                updatePetGalleries={updatePetGalleries}
+                updateFavoriteProfiles={updateFavoriteProfiles}
+                petGalleries={petGalleries}
+                petGallery={petGallery}
               />
             ) : (
               <Navigate replace to={"/"} />
@@ -278,6 +350,20 @@ function App() {
                 updateUserProfile={updateUserProfile}
                 userProfile={userProfile}
                 userData={userData}
+                profilePic={profilePic}
+                userProfiles={userProfiles}
+                updateUserProfiles={updateUserProfiles}
+                updateProfilePic={updateProfilePic}
+                updateProfilePics={updateProfilePics}
+                updatePetGallery={updatePetGallery}
+                updatePetGalleries={updatePetGalleries}
+                favoriteProfiles={favoriteProfiles}
+                updateFavoriteProfiles={updateFavoriteProfiles}
+                addFavorite={addFavorite}
+                removeFavorite={removeFavorite}
+                compatibilityScores={compatibilityScores}
+                petGalleries={petGalleries}
+                petGallery={petGallery}
               />
             ) : (
               <Navigate replace to={"/"} />

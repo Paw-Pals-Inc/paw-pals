@@ -14,6 +14,19 @@ const AgeFilter = ({ value, onChange }) => {
     onChange(typeof value === "string" ? value.split(",") : value); // Update age range state
   };
 
+  const renderAgeLabels = (sizeIndex) => {
+    switch (sizeIndex) {
+      case 0:
+        return "Puppy (0-2 yrs)";
+      case 1:
+        return "Adult (2-12 yrs)";
+      case 2:
+        return "Senior (13+ yrs)";
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="age-filter">
       <Select
@@ -29,7 +42,7 @@ const AgeFilter = ({ value, onChange }) => {
         {ages.map((age, idx) => (
           <MenuItem key={age} value={age}>
             <Checkbox checked={value.indexOf(age) > -1} />
-            <ListItemText primary={age} />
+            <ListItemText primary={renderAgeLabels(idx)} />
           </MenuItem>
         ))}
       </Select>

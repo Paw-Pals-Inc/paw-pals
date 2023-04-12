@@ -5,7 +5,12 @@ import DescriptionSection from "./DescriptionSection";
 import GallerySection from "./GallerySection";
 import AttributeSection from "./AttributeSection";
 
-function UserProfile({ userProfile, updateUserProfile }) {
+function UserProfile({
+  userProfile,
+  updateUserProfile,
+  petGallery,
+  profilePic,
+}) {
   const {
     petName,
     petBreed,
@@ -37,10 +42,10 @@ function UserProfile({ userProfile, updateUserProfile }) {
   const descriptions = { description, petDescription, firstName, petName };
   return (
     <div className="userProfile">
-      <PersonalProfileSection data={personalData} />
-      <PetProfileSection data={petData} />
+      <PersonalProfileSection data={personalData} profilePic={profilePic} />
+      <PetProfileSection data={petData} petGallery={petGallery} />
       <AttributeSection data={petData} />
-      <GallerySection data={userProfile} />
+      <GallerySection data={userProfile} petGallery={petGallery} />
       <DescriptionSection data={descriptions} />
     </div>
   );

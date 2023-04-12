@@ -20,6 +20,19 @@ const SizeFilter = ({ value, onChange }) => {
     onChange(typeof value === "string" ? value.split(",") : value);
   };
 
+  const renderSizeLabels = (sizeIndex) => {
+    switch (sizeIndex) {
+      case 0:
+        return "Small (0-25 lbs)";
+      case 1:
+        return "Medium (26-58 lbs)";
+      case 2:
+        return "Large (59+ lbs)";
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="size-filter">
       <FormControl sx={{ m: 1, width: 300 }}>
@@ -34,10 +47,10 @@ const SizeFilter = ({ value, onChange }) => {
             return <em>Size</em>;
           }}
         >
-          {sizes.map((size) => (
+          {sizes.map((size, idx) => (
             <MenuItem key={size} value={size}>
               <Checkbox checked={value.indexOf(size) > -1} />
-              <ListItemText primary={size} />
+              <ListItemText primary={renderSizeLabels(idx)} />
             </MenuItem>
           ))}
         </Select>

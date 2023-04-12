@@ -2,13 +2,26 @@ import React, { useState, useEffect } from "react";
 import { Avatar, Badge } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-const UsersList = ({ socket, userProfile, userProfiles, handleUserSelect }) => {
+const UsersList = ({
+  socket,
+  userProfile,
+  userProfiles,
+  profilePics,
+  handleUserSelect,
+}) => {
   const [activeUsers, setActiveUsers] = useState([]);
   useEffect(() => {
     if (!socket) return;
     socket.on("newUserResponse", (data) => setActiveUsers(data));
     console.log("active users: ", activeUsers);
   }, [socket, activeUsers]);
+
+  useEffect(() => {
+    console.log("getting prof pics", profilePics);
+    if (profilePics.length === 0) {
+      // rerender or something
+    }
+  }, [profilePics]);
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
@@ -49,6 +62,7 @@ const UsersList = ({ socket, userProfile, userProfiles, handleUserSelect }) => {
     <div className="usersList">
       {userProfile &&
         userProfiles &&
+        profilePics &&
         userProfiles.map((user, index) => (
           <div className="chatUser" key={index}>
             {isUserActive(user, activeUsers) ? (
@@ -60,7 +74,10 @@ const UsersList = ({ socket, userProfile, userProfiles, handleUserSelect }) => {
                 <Avatar
                   key={user.userID}
                   onClick={() => handleUserSelect(user)}
-                  src={user.profilePic}
+                  src={
+                    profilePics.filter((prof) => prof.userID === user.userID)[0]
+                      ?.profilePic
+                  }
                 >
                   {user.firstName[0]}
                 </Avatar>
@@ -69,7 +86,10 @@ const UsersList = ({ socket, userProfile, userProfiles, handleUserSelect }) => {
               <Avatar
                 key={user.userID}
                 onClick={() => handleUserSelect(user)}
-                src={user.profilePic}
+                src={
+                  profilePics.filter((prof) => prof.userID === user.userID)[0]
+                    ?.profilePic
+                }
               >
                 {user.firstName[0]}
               </Avatar>

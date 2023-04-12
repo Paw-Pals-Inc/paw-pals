@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import EditIcon from "@mui/icons-material/EditOutlined";
+import { saveUserProfileLocalStorage } from "../../utils/functions";
 
 function PetProfileSection() {
   const [editMode, setEditMode] = useState(false);
@@ -42,7 +43,8 @@ function PetProfileSection() {
           // User created successfully
           console.log("User updated successfully");
           const data = await resp.json();
-          localStorage.setItem("userProfile", JSON.stringify(data));
+          saveUserProfileLocalStorage(data);
+          // localStorage.setItem("userProfile", JSON.stringify(data));
           toggleEditMode();
         } else {
           console.error("Error creating user:", resp.statusText);

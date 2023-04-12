@@ -48,6 +48,7 @@
   gap: 20px;
   overflow: scroll;
   margin-bottom: 50px;
+  height: 100%;
 }
 
 .messages .my-msg {

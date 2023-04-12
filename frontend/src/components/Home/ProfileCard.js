@@ -22,7 +22,6 @@ import {
   BadgeUnstyled,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import stockImg from "../../assets/landing.png";
 
 function ProfileCard({
   profileData,
@@ -31,6 +30,7 @@ function ProfileCard({
   removeFavorite,
   enterProfile,
   compatibilityScore,
+  petGallery,
 }) {
   const {
     petName,
@@ -78,7 +78,7 @@ function ProfileCard({
         }}
       >
         <CardMedia
-          image={profileData.petGallery[0]}
+          image={petGallery[0]}
           sx={{ borderRadius: "20px" }}
           children={
             <StyledBadge
@@ -101,12 +101,12 @@ function ProfileCard({
               {petBreed}
             </Typography>
           </div>
+
           <Typography variant="body2" component="p" color="textSecondary">
-            {/* {petDescription} */}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat
-            quisquam voluptatem, veniam, velit saepe nemo, odio atque at dolorum
-            nostrum porro id! Quibusdam consectetur cupiditate suscipit
-            doloribus nostrum, optio ullam.
+            {(petDescription.length > 250
+              ? petDescription.substr(0, 250) + "..."
+              : petDescription) ||
+              "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid dolorem explicabo laboriosam iure enim sequi, impedit illum recusandae quasi obcaecati atque voluptas vero ipsa voluptatem blanditiis officiis repudiandae deserunt illo odio"}
           </Typography>
           <Typography>
             <span>Owner: </span>

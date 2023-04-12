@@ -44,7 +44,6 @@ const ChatRoom = ({ socket, currentUser, selectedUser, enterProfile }) => {
 
       // Clear message input
       setMessageText("");
-      //   setMessages((prevMessages) => [...prevMessages, data.message]);
     });
 
     // Listen for private messages sent to the current user
@@ -67,7 +66,6 @@ const ChatRoom = ({ socket, currentUser, selectedUser, enterProfile }) => {
 
       // Clear message input
       setMessageText("");
-      //   setMessages((prevMessages) => [...prevMessages, data.message]);
 
       // scroll down the message container
     });
@@ -81,6 +79,7 @@ const ChatRoom = ({ socket, currentUser, selectedUser, enterProfile }) => {
 
       // Remove event listener for private messages
       socket.off("message");
+      socket.off("messageSaved");
     };
   }, [socket, currentUser, selectedUser]);
 
@@ -104,7 +103,8 @@ const ChatRoom = ({ socket, currentUser, selectedUser, enterProfile }) => {
     if (selectedUser) {
       const messages = fetchMessages(currentUser.userID, selectedUser.userID);
       messages.then((data) => {
-        setMessages(data);
+        console.log("fetched messages: ", data);
+        setMessages((prev) => data);
       });
     }
   }, [currentUser, selectedUser]);
@@ -113,6 +113,10 @@ const ChatRoom = ({ socket, currentUser, selectedUser, enterProfile }) => {
   useEffect(() => {
     // 👇️ scroll to bottom every time messages change
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  useEffect(() => {
+    console.log("messages changed", messages);
   }, [messages]);
 
   const handleSendMessage = (event) => {
@@ -140,7 +144,7 @@ const ChatRoom = ({ socket, currentUser, selectedUser, enterProfile }) => {
     if (e.keyCode !== 13) {
       if (!typing) {
         typing = true;
-        socket.emit("typing", `${currentUser.firstName} is typing`);
+        socket.emit("typing", `${currentUser.firstName} is typing...`);
         timeout = setTimeout(timeoutFunction, 3000);
       } else {
         clearTimeout(timeout);

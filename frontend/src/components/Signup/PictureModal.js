@@ -139,7 +139,6 @@ const PictureModal = ({
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
-          ...userProfile,
           profilePic: profilePic,
           petGallery: [petProfilePic],
         }),

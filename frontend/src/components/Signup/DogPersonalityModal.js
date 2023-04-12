@@ -65,7 +65,7 @@ const DogPersonalityModal = ({
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: JSON.stringify({ ...userProfile, petTags: selectedTags }),
+        body: JSON.stringify({ petTags: selectedTags }),
       });
 
       if (response.ok) {

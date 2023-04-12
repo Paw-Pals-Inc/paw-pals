@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import EditIcon from "@mui/icons-material/EditOutlined";
 import MaterialButton from "../MaterialComponents/MaterialButton";
+import { saveUserProfileLocalStorage } from "../../utils/functions";
 
 function AttributeSection({ data }) {
   const [editMode, setEditMode] = useState(false);
@@ -25,19 +26,15 @@ function AttributeSection({ data }) {
     try {
       const userId = JSON.parse(localStorage.getItem("user")).id;
       const token = localStorage.getItem("token");
-      const currentProfileData = JSON.parse(
-        localStorage.getItem("userProfile")
-      );
 
       // edit profile data
-      const newProfileData = { ...currentProfileData, ...formData };
       await fetch(`http://localhost:4000/users/${userId}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newProfileData),
+        body: JSON.stringify(formData),
       }).then(async (resp) => {
         if (resp.ok) {
           // User created successfully
@@ -46,7 +43,9 @@ function AttributeSection({ data }) {
           let prevProfile = JSON.parse(localStorage.getItem("userProfile"));
           let newData = { ...prevProfile, ...data };
           console.log("new data: ", newData);
-          localStorage.setItem("userProfile", JSON.stringify(newData));
+
+          saveUserProfileLocalStorage(newData);
+          // localStorage.setItem("userProfile", JSON.stringify(newData));
           updateFormData(newData.petTags);
           toggleEditMode();
         } else {

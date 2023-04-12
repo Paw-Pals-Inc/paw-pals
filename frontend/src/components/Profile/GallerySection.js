@@ -1,12 +1,17 @@
 import React, { useState } from "react";
+import { saveUserProfileLocalStorage } from "../../utils/functions";
+import EditIcon from "@mui/icons-material/EditOutlined";
 
-function GallerySection({ data }) {
+function GallerySection({ data, petGallery }) {
   const { petName, firstName } = data;
+  const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
-    description: JSON.parse(localStorage.getItem("userProfile")).description,
-    petDescription: JSON.parse(localStorage.getItem("userProfile"))
-      .petDescription,
+    petGallery: petGallery.petGallery,
   });
+
+  const toggleEditMode = () => {
+    setEditMode((prev) => !prev);
+  };
 
   const handleInputChange = (event) => {
     setFormData({
@@ -17,24 +22,35 @@ function GallerySection({ data }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(event);
-    console.log("submitting");
 
     try {
+      // Form validation
+      let isValid = true;
+
+      if (petGallery.length < 1) {
+        isValid = false;
+      } else {
+        petGallery.forEach((imageStr) => {
+          if (imageStr.match(/^blob/)) isValid = false;
+        });
+      }
+
+      if (!isValid) {
+        console.log("gallery pics not valid");
+        return;
+      }
+
       const userId = JSON.parse(localStorage.getItem("user")).id;
       const token = localStorage.getItem("token");
-      const currentProfileData = JSON.parse(
-        localStorage.getItem("userProfile")
-      );
+
       // edit profile data
-      const newProfileData = { ...currentProfileData, ...formData };
       await fetch(`http://localhost:4000/users/${userId}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newProfileData),
+        body: JSON.stringify(formData),
       }).then(async (resp) => {
         if (resp.ok) {
           // User created successfully
@@ -43,7 +59,8 @@ function GallerySection({ data }) {
           let prevProfile = JSON.parse(localStorage.getItem("userProfile"));
           let newData = { ...prevProfile, ...data };
           console.log("new data: ", newData);
-          localStorage.setItem("userProfile", JSON.stringify(newData));
+          saveUserProfileLocalStorage(newData);
+          // localStorage.setItem("userProfile", JSON.stringify(newData));
         } else {
           console.error("Error creating user:", resp.statusText);
           // render error message on screen
@@ -62,7 +79,21 @@ function GallerySection({ data }) {
       {/* implement edit user data functionalilty*/}
       <form onSubmit={handleSubmit} className="profileDescription-form">
         <div>
-          <h2 className="section-header">Gallery</h2>
+          <h2 className="section-header">
+            Gallery
+            {editMode && <button type="submit">Save</button>}
+          </h2>
+          <div>
+            {petGallery &&
+              petGallery.map((pic, idx) => (
+                <div key={idx}>
+                  <img src={pic} alt={`doggie${idx}`} />
+                </div>
+              ))}
+            <button type="button" onClick={toggleEditMode}>
+              Add More Pics
+            </button>
+          </div>
         </div>
       </form>
     </div>
