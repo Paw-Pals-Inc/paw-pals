@@ -2,7 +2,7 @@ import React from "react";
 import Button from "@mui/material/Button";
 
 const MaterialButton = (props) => {
-  const { styleOverrides, type, onClick, name, id, value } = props;
+  const { styleOverrides, type, onClick, name, id, value, size } = props;
 
   const styles = {
     border: "1px black solid",
@@ -24,6 +24,7 @@ const MaterialButton = (props) => {
       name={name}
       id={id}
       value={value}
+      size={size}
     >
       {props.children}
     </Button>

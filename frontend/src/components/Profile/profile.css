@@ -1,0 +1,46 @@
+.personalProfileSection {
+  display: flex;
+  gap: 5%;
+  margin-right: auto;
+}
+
+.profilePictureSection {
+  width: 20%;
+  margin: 40px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profilePictureSection img {
+  border-radius: 20%;
+  opacity: 0.9;
+  max-height: 200px;
+  min-height: 150px;
+  object-fit: cover;
+}
+
+.personalProfile-form {
+  width: 60%;
+}
+
+.field-line {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5%;
+  gap: 5%;
+}
+
+.field-line-left {
+  display: flex;
+  justify-content: flex-start;
+  width: 50%;
+  gap: 4%;
+}
+
+.field-line-right {
+  display: flex;
+  justify-content: flex-start;
+  width: 50%;
+  gap: 4%;
+}

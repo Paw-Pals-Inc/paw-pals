@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MaterialButton from "../MaterialComponents/MaterialButton";
-import { ButtonGroup, Button } from "@mui/material";
-import TagSelectButton from "../Signup/TagSelectButton";
+import { ButtonGroup } from "@mui/material";
 
 const DogProfileModal = ({
   socket,
@@ -150,12 +149,12 @@ const DogProfileModal = ({
       isValid = false;
     }
 
-    if (!typeof petVaccinated === "boolean") {
+    if (!typeof formData.petVaccinated === "boolean") {
       newErrors.petVaccinated = "Invalid input for pet vaccinated";
       isValid = false;
     }
 
-    if (!typeof petVaccinated === "boolean") {
+    if (!typeof formData.petVaccinated === "boolean") {
       newErrors.petNeutered = "Invalid input for pet neutered";
       isValid = false;
     }
@@ -167,12 +166,6 @@ const DogProfileModal = ({
 
     try {
       const userId = userProfile.userID;
-      if (formData.petAge === "") {
-        formData.petAge = 0;
-      }
-      if (formData.petWeight === "") {
-        formData.petWeight = 0.0;
-      }
       console.log("user ID: " + userId);
       console.log(formData);
       const response = await fetch("http://localhost:4000/users/" + userId, {
@@ -249,23 +242,6 @@ const DogProfileModal = ({
                 Male
               </MaterialButton>
             </ButtonGroup>
-            {/* <input
-              type="radio"
-              id="Male"
-              name="petGender"
-              value={"Male"}
-              onChange={handleInputChange}
-              placeholder="Male"
-            />
-            <label htmlFor="petGender">Male</label>
-            <input
-              type="radio"
-              id="Female"
-              name="petGender"
-              value={"Female"}
-              onChange={handleInputChange}
-            />
-            <label htmlFor="petGender">Female</label> */}
           </div>
         </div>
         <div className="form-line">
@@ -300,6 +276,7 @@ const DogProfileModal = ({
               name="petVaccinated"
               value={formData.petVaccinated}
               onChange={handleCheckboxChange}
+              checked={formData.petVaccinated}
             />
           </div>
           <div className="form-line-right">
@@ -310,6 +287,7 @@ const DogProfileModal = ({
               name="petNeutered"
               value={formData.petNeutered}
               onChange={handleCheckboxChange}
+              checked={formData.petNeutered}
             />
           </div>
         </div>
