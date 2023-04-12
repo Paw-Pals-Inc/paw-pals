@@ -10,6 +10,8 @@ function UserProfile({
   updateUserProfile,
   petGallery,
   profilePic,
+  updatePetGallery,
+  updateProfilePic,
 }) {
   const {
     petName,
@@ -42,10 +44,22 @@ function UserProfile({
   const descriptions = { description, petDescription, firstName, petName };
   return (
     <div className="userProfile">
-      <PersonalProfileSection data={personalData} profilePic={profilePic} />
-      <PetProfileSection data={petData} petGallery={petGallery} />
+      <PersonalProfileSection
+        data={personalData}
+        profilePic={profilePic}
+        updateProfilePic={updateProfilePic}
+      />
+      <PetProfileSection
+        data={petData}
+        petGallery={petGallery}
+        updatePetGallery={updatePetGallery}
+      />
       <AttributeSection data={petData} />
-      <GallerySection data={userProfile} petGallery={petGallery} />
+      <GallerySection
+        data={userProfile}
+        petGallery={petGallery}
+        updatePetGallery={updatePetGallery}
+      />
       <DescriptionSection data={descriptions} />
     </div>
   );

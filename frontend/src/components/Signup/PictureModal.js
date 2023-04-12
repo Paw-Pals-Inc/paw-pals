@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MaterialButton from "../MaterialComponents/MaterialButton";
+import { fileTypes } from "../../utils/constants";
+import { validFileType } from "../../utils/functions";
 
 const PictureModal = ({
   userData,
@@ -11,7 +13,6 @@ const PictureModal = ({
   createdPicturesStatus,
 }) => {
   const navigate = useNavigate();
-  const fileInputRef = useRef();
   const [profilePic, setProfilePic] = useState(null);
   const [petProfilePic, setPetProfilePic] = useState(null);
 
@@ -20,27 +21,8 @@ const PictureModal = ({
     petProfilePic: "",
   });
 
-  // https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types
-  const fileTypes = [
-    "image/apng",
-    "image/bmp",
-    "image/gif",
-    "image/jpeg",
-    "image/pjpeg",
-    "image/png",
-    "image/svg+xml",
-    "image/tiff",
-    "image/webp",
-    "image/x-icon",
-  ];
-
-  function validFileType(file) {
-    return fileTypes.includes(file.type);
-  }
-
   const handleLabelClick = () => {
     console.log("click label");
-    // fileInputRef.current.click();
   };
 
   const handleProfilePicChange = (event) => {
@@ -69,6 +51,7 @@ const PictureModal = ({
       setProfilePic(null);
     }
   };
+
   const handlePetPicChange = (event) => {
     const file = event.target.files[0];
     if (!validFileType(file)) {
@@ -212,7 +195,6 @@ const PictureModal = ({
                 name="profilePic"
                 onChange={handleProfilePicChange}
                 style={{ opacity: 0 }}
-                ref={fileInputRef}
                 hidden
                 accept="image/*"
               />
@@ -248,7 +230,6 @@ const PictureModal = ({
                 name="petProfilePic"
                 onChange={handlePetPicChange}
                 style={{ opacity: 0 }}
-                ref={fileInputRef}
                 hidden
                 accept="image/*"
               />

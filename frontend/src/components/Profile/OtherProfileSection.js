@@ -15,27 +15,27 @@ function OtherProfileSection({ profile }) {
         <div>
           <div className="field-line">
             <label>First Name: </label>
-            {userProfile.firstName}
+            {userProfile?.firstName}
           </div>
           <div className="field-line">
             <label>Last Name:</label>
 
-            {userProfile.lastName}
+            {userProfile?.lastName}
           </div>
           <div className="field-line">
             <label>City:</label>
 
-            {userProfile.city}
+            {userProfile?.city}
           </div>
           <div className="field-line">
             <label>State:</label>
 
-            {userProfile.state}
+            {userProfile?.state}
           </div>
           <div className="field-line">
             <label htmlFor="phoneNumber">Phone Number:</label>
 
-            {userProfile.phoneNumber}
+            {userProfile?.phoneNumber}
           </div>
         </div>
       </div>

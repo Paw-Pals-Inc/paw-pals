@@ -24,7 +24,9 @@ function PageHeader(props) {
           <span className="petName">{petName}</span>
         </div>
         <div className="profilePic">
-          <Avatar src={profilePic}>{profile && firstName[0]}</Avatar>
+          <Avatar src={profilePic}>
+            {profile && firstName && firstName[0]}
+          </Avatar>
         </div>
       </div>
     </div>

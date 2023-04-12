@@ -328,7 +328,7 @@ function PetProfileSection({ petGallery }) {
         </div>
       </form>
       <div className="profilePictureSection">
-        <img src={petGallery[0]} alt="profile pic" />
+        <img src={petGallery && petGallery[0]} alt="profile pic" />
         <button>change picture</button>
       </div>
     </div>

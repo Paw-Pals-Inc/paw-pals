@@ -7,11 +7,13 @@ import PageHeader from "./PageHeader";
 import FilterBar from "../Filters/FilterBar";
 import { getSizeBoundsArr, getAgeBoundsArr } from "../../utils/functions";
 import "./home.css";
+import { CleaningServicesTwoTone } from "@mui/icons-material";
 
 const HomePage = ({
   onLogout,
   userProfile,
   profilePic,
+  petGallery,
   petGalleries,
   userProfiles,
   updateUserProfile,
@@ -92,12 +94,10 @@ const HomePage = ({
 
   useEffect(() => {
     console.log("grabbing other profiles and re-rendering");
-    if (userProfiles) {
-      userProfiles.forEach((profile) => {
-        console.log(profile.petGallery[0]);
-      });
+    if (!filteredProfiles) {
+      filteredProfiles = userProfiles;
     }
-  }, [userProfiles]);
+  }, []);
 
   useEffect(() => {
     // get favorites data on favorites page load
@@ -276,11 +276,16 @@ const HomePage = ({
                     let petGallery;
                     if (petGalleries.length > 0) {
                       console.log("pet galleries: ", petGalleries);
-                      petGallery = petGalleries.filter(
-                        (prof) => prof.userID === profile.userID
-                      );
-                      petGallery = petGallery[0].petGallery;
-                      console.log("pet gallery chosen: ", petGallery);
+                      try {
+                        petGallery =
+                          petGalleries &&
+                          petGalleries.filter(
+                            (prof) => prof.userID === profile.userID
+                          )[0].petGallery;
+                        console.log("pet gallery chosen: ", petGallery);
+                      } catch (err) {
+                        console.error(err);
+                      }
                     }
 
                     return (

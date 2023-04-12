@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import SideNavbar from "../Home/SideNavbar";
 import UserProfile from "./UserProfile";
@@ -28,6 +28,16 @@ const ProfilePage = ({
   compatibilityScores,
 }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // go home to load pics if they aren't loaded
+    console.log("pet gallery: ", petGallery);
+    if (petGallery.length < 1) {
+      navigate("/home");
+    }
+  }, []);
+
   useEffect(() => {
     // on homepage load, get user profile data
     const getUserProfile = async () => {
@@ -73,6 +83,8 @@ const ProfilePage = ({
               userProfile={userProfile}
               profilePic={profilePic}
               petGallery={petGallery}
+              updatePetGallery={updatePetGallery}
+              updateProfilePic={updateProfilePic}
             />
           </div>
         </div>

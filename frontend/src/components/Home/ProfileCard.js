@@ -78,7 +78,7 @@ function ProfileCard({
         }}
       >
         <CardMedia
-          image={petGallery[0]}
+          image={petGallery && petGallery[0]}
           sx={{ borderRadius: "20px" }}
           children={
             <StyledBadge
