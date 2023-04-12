@@ -1,17 +1,38 @@
-import React, { useState } from "react";
-import EditIcon from "@mui/icons-material/EditOutlined";
-import MaterialButton from "../MaterialComponents/MaterialButton";
+import React, { useState, useEffect } from "react";
+import TagSelectButton from "../Signup/TagSelectButton";
 import { saveUserProfileLocalStorage } from "../../utils/functions";
+import { petTags } from "../../utils/constants";
 
 function AttributeSection({ data }) {
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
     petTags: JSON.parse(localStorage.getItem("userProfile")).petTags || [],
   });
+  const [selectedTagIds, setSelectedTagIds] = useState([]);
+
+  useEffect(() => {
+    // set selected tag ids from pet tags loaded
+    let selectedIds = [];
+    if (formData.petTags) {
+      selectedIds = formData.petTags.map((tag) => petTags.indexOf(tag));
+      setSelectedTagIds(selectedIds);
+    }
+  }, []);
 
   const toggleEditMode = (e) => {
     if (e) e.preventDefault();
     setEditMode((prev) => !prev);
+  };
+
+  const handleTagChange = (id, isSelected) => {
+    if (isSelected) {
+      // make sure not a duplicate
+      if (!selectedTagIds.includes(id)) {
+        setSelectedTagIds([...selectedTagIds, id]);
+      }
+    } else {
+      setSelectedTagIds(selectedTagIds.filter((tag) => tag !== id));
+    }
   };
 
   const updateFormData = (newData) => {
@@ -22,6 +43,14 @@ function AttributeSection({ data }) {
     event.preventDefault();
     console.log(event);
     console.log("submitting");
+
+    // filter tags by index
+    let selectedTags = selectedTagIds.map((index) => petTags[index]);
+    if (selectedTags.length > 10) {
+      throw new Error("selected tags array not valid");
+    }
+    console.log("selected tags: ", selectedTags);
+    console.log("selected tag IDs: ", selectedTagIds);
 
     try {
       const userId = JSON.parse(localStorage.getItem("user")).id;
@@ -34,7 +63,7 @@ function AttributeSection({ data }) {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ petTags: selectedTags }),
       }).then(async (resp) => {
         if (resp.ok) {
           // User created successfully
@@ -45,7 +74,6 @@ function AttributeSection({ data }) {
           console.log("new data: ", newData);
 
           saveUserProfileLocalStorage(newData);
-          // localStorage.setItem("userProfile", JSON.stringify(newData));
           updateFormData(newData.petTags);
           toggleEditMode();
         } else {
@@ -78,15 +106,35 @@ function AttributeSection({ data }) {
           </h2>
         </div>
         <div className="tags">
-          {typeof formData.petTags === "object" && formData.petTags.length > 0
-            ? formData.petTags.map((tag, idx) => (
-                <MaterialButton
+          {editMode
+            ? petTags.map((tag, idx) => (
+                <TagSelectButton
                   key={idx}
-                  styleOverrides={{ backgroundColor: "#FFD29D" }}
-                >
-                  {tag}
-                </MaterialButton>
+                  selectedTagIds={selectedTagIds}
+                  updateTags={handleTagChange}
+                  id={idx}
+                  tagName={tag}
+                  styleOverrides={{ width: "auto" }}
+                />
               ))
+            : typeof formData.petTags === "object" &&
+              formData.petTags.length > 0
+            ? petTags.map(
+                (tag, idx) =>
+                  formData.petTags.includes(tag) && (
+                    <TagSelectButton
+                      key={idx}
+                      selectedTagIds={selectedTagIds}
+                      updateTags={handleTagChange}
+                      id={idx}
+                      tagName={tag}
+                      styleOverrides={{
+                        backgroundColor: "#FFD29D",
+                        width: "auto",
+                      }}
+                    />
+                  )
+              )
             : "Add some tags describing your pet!"}
         </div>
       </form>

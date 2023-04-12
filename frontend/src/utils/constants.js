@@ -27,3 +27,16 @@ export const DOG_AGES = {
     MAX: 1000,
   },
 };
+
+export const petTags = [
+  "Likes to run",
+  "Share toys",
+  "Non-reactive",
+  "High energy",
+  "Friendly",
+  "Likes to roughhouse",
+  "Shy",
+  "Friendly towards strangers",
+  "Frequent barker",
+  "Plays catch",
+];

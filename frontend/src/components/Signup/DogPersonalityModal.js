@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MaterialButton from "../MaterialComponents/MaterialButton";
 import TagSelectButton from "./TagSelectButton";
+import { petTags } from "../../utils/constants";
 
 const DogPersonalityModal = ({
   userProfile,
@@ -11,18 +12,6 @@ const DogPersonalityModal = ({
 }) => {
   const navigate = useNavigate();
   const [selectedTagIds, setSelectedTagIds] = useState([]);
-  const petTags = [
-    "Likes to run",
-    "Share toys",
-    "Non-reactive",
-    "High energy",
-    "Friendly",
-    "Likes to roughhouse",
-    "Shy",
-    "Friendly towards strangers",
-    "Frequent barker",
-    "Plays catch",
-  ];
   const tagGroups = [];
 
   for (let index = 0; index < petTags.length; index += 3) {

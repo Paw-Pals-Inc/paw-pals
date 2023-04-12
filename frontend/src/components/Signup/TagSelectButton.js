@@ -2,7 +2,7 @@ import { useState } from "react";
 import MaterialButton from "../MaterialComponents/MaterialButton";
 
 const TagSelectButton = (props) => {
-  const { id, updateTags, tagName } = props;
+  const { id, updateTags, tagName, styleOverrides } = props;
   const [isSelected, setIsSelected] = useState(false);
   const defaultStyle = {
     width: "210px",
@@ -22,7 +22,11 @@ const TagSelectButton = (props) => {
     <div className="tagSelect-button" key={id}>
       <MaterialButton
         onClick={handleClick}
-        styleOverrides={isSelected ? toggleStyle : defaultStyle}
+        styleOverrides={
+          isSelected
+            ? { ...toggleStyle, ...styleOverrides }
+            : { ...defaultStyle, ...styleOverrides }
+        }
       >
         {tagName}
       </MaterialButton>
