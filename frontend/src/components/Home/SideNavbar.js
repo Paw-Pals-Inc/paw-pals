@@ -80,9 +80,10 @@ function SideNavbar({ onLogout, userProfile }) {
           className="logo-container"
           sizes="large"
           component="img"
-          sx={{ maxHeight: "140px", width: "100%" }}
+          sx={{ maxHeight: "140px", width: "100%", cursor: "pointer" }}
           alt="Logo"
           src={logo_top}
+          onClick={() => navigate("/home")}
         />
       </Toolbar>
       <Divider />
