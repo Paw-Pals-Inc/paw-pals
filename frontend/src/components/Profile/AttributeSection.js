@@ -92,7 +92,7 @@ function AttributeSection({ data }) {
     <div className="personalProfileSection">
       {/* text boxes filled with user profile data */}
       {/* implement edit user data functionalilty*/}
-      <form onSubmit={handleSubmit} className="profileDescription-form">
+      <form onSubmit={handleSubmit} className="profileAttributes-form">
         <div>
           <h2 className="section-header">
             Attributes
@@ -125,13 +125,13 @@ function AttributeSection({ data }) {
                     <TagSelectButton
                       key={idx}
                       selectedTagIds={selectedTagIds}
-                      updateTags={handleTagChange}
                       id={idx}
                       tagName={tag}
                       styleOverrides={{
                         backgroundColor: "#FFD29D",
                         width: "auto",
                       }}
+                      clickAction={() => console.log("do nothing :)")}
                     />
                   )
               )

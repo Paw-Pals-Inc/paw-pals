@@ -1,9 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MaterialButton from "../MaterialComponents/MaterialButton";
 
 const TagSelectButton = (props) => {
-  const { id, updateTags, tagName, styleOverrides } = props;
+  const {
+    id,
+    updateTags,
+    tagName,
+    styleOverrides,
+    clickAction,
+    selectedTagIds,
+  } = props;
   const [isSelected, setIsSelected] = useState(false);
+  useEffect(() => {
+    if (selectedTagIds && id !== null) {
+      setIsSelected((prev) => selectedTagIds.includes(id));
+    }
+  }, [id, selectedTagIds]);
+
   const defaultStyle = {
     width: "210px",
   };
@@ -13,15 +26,14 @@ const TagSelectButton = (props) => {
   };
   const handleClick = (e) => {
     // remove or add to tags array
-    console.log("isSelected: ", isSelected);
-    updateTags(id, !isSelected);
     setIsSelected((prev) => !prev);
-    console.log("isSelected new: ", isSelected);
+    updateTags(id, !isSelected);
   };
   return (
     <div className="tagSelect-button" key={id}>
       <MaterialButton
-        onClick={handleClick}
+        key={id}
+        onClick={clickAction ? clickAction : handleClick}
         styleOverrides={
           isSelected
             ? { ...toggleStyle, ...styleOverrides }

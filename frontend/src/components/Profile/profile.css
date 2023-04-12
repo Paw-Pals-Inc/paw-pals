@@ -44,3 +44,11 @@
   width: 50%;
   gap: 4%;
 }
+
+.profileAttributes-form {
+  width: 100%;
+}
+
+.personalProfileSection .tags {
+  width: 80%;
+}
