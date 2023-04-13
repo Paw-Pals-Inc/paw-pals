@@ -24,9 +24,9 @@ const ChatsPage = ({
 }) => {
   const location = useLocation();
   const [socket, setSocket] = useState(null);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null); // used to go to that user's chat room
   const [profileSelected, setProfileSelected] = useState(false); // used to render a specific profile page or homepage stuff
-  const [selectedProfile, setSelectedProfile] = useState(null);
+  const [selectedProfile, setSelectedProfile] = useState(null); // used to go to that user's profile page
 
   useEffect(() => {
     // Connect to socket.io server
@@ -47,6 +47,14 @@ const ChatsPage = ({
       // Disconnect from socket.io server when component unmounts
       newSocket.disconnect();
     };
+  }, []);
+
+  useEffect(() => {
+    // if i came to the chat page with other data
+    const { state } = location || {};
+    if (state) {
+      setSelectedUser(state.selectedUser);
+    }
   }, []);
 
   useEffect(() => {

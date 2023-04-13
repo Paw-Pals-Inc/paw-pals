@@ -3,8 +3,11 @@ import OtherProfileSection from "./OtherProfileSection";
 import MaterialButton from "../MaterialComponents/MaterialButton";
 import { Badge } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useNavigate, useLocation } from "react-router";
 
 function OtherUserProfile({ userProfile, compatibilityScore }) {
+  const navigate = useNavigate();
+  const currentPage = useLocation().pathname;
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
       backgroundColor: "yellow",
@@ -40,11 +43,16 @@ function OtherUserProfile({ userProfile, compatibilityScore }) {
           <img src={userProfile.petGallery[0]} alt="pet profile pic" />
         </StyledBadge>
         <img src={userProfile.profilePic} alt="profile pic" />
-        <MaterialButton
-          styleOverrides={{ width: "100%", backgroundColor: "#ffd29d" }}
-        >
-          Message
-        </MaterialButton>
+        {currentPage !== "/chats" && (
+          <MaterialButton
+            styleOverrides={{ width: "100%", backgroundColor: "#ffd29d" }}
+            onClick={() =>
+              navigate("/chats", { state: { selectedUser: userProfile } })
+            }
+          >
+            Message
+          </MaterialButton>
+        )}
       </div>
       <div className="profile-section">
         <OtherProfileSection userProfile={userProfile} />
