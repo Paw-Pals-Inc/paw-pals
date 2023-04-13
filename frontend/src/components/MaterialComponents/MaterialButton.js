@@ -5,7 +5,9 @@ const MaterialButton = (props) => {
   const { styleOverrides, type, onClick, name, id, value, size } = props;
 
   const styles = {
-    border: "1px black solid",
+    border: "none",
+    boxShadow:
+      "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
     borderRadius: "10px",
     backgroundColor: "#FF8854",
     color: "black",
