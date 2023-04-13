@@ -6,7 +6,7 @@ function OtherUserProfile({ userProfile, compatibilityScore }) {
     <div className="container">
       <div className="col-1 picture-section"></div>
       <div className="col-2 profile-section">
-        <OtherProfileSection profile={userProfile} />
+        <OtherProfileSection userProfile={userProfile} />
       </div>
       <div className="col-3 favorite-section"></div>
     </div>

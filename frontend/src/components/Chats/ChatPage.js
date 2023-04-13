@@ -129,9 +129,11 @@ const ChatsPage = ({
           <PageHeader pageName={location.pathname} profile={userProfile} />
           {profileSelected ? (
             <OtherProfilePage
-              userProfile={userProfiles.filter(
-                (profile) => profile.userID === selectedProfile
-              )}
+              userProfile={
+                userProfiles.filter(
+                  (profile) => profile.userID === selectedProfile
+                )[0]
+              }
               leaveProfile={leaveProfile}
             />
           ) : (

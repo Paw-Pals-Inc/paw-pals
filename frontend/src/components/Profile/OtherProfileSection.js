@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 
-function OtherProfileSection({ profile }) {
-  const userProfile = profile;
-
+function OtherProfileSection({ userProfile }) {
   return (
     <div>
       <div className="personalProfileSection">
