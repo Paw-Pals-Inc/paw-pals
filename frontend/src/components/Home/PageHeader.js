@@ -1,7 +1,9 @@
 import { Avatar } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router";
 
 function PageHeader(props) {
+  const navigate = useNavigate();
   const { pageName, profile } = props;
   const { firstName, petName, profilePic } = profile ? profile : "";
 
@@ -23,7 +25,11 @@ function PageHeader(props) {
           <span className="petName">{petName}</span>
         </div>
         <div className="profilePic">
-          <Avatar src={profile && profilePic} sx={{ width: 50, height: 50 }}>
+          <Avatar
+            src={profile && profilePic}
+            sx={{ width: 50, height: 50, cursor: "pointer" }}
+            onClick={() => navigate("/profile")}
+          >
             {profile && firstName && firstName[0]}
           </Avatar>
         </div>
