@@ -110,7 +110,6 @@ function PersonalProfileSection({ data }) {
           const data = await resp.json();
           let prevProfile = JSON.parse(localStorage.getItem("userProfile"));
           let newData = { ...prevProfile, ...data };
-          console.log("new data: ", newData);
           saveUserProfileLocalStorage(newData);
           // localStorage.setItem("userProfile", JSON.stringify(newData));
           toggleEditMode();

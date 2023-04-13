@@ -92,8 +92,6 @@ const FavoritesPage = ({
   }, []);
 
   const getSizeBoundsArr = (sizeFilterArr) => {
-    console.log(sizeFilterArr);
-
     let minWeight;
     let maxWeight;
     // manipulate array
@@ -124,8 +122,6 @@ const FavoritesPage = ({
   };
 
   const getAgeBoundsArr = (ageFilterArr) => {
-    console.log(ageFilterArr);
-
     let minAge;
     let maxAge;
     // manipulate array
@@ -158,10 +154,7 @@ const FavoritesPage = ({
   const handleFilter = (selectedFilters) => {
     const { sizeFilter, genderFilter, personalityFilter, ageFilter } =
       selectedFilters;
-    console.log("size filter array: ", sizeFilter);
-    console.log("gender filter array: ", genderFilter);
-    console.log("personality filter array: ", personalityFilter);
-    console.log("age filter array: ", ageFilter);
+
     // filter based on filters user used:
     let filteredProfiles;
     filteredProfiles = userProfiles
@@ -173,7 +166,6 @@ const FavoritesPage = ({
         if (profile.petWeight === null || profile.petWeight === "") return true;
         if (sizeFilter.length > 0) {
           let sizeRange = getSizeBoundsArr(sizeFilter);
-          console.log("size boundary: ", sizeRange);
           return (
             profile.petWeight >= sizeRange[0] &&
             profile.petWeight <= sizeRange[1]
@@ -189,7 +181,6 @@ const FavoritesPage = ({
         return true;
       })
       .filter((profile) => {
-        console.log(profile);
         if (
           profile.petTags === null ||
           profile.petTags === "" ||
@@ -198,7 +189,6 @@ const FavoritesPage = ({
           return true;
         if (personalityFilter.length > 0) {
           let profileTags = profile.petTags;
-          console.log(profileTags);
           return personalityFilter.every((tag) => profileTags.includes(tag));
         }
         return true;
@@ -207,20 +197,17 @@ const FavoritesPage = ({
         if (profile.petAge === null || profile.petAge === "") return true;
         if (ageFilter.length > 0) {
           let ageRange = getAgeBoundsArr(ageFilter);
-          console.log("age boundary: ", ageRange);
           return profile.petAge >= ageRange[0] && profile.petAge <= ageRange[1];
         }
         return true;
       });
 
-    console.log("filtered profiles: ", filteredProfiles);
     setFilteredProfiles(filteredProfiles);
   };
 
   const handleClearFilter = () => {
     // clear filters
     setFilteredProfiles(userProfiles);
-    console.log("sending clear filter bar command");
     setClearFilters((prev) => true);
   };
 

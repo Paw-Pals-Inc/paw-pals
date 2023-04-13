@@ -6,8 +6,6 @@ export const calculateCompatibility = (
   otherUserTags,
   otherUserId
 ) => {
-  console.log("user tags: ", userTags);
-  console.log("other user tags: ", otherUserTags);
   let compatibilityScore;
   if (userTags && otherUserTags) {
     const [userTagsArr, otherUserTagsArr] = [userTags, otherUserTags];
@@ -31,8 +29,6 @@ export async function saveUserProfileLocalStorage(profile) {
 }
 
 export const getSizeBoundsArr = (sizeFilterArr) => {
-  console.log(sizeFilterArr);
-
   let minWeight;
   let maxWeight;
   // manipulate array
@@ -63,8 +59,6 @@ export const getSizeBoundsArr = (sizeFilterArr) => {
 };
 
 export const getAgeBoundsArr = (ageFilterArr) => {
-  console.log(ageFilterArr);
-
   let minAge;
   let maxAge;
   // manipulate array

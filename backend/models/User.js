@@ -34,9 +34,7 @@ const User = sequelize.define("User", {
     },
     validate: {
       async isValidIds(value) {
-        console.log("value: ", value);
         const arrValue = JSON.parse(value);
-        console.log("validating array values");
         if (arrValue == null) {
           // Skip validation if value is null or undefined
           return Promise.resolve();

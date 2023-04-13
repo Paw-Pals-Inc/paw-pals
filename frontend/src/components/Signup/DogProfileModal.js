@@ -70,8 +70,6 @@ const DogProfileModal = ({
   };
 
   const handleInputChange = (event) => {
-    console.log(event.target.name);
-    console.log(event.target.value);
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
@@ -79,7 +77,6 @@ const DogProfileModal = ({
   };
 
   const handleCheckboxChange = (event) => {
-    console.log(event);
     setFormData({
       ...formData,
       [event.target.name]: event.target.checked,
@@ -166,8 +163,6 @@ const DogProfileModal = ({
 
     try {
       const userId = userProfile.userID;
-      console.log("user ID: " + userId);
-      console.log(formData);
       const response = await fetch("http://localhost:4000/users/" + userId, {
         method: "PUT",
         headers: {

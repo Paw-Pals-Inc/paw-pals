@@ -70,7 +70,6 @@ function PetProfileSection({ data }) {
     });
   };
   const handleCheckboxChange = (event) => {
-    console.log(event);
     setFormData({
       ...formData,
       [event.target.name]: event.target.checked,

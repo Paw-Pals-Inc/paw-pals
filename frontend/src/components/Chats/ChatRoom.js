@@ -115,10 +115,6 @@ const ChatRoom = ({ socket, currentUser, selectedUser, enterProfile }) => {
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  useEffect(() => {
-    console.log("messages changed", messages);
-  }, [messages]);
-
   const handleSendMessage = (event) => {
     event.preventDefault();
     if (!selectedUser || !messageText) {

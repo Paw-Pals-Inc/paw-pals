@@ -98,7 +98,6 @@ const ProfileModal = ({
 
     try {
       const userId = userProfile.userID;
-      console.log("user ID: " + userId);
       const response = await fetch("http://localhost:4000/users/" + userId, {
         method: "PUT",
         headers: {
