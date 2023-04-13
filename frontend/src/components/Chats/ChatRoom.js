@@ -191,7 +191,7 @@ const ChatRoom = ({ socket, currentUser, selectedUser, enterProfile }) => {
               type="text"
               value={messageText}
               onChange={(e) => setMessageText(e.target.value)}
-              placeholder={"Message " + selectedUser.firstName}
+              placeholder={"Message @" + selectedUser.firstName}
               onKeyDown={handleTyping}
             />
             <MaterialButton
