@@ -30,7 +30,7 @@ Our platform is a digital space that allows dog owners to create profiles for th
 
 ## Getting Started
 
-1. Clone this repo (or fork if you'd like to contribute)
+1. Clone this repo
 2. Run `npm install` from the command line to install dependencies for the root directory, then run `npm run install-all` to install dependencies for both frontend and backend directories
 3. The backend communicates with a MySQL database and uses JSON web tokens for authorization of API endpoints. So you need to create a `.env` file in the `backend/` folder. Specify 5 variables:
 
