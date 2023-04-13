@@ -241,25 +241,33 @@ const HomePage = ({
                 {!userProfiles || !filteredProfiles ? (
                   <div>No data yet!</div>
                 ) : (
-                  filteredProfiles.map((profile, idx) => {
-                    let isFavorite = favoriteProfiles.includes(profile.userID);
-                    let compatibilityScore = getCompatibilityScore(
-                      profile,
-                      compatibilityScores
-                    );
+                  filteredProfiles
+                    .sort(
+                      (a, b) =>
+                        getCompatibilityScore(b, compatibilityScores) -
+                        getCompatibilityScore(a, compatibilityScores)
+                    )
+                    .map((profile, idx) => {
+                      let isFavorite = favoriteProfiles.includes(
+                        profile.userID
+                      );
+                      let compatibilityScore = getCompatibilityScore(
+                        profile,
+                        compatibilityScores
+                      );
 
-                    return (
-                      <ProfileCard
-                        key={idx}
-                        profileData={profile}
-                        isFavorite={isFavorite}
-                        addFavorite={addFavorite}
-                        removeFavorite={removeFavorite}
-                        enterProfile={enterProfile}
-                        compatibilityScore={compatibilityScore}
-                      />
-                    );
-                  })
+                      return (
+                        <ProfileCard
+                          key={idx}
+                          profileData={profile}
+                          isFavorite={isFavorite}
+                          addFavorite={addFavorite}
+                          removeFavorite={removeFavorite}
+                          enterProfile={enterProfile}
+                          compatibilityScore={compatibilityScore}
+                        />
+                      );
+                    })
                 )}
               </div>
             </div>
