@@ -21,7 +21,7 @@ const OtherProfilePage = ({
     <div className="mainContainer-otherProfile">
       <ArrowCircleLeftIcon
         onClick={leaveProfile}
-        sx={{ width: "30px", height: "30px" }}
+        sx={{ width: "30px", height: "30px", cursor: "pointer" }}
       />
       <OtherUserProfile
         userProfile={userProfile}

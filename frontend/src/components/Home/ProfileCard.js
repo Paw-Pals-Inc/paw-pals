@@ -117,17 +117,17 @@ function ProfileCard({
             {isFavorite ? (
               <StarIcon
                 onClick={() => removeFavorite(userID)}
-                sx={{ width: "30px", height: "30px" }}
+                sx={{ width: "30px", height: "30px", cursor: "pointer" }}
               />
             ) : (
               <StarBorderIcon
                 onClick={() => addFavorite(userID)}
-                sx={{ width: "30px", height: "30px" }}
+                sx={{ width: "30px", height: "30px", cursor: "pointer" }}
               />
             )}
           </div>
           <ArrowCircleRightIcon
-            sx={{ width: "45px", height: "45px" }}
+            sx={{ width: "45px", height: "45px", cursor: "pointer" }}
             onClick={() => enterProfile(userID)}
           />
         </CardActions>
