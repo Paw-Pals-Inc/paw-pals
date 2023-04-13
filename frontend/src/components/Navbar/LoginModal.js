@@ -24,7 +24,7 @@ function LoginModal({ onLogin }) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
       // User has been authenticated successfully
-      onLogin();
+      onLogin(data.user);
       // Redirect to profile page
       navigate("/home");
     } else {

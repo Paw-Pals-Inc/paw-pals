@@ -12,15 +12,8 @@ const ProfilePage = ({
   userProfile,
   updateUserProfile,
   userData,
-  profilePic,
-  petGallery,
-  petGalleries,
   userProfiles,
   updateUserProfiles,
-  updateProfilePics,
-  updateProfilePic,
-  updatePetGallery,
-  updatePetGalleries,
   favoriteProfiles,
   updateFavoriteProfiles,
   addFavorite,
@@ -31,15 +24,7 @@ const ProfilePage = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    // go home to load pics if they aren't loaded
-    console.log("pet gallery: ", petGallery);
-    if (petGallery.length < 1) {
-      navigate("/home");
-    }
-  }, []);
-
-  useEffect(() => {
-    // on homepage load, get user profile data
+    // on page load, get user profile data
     const getUserProfile = async () => {
       if (localStorage.getItem("user") !== null) {
         let userID = JSON.parse(localStorage.getItem("user")).id;
@@ -55,8 +40,6 @@ const ProfilePage = ({
           response.json().then((data) => {
             // localStorage.setItem("userProfile", JSON.stringify(data));
             updateUserProfile(data);
-            updatePetGallery(data);
-            updateProfilePic(data);
           });
         } else {
           onLogout();
@@ -72,19 +55,11 @@ const ProfilePage = ({
           <SideNavbar onLogout={onLogout} userProfile={userProfile} />
         </div>
         <div className="contentRight">
-          <PageHeader
-            pageName={location.pathname}
-            profile={userProfile}
-            profilePic={profilePic}
-          />
+          <PageHeader pageName={location.pathname} profile={userProfile} />
           <div className="mainContainer">
             <UserProfile
               updateUserProfile={updateUserProfile}
               userProfile={userProfile}
-              profilePic={profilePic}
-              petGallery={petGallery}
-              updatePetGallery={updatePetGallery}
-              updateProfilePic={updateProfilePic}
             />
           </div>
         </div>

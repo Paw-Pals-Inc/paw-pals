@@ -7,21 +7,13 @@ import PageHeader from "./PageHeader";
 import FilterBar from "../Filters/FilterBar";
 import { getSizeBoundsArr, getAgeBoundsArr } from "../../utils/functions";
 import "./home.css";
-import { CleaningServicesTwoTone } from "@mui/icons-material";
 
 const HomePage = ({
   onLogout,
   userProfile,
-  profilePic,
-  petGallery,
-  petGalleries,
   userProfiles,
   updateUserProfile,
   updateUserProfiles,
-  updateProfilePics,
-  updateProfilePic,
-  updatePetGallery,
-  updatePetGalleries,
   favoriteProfiles,
   updateFavoriteProfiles,
   addFavorite,
@@ -51,8 +43,6 @@ const HomePage = ({
           response.json().then((data) => {
             // localStorage.setItem("userProfile", JSON.stringify(data));
             updateUserProfile(data);
-            updatePetGallery(data);
-            updateProfilePic(data);
           });
         } else {
           onLogout();
@@ -60,7 +50,7 @@ const HomePage = ({
       }
     };
     getUserProfile();
-  }, []);
+  }, [userProfiles]);
 
   useEffect(() => {
     // get other user's data on home page load
@@ -81,9 +71,8 @@ const HomePage = ({
                 profile.userID !== JSON.parse(localStorage.getItem("user")).id
             );
             updateUserProfiles(filteredData);
-            updateProfilePics(filteredData);
-            updatePetGalleries(filteredData);
-            console.log(petGalleries);
+            setFilteredProfiles(filteredData);
+            //refresh page
           });
         }
       }
@@ -95,7 +84,7 @@ const HomePage = ({
   useEffect(() => {
     console.log("grabbing other profiles and re-rendering");
     if (!filteredProfiles) {
-      filteredProfiles = userProfiles;
+      setFilteredProfiles(userProfiles);
     }
   }, []);
 
@@ -133,10 +122,6 @@ const HomePage = ({
 
     getFavorites();
   }, []);
-
-  useEffect(() => {
-    console.log("galleries: ", petGalleries);
-  }, [petGalleries]);
 
   const handleFilter = (selectedFilters) => {
     const { sizeFilter, genderFilter, personalityFilter, ageFilter } =
@@ -234,11 +219,7 @@ const HomePage = ({
         </div>
 
         <div className="contentRight">
-          <PageHeader
-            pageName={location.pathname}
-            profile={userProfile}
-            profilePic={profilePic}
-          />
+          <PageHeader pageName={location.pathname} profile={userProfile} />
           {profileSelected ? (
             <OtherProfilePage
               userProfile={
@@ -264,29 +245,12 @@ const HomePage = ({
                 resetClearFilter={resetClearFilter}
               />
               <div className="data">
-                {!userProfiles ||
-                !filteredProfiles ||
-                !petGalleries.length > 0 ? (
+                {!userProfiles || !filteredProfiles ? (
                   <div>No data yet!</div>
                 ) : (
                   filteredProfiles.map((profile, idx) => {
                     let isFavorite = favoriteProfiles.includes(profile.userID);
                     let compatibilityScore = getCompatibilityScore(profile);
-                    console.log("pet galleries: ", petGalleries);
-                    let petGallery;
-                    if (petGalleries.length > 0) {
-                      console.log("pet galleries: ", petGalleries);
-                      try {
-                        petGallery =
-                          petGalleries &&
-                          petGalleries.filter(
-                            (prof) => prof.userID === profile.userID
-                          )[0].petGallery;
-                        console.log("pet gallery chosen: ", petGallery);
-                      } catch (err) {
-                        console.error(err);
-                      }
-                    }
 
                     return (
                       <ProfileCard
@@ -297,7 +261,6 @@ const HomePage = ({
                         removeFavorite={removeFavorite}
                         enterProfile={enterProfile}
                         compatibilityScore={compatibilityScore}
-                        petGallery={petGallery}
                       />
                     );
                   })

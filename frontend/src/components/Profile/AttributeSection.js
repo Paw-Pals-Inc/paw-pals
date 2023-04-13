@@ -6,7 +6,7 @@ import { petTags } from "../../utils/constants";
 function AttributeSection({ data }) {
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
-    petTags: JSON.parse(localStorage.getItem("userProfile")).petTags || [],
+    petTags: data.petTags || [],
   });
   const [selectedTagIds, setSelectedTagIds] = useState([]);
 

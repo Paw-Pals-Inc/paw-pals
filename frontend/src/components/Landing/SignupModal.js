@@ -90,7 +90,7 @@ const SignupModal = ({
           console.log("updating user profile");
           updateUserData(data.user);
           updateUserProfile(data.profile);
-          onLogin();
+          onLogin(data.user);
         })
         .then(() => createdAccountStatus(true));
       navigate("/signup");

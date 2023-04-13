@@ -30,7 +30,6 @@ function ProfileCard({
   removeFavorite,
   enterProfile,
   compatibilityScore,
-  petGallery,
 }) {
   const {
     petName,
@@ -43,7 +42,7 @@ function ProfileCard({
     firstName,
     lastName,
     userID,
-    profilePictureUrl,
+    petGallery,
   } = profileData;
 
   const StyledBadge = styled(Badge)(({ theme }) => ({

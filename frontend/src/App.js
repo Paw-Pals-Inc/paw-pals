@@ -29,13 +29,10 @@ function App() {
   const [userProfile, setUserProfile] = useState(
     JSON.parse(localStorage.getItem("userProfile"))
   );
-  const [profilePic, setProfilePic] = useState("");
-  const [petGallery, setPetGallery] = useState([]);
+
   const [userProfiles, setUserProfiles] = useState(
     JSON.parse(localStorage.getItem("userProfiles"))
   );
-  const [profilePics, setProfilePics] = useState([]); // userID, profilePic
-  const [petGalleries, setPetGalleries] = useState([]); // [{userID, petGallery}, ...]
   const [favoriteProfiles, setFavoriteProfiles] = useState([]);
   const [compatibilityScores, setCompatibilityScores] = useState([]);
 
@@ -118,22 +115,15 @@ function App() {
     }
   };
 
-  const handleLogin = () => {
+  const handleLogin = (userData) => {
     setIsLoggedIn(true);
-    setUserData(JSON.parse(localStorage.getItem("user")));
+    setUserData(userData);
+    setUserProfiles(JSON.parse(localStorage.getItem("userProfiles")));
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("userProfile");
-    localStorage.removeItem("userProfiles");
-    localStorage.removeItem("favoriteProfiles");
-    localStorage.removeItem("createdDogPersonality");
-    localStorage.removeItem("createdDogProfile");
-    localStorage.removeItem("createdProfile");
-    localStorage.removeItem("password");
+    localStorage.clear();
   };
   const updateToken = (newToken) => {
     setToken((prev) => newToken);
@@ -152,39 +142,6 @@ function App() {
     saveUserProfilesLocalStorage(newData);
   };
 
-  const updateProfilePic = (profile) => {
-    setProfilePic((prev) => profile.profilePic);
-  };
-
-  const updateProfilePics = (profiles) => {
-    let profilePicArr = [];
-    let profilePicObject;
-    profiles.forEach((profile) => {
-      profilePicObject = {
-        userID: profile.userID,
-        profilePic: profile.profilePic,
-      };
-      profilePicArr.push(profilePicObject);
-    });
-    setProfilePics((prev) => profilePicArr);
-  };
-
-  const updatePetGallery = (profile) => {
-    setPetGallery((prev) => profile.petGallery);
-  };
-
-  const updatePetGalleries = (profiles) => {
-    let petGalleryArrays = [];
-    let petGalleryObject;
-    profiles.forEach((profile) => {
-      petGalleryObject = {
-        userID: profile.userID,
-        petGallery: profile.petGallery,
-      };
-      petGalleryArrays.push(petGalleryObject);
-    });
-    setPetGalleries((prev) => petGalleryArrays);
-  };
   const updateFavoriteProfiles = (newData) => {
     updateFavoritesDB([...newData]);
   };
@@ -233,18 +190,11 @@ function App() {
               updateToken={updateToken}
               userProfiles={userProfiles}
               updateUserProfiles={updateUserProfiles}
-              updateProfilePic={updateProfilePic}
-              updateProfilePics={updateProfilePics}
-              updatePetGallery={updatePetGallery}
-              updatePetGalleries={updatePetGalleries}
               favoriteProfiles={favoriteProfiles}
               updateFavoriteProfiles={updateFavoriteProfiles}
               addFavorite={addFavorite}
               removeFavorite={removeFavorite}
               compatibilityScores={compatibilityScores}
-              petGalleries={petGalleries}
-              profilePic={profilePic}
-              petGallery={petGallery}
             />
           }
         ></Route>
@@ -260,18 +210,11 @@ function App() {
                 userProfiles={userProfiles}
                 updateUserProfile={updateUserProfile}
                 updateUserProfiles={updateUserProfiles}
-                updateProfilePic={updateProfilePic}
-                updateProfilePics={updateProfilePics}
-                updatePetGallery={updatePetGallery}
-                updatePetGalleries={updatePetGalleries}
                 favoriteProfiles={favoriteProfiles}
                 updateFavoriteProfiles={updateFavoriteProfiles}
                 addFavorite={addFavorite}
                 removeFavorite={removeFavorite}
                 compatibilityScores={compatibilityScores}
-                petGalleries={petGalleries}
-                profilePic={profilePic}
-                petGallery={petGallery}
               />
             ) : (
               <Navigate replace to={"/"} />
@@ -290,19 +233,11 @@ function App() {
                 updateUserProfile={updateUserProfile}
                 updateUserProfiles={updateUserProfiles}
                 userProfiles={userProfiles}
-                profilePics={profilePics}
-                profilePic={profilePic}
-                updateProfilePic={updateProfilePic}
-                updateProfilePics={updateProfilePics}
-                updatePetGallery={updatePetGallery}
-                updatePetGalleries={updatePetGalleries}
                 favoriteProfiles={favoriteProfiles}
                 updateFavoriteProfiles={updateFavoriteProfiles}
                 addFavorite={addFavorite}
                 removeFavorite={removeFavorite}
                 compatibilityScores={compatibilityScores}
-                petGalleries={petGalleries}
-                petGallery={petGallery}
               />
             ) : (
               <Navigate replace to={"/"} />
@@ -322,17 +257,10 @@ function App() {
                 userProfiles={userProfiles}
                 addFavorite={addFavorite}
                 removeFavorite={removeFavorite}
-                profilePic={profilePic}
                 compatibilityScores={compatibilityScores}
                 updateUserProfile={updateUserProfile}
                 updateUserProfiles={updateUserProfiles}
-                updateProfilePic={updateProfilePic}
-                updateProfilePics={updateProfilePics}
-                updatePetGallery={updatePetGallery}
-                updatePetGalleries={updatePetGalleries}
                 updateFavoriteProfiles={updateFavoriteProfiles}
-                petGalleries={petGalleries}
-                petGallery={petGallery}
               />
             ) : (
               <Navigate replace to={"/"} />
@@ -350,20 +278,13 @@ function App() {
                 updateUserProfile={updateUserProfile}
                 userProfile={userProfile}
                 userData={userData}
-                profilePic={profilePic}
                 userProfiles={userProfiles}
                 updateUserProfiles={updateUserProfiles}
-                updateProfilePic={updateProfilePic}
-                updateProfilePics={updateProfilePics}
-                updatePetGallery={updatePetGallery}
-                updatePetGalleries={updatePetGalleries}
                 favoriteProfiles={favoriteProfiles}
                 updateFavoriteProfiles={updateFavoriteProfiles}
                 addFavorite={addFavorite}
                 removeFavorite={removeFavorite}
                 compatibilityScores={compatibilityScores}
-                petGalleries={petGalleries}
-                petGallery={petGallery}
               />
             ) : (
               <Navigate replace to={"/"} />

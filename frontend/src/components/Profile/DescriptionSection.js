@@ -6,9 +6,8 @@ function DescriptionSection({ data }) {
   const { petName, firstName } = data;
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
-    description: JSON.parse(localStorage.getItem("userProfile")).description,
-    petDescription: JSON.parse(localStorage.getItem("userProfile"))
-      .petDescription,
+    description: "",
+    petDescription: "",
   });
 
   const toggleEditMode = () => {

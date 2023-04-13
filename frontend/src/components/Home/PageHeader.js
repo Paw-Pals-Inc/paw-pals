@@ -2,8 +2,8 @@ import { Avatar } from "@mui/material";
 import React from "react";
 
 function PageHeader(props) {
-  const { pageName, profile, profilePic } = props;
-  const { firstName, petName } = profile ? profile : "";
+  const { pageName, profile } = props;
+  const { firstName, petName, profilePic } = profile ? profile : "";
 
   let pageTitle = pageName.slice(1);
   let upperFirstLetter = pageTitle[0].toUpperCase();
@@ -24,7 +24,7 @@ function PageHeader(props) {
           <span className="petName">{petName}</span>
         </div>
         <div className="profilePic">
-          <Avatar src={profilePic}>
+          <Avatar src={profile && profilePic}>
             {profile && firstName && firstName[0]}
           </Avatar>
         </div>

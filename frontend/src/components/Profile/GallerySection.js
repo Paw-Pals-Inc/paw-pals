@@ -2,30 +2,21 @@ import React, { useState, useEffect } from "react";
 import {
   saveUserProfileLocalStorage,
   validFileType,
-  blobToDataURL,
 } from "../../utils/functions";
 import EditIcon from "@mui/icons-material/EditOutlined";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Badge } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-function GallerySection({ data, petGallery, updatePetGallery }) {
+function GallerySection({ data }) {
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
-    petGallery: petGallery,
+    petGallery: data.petGallery,
   });
   const [errors, setErrors] = useState({
     petGallery: "",
   });
-
-  useEffect(() => {
-    if (!petGallery) {
-      // get it again
-      navigate("/home");
-    }
-    console.log(petGallery);
-  }, [petGallery]);
 
   const toggleEditMode = () => {
     setEditMode((prev) => !prev);
@@ -88,44 +79,16 @@ function GallerySection({ data, petGallery, updatePetGallery }) {
 
     // Form validation
     let isValid = true;
-    let newForm = formData;
 
     if (formData.petGallery.length < 1) {
       isValid = false;
-    } else {
-      const promises = formData.petGallery.map(async (imageStr, idx) => {
-        if (imageStr.match(/^blob/)) {
-          console.log(`image ${idx} is a blob url`);
-          // convert to data url
-          let blob = await fetch(imageStr)
-            .then((r) => r.blob())
-            .then(async (blob) => {
-              console.log(blob);
-              let dataUrl = await blobToDataURL(blob);
-              if (dataUrl) {
-                if (dataUrl.match(/^blob/)) isValid = false;
-                newForm = { petGallery: [...formData.petGallery] };
-                newForm.petGallery[idx] = dataUrl;
-                setFormData((prev) => newForm);
-                console.log(newForm.petGallery);
-              } else {
-                console.log(dataUrl);
-                isValid = false;
-              }
-            });
-        }
-      });
-      await Promise.all(promises);
     }
-    console.log("i should see this after my promises resolve");
 
     if (!isValid) {
       console.log("gallery pics not valid");
       toggleEditMode();
       return;
     }
-
-    console.log(newForm);
 
     const userId = JSON.parse(localStorage.getItem("user")).id;
     const token = localStorage.getItem("token");
@@ -137,7 +100,7 @@ function GallerySection({ data, petGallery, updatePetGallery }) {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newForm),
+      body: JSON.stringify(formData),
     }).then(async (resp) => {
       if (resp.ok) {
         // User created successfully
@@ -147,7 +110,6 @@ function GallerySection({ data, petGallery, updatePetGallery }) {
         let newData = { ...prevProfile, ...data };
         console.log("new data: ", newData);
         saveUserProfileLocalStorage(newData);
-        updatePetGallery(newData.petGallery);
         toggleEditMode();
         // refresh to see new pet profile pic
         navigate("/profile");

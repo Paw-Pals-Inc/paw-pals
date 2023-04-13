@@ -13,15 +13,8 @@ const ChatsPage = ({
   onLogout,
   userProfile,
   userProfiles,
-  profilePic,
-  profilePics,
   updateUserProfile,
   updateUserProfiles,
-  updateProfilePics,
-  updateProfilePic,
-  updatePetGallery,
-  updatePetGalleries,
-  petGalleries,
   favoriteProfiles,
   updateFavoriteProfiles,
   addFavorite,
@@ -72,8 +65,6 @@ const ChatsPage = ({
           response.json().then((data) => {
             // localStorage.setItem("userProfile", JSON.stringify(data));
             updateUserProfile(data);
-            updatePetGallery(data);
-            updateProfilePic(data);
           });
         } else {
           onLogout();
@@ -102,8 +93,6 @@ const ChatsPage = ({
                 profile.userID !== JSON.parse(localStorage.getItem("user")).id
             );
             updateUserProfiles(filteredData);
-            updateProfilePics(filteredData);
-            updatePetGalleries(filteredData);
           });
         }
       }
@@ -139,11 +128,7 @@ const ChatsPage = ({
           />
         </div>
         <div className="contentRight">
-          <PageHeader
-            pageName={location.pathname}
-            profile={userProfile}
-            profilePic={profilePic}
-          />
+          <PageHeader pageName={location.pathname} profile={userProfile} />
           {profileSelected ? (
             <OtherProfilePage
               userProfile={userProfiles.filter(
@@ -158,7 +143,6 @@ const ChatsPage = ({
                 userProfile={userProfile}
                 userProfiles={userProfiles}
                 handleUserSelect={handleUserSelect}
-                profilePics={profilePics}
               />
               <ChatRoom
                 socket={socket}

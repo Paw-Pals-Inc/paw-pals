@@ -1,6 +1,7 @@
 const { User, Profile } = require("../models");
 const bcrypt = require("bcrypt");
-const { generateAccessToken } = require("../utils");
+const { generateAccessToken, saveImage } = require("../utils");
+require("dotenv").config();
 
 // create user account and attached blank profile
 const createUser = async (req, res) => {
@@ -68,7 +69,6 @@ const editProfile = async (req, res) => {
     if (req.body.city) fieldsToUpdate.city = req.body.city;
     if (req.body.state) fieldsToUpdate.state = req.body.state;
     if (req.body.phoneNumber) fieldsToUpdate.phoneNumber = req.body.phoneNumber;
-    if (req.body.profilePic) fieldsToUpdate.profilePic = req.body.profilePic;
     if (req.body.description) fieldsToUpdate.description = req.body.description;
     if (req.body.petName) fieldsToUpdate.petName = req.body.petName;
     if (req.body.petAge) fieldsToUpdate.petAge = req.body.petAge;
@@ -78,10 +78,24 @@ const editProfile = async (req, res) => {
     if (req.body.petVaccinated)
       fieldsToUpdate.petVaccinated = req.body.petVaccinated;
     if (req.body.petNeutered) fieldsToUpdate.petNeutered = req.body.petNeutered;
-    if (req.body.petGallery) fieldsToUpdate.petGallery = req.body.petGallery;
     if (req.body.petTags) fieldsToUpdate.petTags = req.body.petTags;
     if (req.body.petDescription)
       fieldsToUpdate.petDescription = req.body.petDescription;
+
+    if (req.body.profilePic) {
+      let profilePic_filePath =
+        `http://localhost:${process.env.PORT}/${id}/` +
+        saveImage(req.body.profilePic, id);
+      fieldsToUpdate.profilePic = profilePic_filePath;
+    }
+    if (req.body.petGallery) {
+      let images = req.body.petGallery;
+      let filePathArr = images.map(
+        (image) =>
+          `http://localhost:${process.env.PORT}/${id}/` + saveImage(image, id)
+      );
+      fieldsToUpdate.petGallery = filePathArr;
+    }
 
     const [updated] = await Profile.update(fieldsToUpdate, {
       where: { userId: id },

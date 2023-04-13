@@ -5,32 +5,33 @@ import DescriptionSection from "./DescriptionSection";
 import GallerySection from "./GallerySection";
 import AttributeSection from "./AttributeSection";
 
-function UserProfile({
-  userProfile,
-  updateUserProfile,
-  petGallery,
-  profilePic,
-  updatePetGallery,
-  updateProfilePic,
-}) {
-  const {
-    petName,
-    petBreed,
-    petVaccinated,
-    petNeutered,
-    petAge,
-    petGender,
-    petTags,
-    petWeight,
+function UserProfile({ userProfile, updateUserProfile }) {
+  const profilePic = userProfile && userProfile.profilePic;
+  const petGallery = userProfile && userProfile.petGallery;
+  const petName = userProfile && userProfile.petName;
+  const petBreed = userProfile && userProfile.petBreed;
+  const petVaccinated = userProfile && userProfile.petVaccinated;
+  const petNeutered = userProfile && userProfile.petNeutered;
+  const petAge = userProfile && userProfile.petAge;
+  const petGender = userProfile && userProfile.petGender;
+  const petTags = userProfile && userProfile.petTags;
+  const petWeight = userProfile && userProfile.petWeight;
+  const firstName = userProfile && userProfile.firstName;
+  const lastName = userProfile && userProfile.lastName;
+  const phoneNumber = userProfile && userProfile.phoneNumber;
+  const description = userProfile && userProfile.description;
+  const petDescription = userProfile && userProfile.petDescription;
+  const city = userProfile && userProfile.city;
+  const state = userProfile && userProfile.state;
+
+  const personalData = {
     firstName,
     lastName,
     phoneNumber,
-    description,
-    petDescription,
     city,
     state,
-  } = userProfile;
-  const personalData = { firstName, lastName, phoneNumber, city, state };
+    profilePic,
+  };
   const petData = {
     petName,
     petAge,
@@ -40,26 +41,15 @@ function UserProfile({
     petBreed,
     petVaccinated,
     petNeutered,
+    petGallery,
   };
   const descriptions = { description, petDescription, firstName, petName };
   return (
     <div className="userProfile">
-      <PersonalProfileSection
-        data={personalData}
-        profilePic={profilePic}
-        updateProfilePic={updateProfilePic}
-      />
-      <PetProfileSection
-        data={petData}
-        petGallery={petGallery}
-        updatePetGallery={updatePetGallery}
-      />
+      <PersonalProfileSection data={personalData} />
+      <PetProfileSection data={petData} />
       <AttributeSection data={petData} />
-      <GallerySection
-        data={userProfile}
-        petGallery={petGallery}
-        updatePetGallery={updatePetGallery}
-      />
+      <GallerySection data={petData} />
       <DescriptionSection data={descriptions} />
     </div>
   );

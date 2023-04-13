@@ -15,15 +15,8 @@ const FavoritesPage = ({
   userProfiles,
   compatibilityScores,
   favoriteProfiles,
-  profilePic,
-  petGallery,
-  petGalleries,
   updateUserProfile,
   updateUserProfiles,
-  updateProfilePics,
-  updateProfilePic,
-  updatePetGallery,
-  updatePetGalleries,
   updateFavoriteProfiles,
 }) => {
   const location = useLocation();
@@ -54,8 +47,6 @@ const FavoritesPage = ({
           response.json().then((data) => {
             // localStorage.setItem("userProfile", JSON.stringify(data));
             updateUserProfile(data);
-            updatePetGallery(data);
-            updateProfilePic(data);
           });
         } else {
           onLogout();
@@ -265,11 +256,7 @@ const FavoritesPage = ({
           <SideNavbar onLogout={onLogout} userProfile={userProfile} />
         </div>
         <div className="contentRight">
-          <PageHeader
-            pageName={location.pathname}
-            profile={userProfile}
-            profilePic={profilePic}
-          />
+          <PageHeader pageName={location.pathname} profile={userProfile} />
           {profileSelected ? (
             <OtherProfilePage
               userProfile={userProfiles.filter(
@@ -309,7 +296,6 @@ const FavoritesPage = ({
                         removeFavorite={removeFavorite}
                         enterProfile={enterProfile}
                         compatibilityScore={compatibilityScore}
-                        petGallery={petGallery}
                       />
                     );
                   })

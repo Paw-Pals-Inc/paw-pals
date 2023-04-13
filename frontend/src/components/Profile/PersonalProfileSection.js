@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import EditIcon from "@mui/icons-material/EditOutlined";
 import { saveUserProfileLocalStorage } from "../../utils/functions";
 
-function PersonalProfileSection({ profilePic }) {
+function PersonalProfileSection({ data }) {
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: JSON.parse(localStorage.getItem("userProfile")).firstName,
-    lastName: JSON.parse(localStorage.getItem("userProfile")).lastName,
-    phoneNumber: JSON.parse(localStorage.getItem("userProfile")).phoneNumber,
-    city: JSON.parse(localStorage.getItem("userProfile")).city,
-    state: JSON.parse(localStorage.getItem("userProfile")).state,
+    firstName: data?.firstName,
+    lastName: data?.lastName,
+    phoneNumber: data?.phoneNumber,
+    city: data?.city,
+    state: data?.state,
   });
   const [errors, setErrors] = useState({
     firstName: "",
@@ -226,7 +226,7 @@ function PersonalProfileSection({ profilePic }) {
         </div>
       </form>
       <div className="profilePictureSection">
-        <img src={profilePic} alt="profile pic" />
+        <img src={data?.profilePic} alt="profile pic" />
         <button>change picture</button>
       </div>
     </div>

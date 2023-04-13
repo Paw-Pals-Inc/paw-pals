@@ -22,7 +22,7 @@ const io = socketio(server, {
   },
 });
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT;
 
 app.use(bodyParser.urlencoded({ extended: true, limit: "400mb" }));
 app.use(bodyParser.json({ limit: "400mb" }));
@@ -128,6 +128,8 @@ app.use("/logout", logoutRoutes);
 app.use("/users", profileRoutes);
 app.use("/favorites", favoriteRoutes);
 app.use("/chat", chatRoutes);
+// Serve static files from the 'images' directory
+app.use(express.static("uploads/images"));
 
 // protected endpoint
 app.get("/protected", authenticateToken, (req, res) => {

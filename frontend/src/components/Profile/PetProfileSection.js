@@ -4,17 +4,18 @@ import MaterialButton from "../MaterialComponents/MaterialButton";
 import { ButtonGroup } from "@mui/material";
 import { saveUserProfileLocalStorage } from "../../utils/functions";
 
-function PetProfileSection({ petGallery }) {
+function PetProfileSection({ data }) {
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
-    petName: JSON.parse(localStorage.getItem("userProfile")).petName,
-    petAge: JSON.parse(localStorage.getItem("userProfile")).petAge,
-    petGender: JSON.parse(localStorage.getItem("userProfile")).petGender,
-    petVaccinated: JSON.parse(localStorage.getItem("userProfile"))
-      .petVaccinated,
-    petWeight: JSON.parse(localStorage.getItem("userProfile")).petWeight,
-    petBreed: JSON.parse(localStorage.getItem("userProfile")).petBreed,
-    petNeutered: JSON.parse(localStorage.getItem("userProfile")).petNeutered,
+    petName: data?.petName,
+    petAge: data?.petName,
+    petGender: data?.petName,
+    petVaccinated: data?.petName,
+    petVaccinated: data?.petName,
+    petWeight: data?.petName,
+    petBreed: data?.petName,
+    petNeutered: data?.petName,
+    petGallery: data?.petGallery,
   });
   const [errors, setErrors] = useState({
     petName: "",
@@ -24,6 +25,7 @@ function PetProfileSection({ petGallery }) {
     petWeight: "",
     petVaccinated: false,
     petNeutered: false,
+    petGallery: "",
   });
 
   const [maleSelected, setMaleSelected] = useState(false);
@@ -92,6 +94,7 @@ function PetProfileSection({ petGallery }) {
       petWeight: "",
       petVaccinated: false,
       petNeutered: false,
+      petGallery: "",
     };
 
     // petName
@@ -142,6 +145,11 @@ function PetProfileSection({ petGallery }) {
 
     if (!typeof formData.petVaccinated === "boolean") {
       newErrors.petNeutered = "Invalid input for pet neutered";
+      isValid = false;
+    }
+
+    if (formData.petGallery.length < 1) {
+      newErrors.petGallery = "Pet profile picture is required";
       isValid = false;
     }
 
@@ -328,7 +336,7 @@ function PetProfileSection({ petGallery }) {
         </div>
       </form>
       <div className="profilePictureSection">
-        <img src={petGallery && petGallery[0]} alt="profile pic" />
+        <img src={data?.petGallery && data.petGallery[0]} alt="profile pic" />
         <button>change picture</button>
       </div>
     </div>
