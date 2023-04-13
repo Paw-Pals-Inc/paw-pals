@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import EditIcon from "@mui/icons-material/EditOutlined";
-import { saveUserProfileLocalStorage } from "../../utils/functions";
+import {
+  saveUserProfileLocalStorage,
+  validFileType,
+} from "../../utils/functions";
 
 function PersonalProfileSection({ data }) {
   const [editMode, setEditMode] = useState(false);
@@ -10,6 +13,7 @@ function PersonalProfileSection({ data }) {
     phoneNumber: data?.phoneNumber,
     city: data?.city,
     state: data?.state,
+    profilePic: data?.profilePic,
   });
   const [errors, setErrors] = useState({
     firstName: "",
@@ -17,10 +21,36 @@ function PersonalProfileSection({ data }) {
     city: "",
     state: "",
     phoneNumber: "",
+    profilePic: "",
   });
 
   const toggleEditMode = () => {
     setEditMode((prev) => !prev);
+  };
+
+  const handleProfilePicChange = (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    if (!validFileType(file)) {
+      setErrors({
+        ...errors,
+        profilePic: `${file.name} not a valid file type. Update your selection.`,
+      });
+      return;
+    }
+    setErrors({ ...errors, profilePic: "" });
+
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setFormData((prev) => ({ ...formData, profilePic: reader.result }));
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      // nop
+    }
   };
 
   const handleInputChange = (event) => {
@@ -41,6 +71,7 @@ function PersonalProfileSection({ data }) {
       city: "",
       state: "",
       phoneNumber: "",
+      profilePic: "",
     };
 
     // firstName
@@ -85,6 +116,12 @@ function PersonalProfileSection({ data }) {
       isValid = false;
     } else if (!/^[0-9-]{10,}$/.test(formData.phoneNumber)) {
       newErrors.phoneNumber = "Phone number is invalid. Must be 10 digits";
+      isValid = false;
+    }
+
+    // profile pic
+    if (!formData.profilePic) {
+      newErrors.profilePic = "Profile picture is required.";
       isValid = false;
     }
 
@@ -225,8 +262,24 @@ function PersonalProfileSection({ data }) {
         </div>
       </form>
       <div className="profilePictureSection">
-        <img src={data?.profilePic} alt="profile pic" />
-        <button>change picture</button>
+        <img src={formData.profilePic} alt="profile pic" />
+        {editMode && (
+          <div>
+            <label htmlFor="profilePic" className="uploadPic-button">
+              change picture
+            </label>
+            <input
+              type="file"
+              id="profilePic"
+              name="profilePic"
+              onChange={handleProfilePicChange}
+              style={{ opacity: 0 }}
+              hidden
+              accept="image/*"
+            />
+          </div>
+        )}
+        {errors.profilePic && <div>{errors.profilePic}</div>}
       </div>
     </div>
   );
