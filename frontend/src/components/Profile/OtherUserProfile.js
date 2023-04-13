@@ -2,12 +2,24 @@ import React, { useState, useEffect } from "react";
 import OtherProfileSection from "./OtherProfileSection";
 import MaterialButton from "../MaterialComponents/MaterialButton";
 import { Badge } from "@mui/material";
+import {
+  Star as StarIcon,
+  StarBorder as StarBorderIcon,
+} from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
 import { useNavigate, useLocation } from "react-router";
 
-function OtherUserProfile({ userProfile, compatibilityScore }) {
+function OtherUserProfile({
+  userProfile,
+  compatibilityScore,
+  isFavorite,
+  addFavorite,
+  removeFavorite,
+  favoriteProfiles,
+}) {
   const navigate = useNavigate();
   const currentPage = useLocation().pathname;
+  const [isProfileFavorite, setIsProfileFavorite] = useState(isFavorite);
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
       backgroundColor: "yellow",
@@ -21,6 +33,12 @@ function OtherUserProfile({ userProfile, compatibilityScore }) {
       borderRadius: "50%",
     },
   }));
+
+  useEffect(() => {
+    // check if favorite again
+    if (favoriteProfiles.includes(userProfile.userID))
+      setIsProfileFavorite(true);
+  }, [isFavorite, favoriteProfiles]);
 
   return (
     <div className="otherProfile-container">
@@ -57,7 +75,24 @@ function OtherUserProfile({ userProfile, compatibilityScore }) {
       <div className="profile-section">
         <OtherProfileSection userProfile={userProfile} />
       </div>
-      <div className="favorite-section"></div>
+      <div className="favorite-section">
+        {isProfileFavorite ? "favorited" : "favorite"}
+        {isProfileFavorite ? (
+          <StarIcon
+            onClick={() => {
+              setIsProfileFavorite(false);
+              removeFavorite(userProfile.userID);
+            }}
+          />
+        ) : (
+          <StarBorderIcon
+            onClick={() => {
+              setIsProfileFavorite(true);
+              addFavorite(userProfile.userID);
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 }

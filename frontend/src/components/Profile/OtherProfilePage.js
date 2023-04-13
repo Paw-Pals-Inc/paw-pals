@@ -12,6 +12,10 @@ const OtherProfilePage = ({
   userData,
   leaveProfile,
   compatibilityScore,
+  addFavorite,
+  removeFavorite,
+  isFavorite,
+  favoriteProfiles,
 }) => {
   return (
     <div className="mainContainer-otherProfile">
@@ -19,6 +23,10 @@ const OtherProfilePage = ({
       <OtherUserProfile
         userProfile={userProfile}
         compatibilityScore={compatibilityScore()}
+        isFavorite={isFavorite}
+        addFavorite={addFavorite}
+        removeFavorite={removeFavorite}
+        favoriteProfiles={favoriteProfiles}
       />
     </div>
   );

@@ -172,15 +172,16 @@ body {
 .otherProfile-container {
   display: flex;
   flex-direction: row;
-  gap: 5%;
-  margin-right: auto;
   width: 100%;
+  margin: 30px auto 30px 0;
+  height: calc(100vh - 150px);
+  overflow-y: scroll;
 }
 
 .picture-section {
+  margin: 20px 0;
   width: 20%;
   order: 1;
-  margin: 40px auto 0;
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -198,10 +199,31 @@ body {
 
 .profile-section {
   width: 60%;
+  display: flex;
+  flex-direction: row;
   order: 2;
+  padding: 0 5%;
+}
+
+.profile-section .section-header :last-child {
+  margin-left: 30%;
+}
+
+.profile-section .tags-list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.profile-section .galleryImageDiv {
+  width: 25%;
 }
 
 .favorite-section {
   width: 10%;
   order: 3;
+  display: flex;
+  gap: 5px;
+  position: absolute;
+  right: 100px;
 }

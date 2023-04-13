@@ -210,6 +210,10 @@ const HomePage = ({
           <PageHeader pageName={location.pathname} profile={userProfile} />
           {profileSelected ? (
             <OtherProfilePage
+              isFavorite={favoriteProfiles.includes(selectedProfile.userID)}
+              addFavorite={addFavorite}
+              removeFavorite={removeFavorite}
+              favoriteProfiles={favoriteProfiles}
               userProfile={
                 userProfiles.filter(
                   (profile) => profile.userID === selectedProfile

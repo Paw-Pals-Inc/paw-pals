@@ -110,6 +110,41 @@ const ChatsPage = ({
     getOtherProfiles();
   }, []);
 
+  useEffect(() => {
+    // get favorites data on favorites page load
+    const getFavorites = async () => {
+      if (localStorage.getItem("user") !== null) {
+        let userAccount = JSON.parse(localStorage.getItem("user"));
+        const jwt = localStorage.getItem("token");
+        const favorites = await fetch(
+          `http://localhost:4000/favorites/${userAccount.id}`,
+          {
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${jwt}`,
+            },
+          }
+        );
+
+        if (favorites.ok) {
+          let favResp = await favorites.json();
+          let favProfiles = favResp.favorites ? favResp.favorites : [];
+          updateFavoriteProfiles(favProfiles);
+          localStorage.setItem(
+            "favoriteProfiles",
+            JSON.stringify([...favProfiles])
+          );
+        } else {
+          let error = await favorites.json();
+          console.log(error.message);
+        }
+      }
+    };
+
+    getFavorites();
+  }, []);
+
   const handleUserSelect = async (user) => {
     setSelectedUser(user);
   };
@@ -151,6 +186,10 @@ const ChatsPage = ({
                   compatibilityScores
                 )
               }
+              isFavorite={favoriteProfiles.includes(selectedProfile.userID)}
+              addFavorite={addFavorite}
+              removeFavorite={removeFavorite}
+              favoriteProfiles={favoriteProfiles}
               leaveProfile={leaveProfile}
             />
           ) : (
