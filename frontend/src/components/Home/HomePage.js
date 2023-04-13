@@ -5,7 +5,11 @@ import ProfileCard from "./ProfileCard";
 import OtherProfilePage from "../Profile/OtherProfilePage";
 import PageHeader from "./PageHeader";
 import FilterBar from "../Filters/FilterBar";
-import { getSizeBoundsArr, getAgeBoundsArr } from "../../utils/functions";
+import {
+  getSizeBoundsArr,
+  getAgeBoundsArr,
+  getCompatibilityScore,
+} from "../../utils/functions";
 import "./home.css";
 
 const HomePage = ({
@@ -195,13 +199,6 @@ const HomePage = ({
     setSelectedProfile((prev) => null);
   };
 
-  const getCompatibilityScore = (profile) => {
-    let compatibilityScore = compatibilityScores.filter(
-      (prof) => prof.userId === profile.userID
-    )[0]?.score;
-    return compatibilityScore;
-  };
-
   return (
     <div className="homepage">
       <div className="content">
@@ -223,7 +220,8 @@ const HomePage = ({
                 getCompatibilityScore(
                   userProfiles.filter(
                     (profile) => profile.userID === selectedProfile
-                  )[0]
+                  )[0],
+                  compatibilityScores
                 )
               }
             />
@@ -241,7 +239,10 @@ const HomePage = ({
                 ) : (
                   filteredProfiles.map((profile, idx) => {
                     let isFavorite = favoriteProfiles.includes(profile.userID);
-                    let compatibilityScore = getCompatibilityScore(profile);
+                    let compatibilityScore = getCompatibilityScore(
+                      profile,
+                      compatibilityScores
+                    );
 
                     return (
                       <ProfileCard

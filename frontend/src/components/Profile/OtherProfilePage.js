@@ -14,17 +14,12 @@ const OtherProfilePage = ({
   compatibilityScore,
 }) => {
   return (
-    <div className="homepage">
-      <div className="content">
-        <div className="sideNav"></div>
-        <div className="mainContainer">
-          <ArrowCircleLeftIcon onClick={leaveProfile} />
-          <OtherUserProfile
-            userProfile={userProfile}
-            compatibilityScore={compatibilityScore}
-          />
-        </div>
-      </div>
+    <div className="mainContainer-otherProfile">
+      <ArrowCircleLeftIcon onClick={leaveProfile} />
+      <OtherUserProfile
+        userProfile={userProfile}
+        compatibilityScore={compatibilityScore()}
+      />
     </div>
   );
 };

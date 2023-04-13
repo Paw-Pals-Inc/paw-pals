@@ -20,6 +20,13 @@ export const calculateCompatibility = (
   return { userId: otherUserId, score: compatibilityScore };
 };
 
+export const getCompatibilityScore = (profile, compatibilityScores) => {
+  let compatibilityScore = compatibilityScores.filter(
+    (prof) => prof.userId === profile.userID
+  )[0]?.score;
+  return compatibilityScore;
+};
+
 export function saveUserProfilesLocalStorage(profiles) {
   localStorage.setItem("userProfiles", JSON.stringify(profiles));
 }

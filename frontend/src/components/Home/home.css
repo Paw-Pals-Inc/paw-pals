@@ -164,3 +164,44 @@ body {
   height: 100%;
   overflow: scroll;
 }
+
+/**************** Other Profile Page Stuff **************/
+.mainContainer-otherProfile {
+  width: 100%;
+}
+.otherProfile-container {
+  display: flex;
+  flex-direction: row;
+  gap: 5%;
+  margin-right: auto;
+  width: 100%;
+}
+
+.picture-section {
+  width: 20%;
+  order: 1;
+  margin: 40px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+}
+.picture-section img {
+  border-radius: 20%;
+  opacity: 0.9;
+  max-height: 200px;
+  min-height: 150px;
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
+  max-width: 90% !important;
+}
+
+.profile-section {
+  width: 60%;
+  order: 2;
+}
+
+.favorite-section {
+  width: 10%;
+  order: 3;
+}

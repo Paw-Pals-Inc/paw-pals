@@ -48,20 +48,11 @@ function ProfileCard({
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
       backgroundColor: "white",
-      color: "black",
-      fontSize: "1rem",
-      width: "25px",
-      height: "25px",
+      fontSize: "1.5rem",
+      width: "40px",
+      height: "40px",
       border: "1px solid black",
-      "&::after": {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "30px",
-        height: "30px",
-        borderRadius: "50%",
-        border: "1px solid black",
-      },
+      borderRadius: "50%",
     },
   }));
   return (

@@ -6,6 +6,7 @@ import ChatRoom from "./ChatRoom";
 import PageHeader from "../Home/PageHeader";
 import UsersList from "./UsersList";
 import OtherProfilePage from "../Profile/OtherProfilePage";
+import { getCompatibilityScore } from "../../utils/functions";
 import "./chat.css";
 
 const ChatsPage = ({
@@ -133,6 +134,14 @@ const ChatsPage = ({
                 userProfiles.filter(
                   (profile) => profile.userID === selectedProfile
                 )[0]
+              }
+              compatibilityScore={() =>
+                getCompatibilityScore(
+                  userProfiles.filter(
+                    (profile) => profile.userID === selectedProfile
+                  )[0],
+                  compatibilityScores
+                )
               }
               leaveProfile={leaveProfile}
             />
