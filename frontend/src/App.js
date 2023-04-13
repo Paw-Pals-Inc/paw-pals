@@ -78,7 +78,6 @@ function App() {
           otherUser.userID
         )
       );
-      console.log("compatibility scores: ", scores);
       setCompatibilityScores(scores);
     }
   }, [userProfile, userProfiles]);
