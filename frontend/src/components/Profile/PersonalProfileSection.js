@@ -172,7 +172,7 @@ function PersonalProfileSection({ data, updateUserProfile }) {
             {editMode ? (
               <button type="submit">Save</button>
             ) : (
-              <EditIcon onClick={toggleEditMode} />
+              <EditIcon onClick={toggleEditMode} sx={{ cursor: "pointer" }} />
             )}
           </h2>
         </div>
