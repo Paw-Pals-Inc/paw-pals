@@ -61,6 +61,8 @@ const UsersList = ({ socket, userProfile, userProfiles, handleUserSelect }) => {
                   key={user.userID}
                   onClick={() => handleUserSelect(user)}
                   src={user.profilePic}
+                  sx={{ width: 60, height: 60 }}
+                  // variant="rounded"
                 >
                   {user.firstName[0]}
                 </Avatar>
@@ -70,6 +72,8 @@ const UsersList = ({ socket, userProfile, userProfiles, handleUserSelect }) => {
                 key={user.userID}
                 onClick={() => handleUserSelect(user)}
                 src={user.profilePic}
+                sx={{ width: 60, height: 60 }}
+                // variant="rounded"
               >
                 {user.firstName[0]}
               </Avatar>
