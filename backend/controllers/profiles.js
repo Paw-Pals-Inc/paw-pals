@@ -88,11 +88,17 @@ const editProfile = async (req, res) => {
       fieldsToUpdate.profilePic = profilePic_filePath;
     }
     if (req.body.petGallery) {
+      // get old gallery images
+      // const user = await Profile.findOne({ where: { userId: id } });
+      // let oldGallery = user.petGallery;
       let images = req.body.petGallery;
-      let filePathArr = images.map(
-        (image) =>
+      let filePathArr = images.map((image) => {
+        // if we already have image, no need to save it again
+        if (image.match(/^http:\/\/localhost:/)) return image;
+        return (
           `http://localhost:${process.env.PORT}/${id}/` + saveImage(image, id)
-      );
+        );
+      });
       fieldsToUpdate.petGallery = filePathArr;
     }
 

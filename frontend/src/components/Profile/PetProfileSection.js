@@ -1,20 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EditIcon from "@mui/icons-material/EditOutlined";
 import MaterialButton from "../MaterialComponents/MaterialButton";
 import { ButtonGroup } from "@mui/material";
-import { saveUserProfileLocalStorage } from "../../utils/functions";
+import {
+  saveUserProfileLocalStorage,
+  validFileType,
+} from "../../utils/functions";
 
-function PetProfileSection({ data }) {
+function PetProfileSection({ data, updateUserProfile }) {
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
     petName: data?.petName,
-    petAge: data?.petName,
-    petGender: data?.petName,
-    petVaccinated: data?.petName,
-    petVaccinated: data?.petName,
-    petWeight: data?.petName,
-    petBreed: data?.petName,
-    petNeutered: data?.petName,
+    petAge: data?.petAge,
+    petGender: data?.petGender,
+    petVaccinated: data?.petVaccinated,
+    petNeutered: data?.petNeutered,
+    petWeight: data?.petWeight,
+    petBreed: data?.petBreed,
     petGallery: data?.petGallery,
   });
   const [errors, setErrors] = useState({
@@ -30,6 +32,12 @@ function PetProfileSection({ data }) {
 
   const [maleSelected, setMaleSelected] = useState(false);
   const [femaleSelected, setFemaleSelected] = useState(false);
+
+  useEffect(() => {
+    setFormData((prev) => ({
+      petGallery: data.petGallery,
+    }));
+  }, [data.petGallery]);
 
   const toggleStyle = {
     backgroundColor: "yellow",
@@ -61,6 +69,35 @@ function PetProfileSection({ data }) {
         setMaleSelected((prev) => false);
         setFemaleSelected((prev) => true);
       }
+    }
+  };
+
+  const handlePetProfilePicChange = (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    if (!validFileType(file)) {
+      setErrors({
+        ...errors,
+        petGallery: `${file.name} not a valid file type. Update your selection.`,
+      });
+      return;
+    }
+    setErrors({ ...errors, petGallery: "" });
+
+    const reader = new FileReader();
+
+    // replaces old pet profile pic and pushes it into the gallery
+    reader.onloadend = () => {
+      setFormData((prev) => ({
+        ...formData,
+        petGallery: [reader.result, ...formData.petGallery],
+      }));
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      // nop
     }
   };
   const handleInputChange = (event) => {
@@ -172,6 +209,7 @@ function PetProfileSection({ data }) {
           console.log("User updated successfully");
           const data = await resp.json();
           saveUserProfileLocalStorage(data);
+          updateUserProfile(data);
           toggleEditMode();
         } else {
           console.error("Error creating user:", resp.statusText);
@@ -335,8 +373,24 @@ function PetProfileSection({ data }) {
         </div>
       </form>
       <div className="profilePictureSection">
-        <img src={data?.petGallery && data.petGallery[0]} alt="profile pic" />
-        <button>change picture</button>
+        <img src={formData.petGallery[0]} alt="pet profile pic" />
+        {editMode && (
+          <div>
+            <label htmlFor="petProfilePic" className="uploadPic-button">
+              change picture
+            </label>
+            <input
+              type="file"
+              id="petProfilePic"
+              name="petProfilePic"
+              onChange={handlePetProfilePicChange}
+              style={{ opacity: 0 }}
+              hidden
+              accept="image/*"
+            />
+          </div>
+        )}
+        {errors.petGallery && <div>{errors.petGallery}</div>}
       </div>
     </div>
   );

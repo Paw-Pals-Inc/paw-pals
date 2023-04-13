@@ -8,7 +8,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { Badge } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-function GallerySection({ data }) {
+function GallerySection({ data, updateUserProfile }) {
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
@@ -17,6 +17,12 @@ function GallerySection({ data }) {
   const [errors, setErrors] = useState({
     petGallery: "",
   });
+
+  useEffect(() => {
+    setFormData((prev) => ({
+      petGallery: data.petGallery,
+    }));
+  }, [data.petGallery]);
 
   const toggleEditMode = () => {
     setEditMode((prev) => !prev);
@@ -93,12 +99,11 @@ function GallerySection({ data }) {
       body: JSON.stringify(formData),
     }).then(async (resp) => {
       if (resp.ok) {
-        // User created successfully
+        // User updated successfully
         console.log("User updated successfully");
         const data = await resp.json();
-        let prevProfile = JSON.parse(localStorage.getItem("userProfile"));
-        let newData = { ...prevProfile, ...data };
-        saveUserProfileLocalStorage(newData);
+        saveUserProfileLocalStorage(data);
+        updateUserProfile(data);
         toggleEditMode();
         // refresh to see new pet profile pic
         navigate("/profile");

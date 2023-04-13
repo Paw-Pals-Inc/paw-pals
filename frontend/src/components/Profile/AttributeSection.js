@@ -3,7 +3,7 @@ import TagSelectButton from "../Signup/TagSelectButton";
 import { saveUserProfileLocalStorage } from "../../utils/functions";
 import { petTags } from "../../utils/constants";
 
-function AttributeSection({ data }) {
+function AttributeSection({ data, updateUserProfile }) {
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
     petTags: data.petTags || [],
@@ -65,11 +65,9 @@ function AttributeSection({ data }) {
           // User created successfully
           console.log("User updated successfully");
           const data = await resp.json();
-          let prevProfile = JSON.parse(localStorage.getItem("userProfile"));
-          let newData = { ...prevProfile, ...data };
-
-          saveUserProfileLocalStorage(newData);
-          updateFormData(newData.petTags);
+          saveUserProfileLocalStorage(data);
+          updateUserProfile(data);
+          updateFormData(data.petTags);
           toggleEditMode();
         } else {
           console.error("Error creating user:", resp.statusText);

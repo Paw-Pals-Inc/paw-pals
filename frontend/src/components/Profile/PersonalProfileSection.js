@@ -5,7 +5,7 @@ import {
   validFileType,
 } from "../../utils/functions";
 
-function PersonalProfileSection({ data }) {
+function PersonalProfileSection({ data, updateUserProfile }) {
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
     firstName: data?.firstName,
@@ -145,10 +145,9 @@ function PersonalProfileSection({ data }) {
           // User created successfully
           console.log("User updated successfully");
           const data = await resp.json();
-          let prevProfile = JSON.parse(localStorage.getItem("userProfile"));
-          let newData = { ...prevProfile, ...data };
-          saveUserProfileLocalStorage(newData);
-          // localStorage.setItem("userProfile", JSON.stringify(newData));
+
+          saveUserProfileLocalStorage(data);
+          updateUserProfile(data);
           toggleEditMode();
         } else {
           console.error("Error creating user:", resp.statusText);
