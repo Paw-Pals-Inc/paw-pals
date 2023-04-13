@@ -112,8 +112,6 @@ const PictureModal = ({
 
     try {
       const userId = userProfile.userID;
-      console.log("user ID: " + userId);
-      console.log(profilePic, petProfilePic);
       const response = await fetch("http://localhost:4000/users/" + userId, {
         method: "PUT",
         headers: {

@@ -57,7 +57,6 @@ const getProfile = async (req, res) => {
 
 // update
 const editProfile = async (req, res) => {
-  console.log("updating profile");
   const id = req.params.id;
   // const { firstName, lastName } = req.body;
 

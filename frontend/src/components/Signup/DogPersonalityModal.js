@@ -43,10 +43,7 @@ const DogPersonalityModal = ({
       if (selectedTags.length > 10) {
         throw new Error("selected tags array not valid");
       }
-      console.log("selected tags: ", selectedTags);
-      console.log("selected tag IDs: ", selectedTagIds);
 
-      console.log("user ID: " + userId);
       const response = await fetch("http://localhost:4000/users/" + userId, {
         method: "PUT",
         headers: {

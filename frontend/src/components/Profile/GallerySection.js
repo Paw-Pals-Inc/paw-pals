@@ -22,16 +22,7 @@ function GallerySection({ data }) {
     setEditMode((prev) => !prev);
   };
 
-  const handleLabelClick = (e) => {
-    console.log("click label");
-    console.log(e);
-    let input = document.querySelector("#petGallery");
-    console.log(input);
-    input.click();
-  };
-
   const handleGalleryChange = (event) => {
-    console.log("im listening to your add button");
     const file = event.target.files[0];
     if (!file) return;
     if (!validFileType(file)) {
@@ -67,7 +58,6 @@ function GallerySection({ data }) {
     // remove pic from state
     let galleryArr = formData.petGallery;
     let newArr = galleryArr.filter((pic, index) => index !== idx);
-    console.log(newArr);
     // update state
     setFormData((prev) => ({
       petGallery: newArr,
@@ -108,7 +98,6 @@ function GallerySection({ data }) {
         const data = await resp.json();
         let prevProfile = JSON.parse(localStorage.getItem("userProfile"));
         let newData = { ...prevProfile, ...data };
-        console.log("new data: ", newData);
         saveUserProfileLocalStorage(newData);
         toggleEditMode();
         // refresh to see new pet profile pic

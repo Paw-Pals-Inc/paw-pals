@@ -103,14 +103,11 @@ const removeFavorite = async (req, res) => {
     }
 
     const newFavorites = oldFavorites.filter((oldfav) => oldfav !== newFav);
-    console.log(oldFavorites);
-    console.log(newFavorites);
 
     try {
       user.favorites = [...newFavorites];
       // await user.validate();
       await user.save({ validate: false }).then(() => {
-        console.log("SAVEDDDDD");
         return res.status(200).json({
           message: "Favorite removed successfully.",
           favorites: user.favorites,

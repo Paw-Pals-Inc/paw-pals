@@ -41,16 +41,12 @@ function AttributeSection({ data }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(event);
-    console.log("submitting");
 
     // filter tags by index
     let selectedTags = selectedTagIds.map((index) => petTags[index]);
     if (selectedTags.length > 10) {
       throw new Error("selected tags array not valid");
     }
-    console.log("selected tags: ", selectedTags);
-    console.log("selected tag IDs: ", selectedTagIds);
 
     try {
       const userId = JSON.parse(localStorage.getItem("user")).id;
@@ -71,7 +67,6 @@ function AttributeSection({ data }) {
           const data = await resp.json();
           let prevProfile = JSON.parse(localStorage.getItem("userProfile"));
           let newData = { ...prevProfile, ...data };
-          console.log("new data: ", newData);
 
           saveUserProfileLocalStorage(newData);
           updateFormData(newData.petTags);

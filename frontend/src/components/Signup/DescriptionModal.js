@@ -19,7 +19,6 @@ const DescriptionModal = ({
   });
 
   const handleInputChange = (event) => {
-    console.log(event);
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
@@ -60,8 +59,6 @@ const DescriptionModal = ({
 
     try {
       const userId = userProfile.userID;
-      console.log("user ID: " + userId);
-      console.log(formData);
       const response = await fetch("http://localhost:4000/users/" + userId, {
         method: "PUT",
         headers: {

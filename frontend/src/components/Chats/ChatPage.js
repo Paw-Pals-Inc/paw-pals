@@ -106,13 +106,11 @@ const ChatsPage = ({
   };
 
   const enterProfile = (profileID) => {
-    console.log("entering profile ", profileID);
     setProfileSelected((prev) => true);
     setSelectedProfile((prev) => profileID);
   };
 
   const leaveProfile = () => {
-    console.log("leaving profile");
     setProfileSelected((prev) => false);
     setSelectedProfile((prev) => null);
   };

@@ -37,7 +37,6 @@ function saveImage(baseImage, userID) {
   const localPath = `${uploadPath}/${userID}/`;
   //Find extension of file
   const ext = getExtensionFromDataURL(baseImage) || "png";
-  console.log("extention: ", ext);
   const fileType = baseImage.substring("data:".length, baseImage.indexOf("/"));
   //Forming regex to extract base64 data of file.
   const regex = new RegExp(`^data:${fileType}\/${ext};base64,`, "gi");

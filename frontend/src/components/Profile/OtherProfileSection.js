@@ -2,9 +2,6 @@ import React, { useEffect } from "react";
 
 function OtherProfileSection({ profile }) {
   const userProfile = profile;
-  useEffect(() => {
-    console.log("other profile section loaded", userProfile.firstName);
-  }, []);
 
   return (
     <div>

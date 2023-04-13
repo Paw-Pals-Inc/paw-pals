@@ -24,7 +24,6 @@ const FilterBar = ({
 
   useEffect(() => {
     // reset all filter states
-    console.log("resetting all filter states for the filter bar");
     if (clearFilters) {
       setSizeFilterValue([]);
       setGenderFilterValue([]);
@@ -36,7 +35,6 @@ const FilterBar = ({
 
   useEffect(() => {
     // update selected filters when filter values change
-    console.log("updating selected filters");
     setSelectedFilters({
       sizeFilter: sizeFilterValue,
       genderFilter: genderFilterValue,
@@ -60,25 +58,21 @@ const FilterBar = ({
 
   // Event handler for updating size filter value
   const handleSizeFilterChange = (sizeArr) => {
-    console.log(sizeArr);
     setSizeFilterValue([...sizeArr]);
   };
 
   // Event handler for updating gender filter value
   const handleGenderFilterChange = (genderArr) => {
-    console.log(genderArr);
     setGenderFilterValue([...genderArr]);
   };
 
   // Event handler for updating gender filter value
   const handlePersonalityFilterChange = (personalityArr) => {
-    console.log(personalityArr);
     setPersonalityFilterValue([...personalityArr]);
   };
 
   // Event handler for updating age filter value
   const handleAgeFilterChange = (ageArr) => {
-    console.log(ageArr);
     setAgeFilterValue([...ageArr]);
   };
 

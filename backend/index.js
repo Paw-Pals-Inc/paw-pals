@@ -84,8 +84,6 @@ io.on("connection", (socket) => {
         : `${data.receiverId}-${data.senderId}`;
     socket.join(roomName);
 
-    console.log(data.senderId);
-
     // Add the message to the database
     const newMessage = await Chat.create({
       senderId: data.senderId,
@@ -102,7 +100,6 @@ io.on("connection", (socket) => {
 
   // when a user is typing a message
   socket.on("typing", (data) => {
-    console.log(data);
     socket.broadcast.emit("typingResponse", data);
   });
 
@@ -111,8 +108,6 @@ io.on("connection", (socket) => {
     console.log("A user disconnected!");
     //Updates the list of users when a user disconnects from the server
     activeUsers = activeUsers.filter((user) => {
-      console.log(user);
-
       return user.socketId !== socket.id;
     });
     //Sends the list of users to the client

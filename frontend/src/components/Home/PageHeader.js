@@ -8,7 +8,6 @@ function PageHeader(props) {
   let pageTitle = pageName.slice(1);
   let upperFirstLetter = pageTitle[0].toUpperCase();
   let upperPageTitle = upperFirstLetter + pageTitle.slice(1);
-  console.log(upperPageTitle);
 
   // render page name in top left
   // render profile info and profile pic in top right
