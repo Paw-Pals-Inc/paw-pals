@@ -83,6 +83,7 @@ function OtherUserProfile({
               setIsProfileFavorite(false);
               removeFavorite(userProfile.userID);
             }}
+            sx={{ width: "30px", height: "30px" }}
           />
         ) : (
           <StarBorderIcon
@@ -90,6 +91,7 @@ function OtherUserProfile({
               setIsProfileFavorite(true);
               addFavorite(userProfile.userID);
             }}
+            sx={{ width: "30px", height: "30px" }}
           />
         )}
       </div>

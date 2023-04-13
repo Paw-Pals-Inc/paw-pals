@@ -115,12 +115,21 @@ function ProfileCard({
           <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
             {isFavorite ? "favorited" : "favorite"}
             {isFavorite ? (
-              <StarIcon onClick={() => removeFavorite(userID)} />
+              <StarIcon
+                onClick={() => removeFavorite(userID)}
+                sx={{ width: "30px", height: "30px" }}
+              />
             ) : (
-              <StarBorderIcon onClick={() => addFavorite(userID)} />
+              <StarBorderIcon
+                onClick={() => addFavorite(userID)}
+                sx={{ width: "30px", height: "30px" }}
+              />
             )}
           </div>
-          <ArrowCircleRightIcon onClick={() => enterProfile(userID)} />
+          <ArrowCircleRightIcon
+            sx={{ width: "45px", height: "45px" }}
+            onClick={() => enterProfile(userID)}
+          />
         </CardActions>
       </Card>
     </div>

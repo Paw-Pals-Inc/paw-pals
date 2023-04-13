@@ -19,7 +19,10 @@ const OtherProfilePage = ({
 }) => {
   return (
     <div className="mainContainer-otherProfile">
-      <ArrowCircleLeftIcon onClick={leaveProfile} />
+      <ArrowCircleLeftIcon
+        onClick={leaveProfile}
+        sx={{ width: "30px", height: "30px" }}
+      />
       <OtherUserProfile
         userProfile={userProfile}
         compatibilityScore={compatibilityScore()}
