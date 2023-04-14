@@ -10,6 +10,11 @@ import {
   getAgeBoundsArr,
   getCompatibilityScore,
 } from "../../utils/functions";
+import {
+  getUserProfile,
+  getOtherUserProfiles,
+  getFavoriteProfiles,
+} from "../../utils/fetchRequests";
 import "./home.css";
 
 const HomePage = ({
@@ -57,31 +62,37 @@ const HomePage = ({
   }, [userProfiles]);
 
   useEffect(() => {
-    // get other user's data on home page load
-    const getOtherProfiles = async () => {
-      if (localStorage.getItem("user") !== null) {
-        const jwt = localStorage.getItem("token");
-        const response = await fetch(`http://localhost:4000/users/`, {
-          headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwt}`,
-          },
-        });
-        if (response.ok) {
-          response.json().then((data) => {
-            let filteredData = data.filter(
-              (profile) =>
-                profile.userID !== JSON.parse(localStorage.getItem("user")).id
-            );
-            updateUserProfiles(filteredData);
-            setFilteredProfiles(filteredData);
-          });
-        }
-      }
-    };
+    // on homepage load, get user profile data
+    (async () => {
+      const response = await getUserProfile(
+        JSON.parse(localStorage.getItem("user")).id
+      );
+      updateUserProfile(response);
+      console.log(response);
+      if (!response) onLogout(); // logout if I don't get a response
+    })();
+  }, []);
 
-    getOtherProfiles();
+  useEffect(() => {
+    // get other user's data on home page load
+    (async () => {
+      const response = await getOtherUserProfiles(
+        JSON.parse(localStorage.getItem("user")).id
+      );
+      updateUserProfiles(response);
+      setFilteredProfiles(response);
+    })();
+  }, []);
+
+  useEffect(() => {
+    // get favorites data on favorites page load
+    (async () => {
+      const response = await getFavoriteProfiles(
+        JSON.parse(localStorage.getItem("user")).id
+      );
+      updateFavoriteProfiles(response);
+      localStorage.setItem("favoriteProfiles", JSON.stringify(response));
+    })();
   }, []);
 
   useEffect(() => {
@@ -89,37 +100,6 @@ const HomePage = ({
     if (!filteredProfiles) {
       setFilteredProfiles(userProfiles);
     }
-  }, []);
-
-  useEffect(() => {
-    // get favorites data on favorites page load
-    const getFavorites = async () => {
-      if (localStorage.getItem("user") !== null) {
-        let userAccount = JSON.parse(localStorage.getItem("user"));
-        const jwt = localStorage.getItem("token");
-        const favorites = await fetch(
-          `http://localhost:4000/favorites/${userAccount.id}`,
-          {
-            headers: {
-              Accept: "application/json, text/plain, */*",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${jwt}`,
-            },
-          }
-        );
-
-        if (favorites.ok) {
-          let favResp = await favorites.json();
-          let favProfiles = favResp.favorites ? favResp.favorites : [];
-          updateFavoriteProfiles(favProfiles);
-          localStorage.setItem(
-            "favoriteProfiles",
-            JSON.stringify([...favProfiles])
-          );
-        } else {
-          let error = await favorites.json();
-          console.log(error.message);
-        }
       }
     };
 

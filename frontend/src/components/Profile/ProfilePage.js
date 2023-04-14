@@ -4,6 +4,8 @@ import Navbar from "../Navbar/Navbar";
 import SideNavbar from "../Home/SideNavbar";
 import UserProfile from "./UserProfile";
 import PageHeader from "../Home/PageHeader";
+import { getUserProfile } from "../../utils/fetchRequests";
+import LoadingProgress from "../Loading/LoadingProgress";
 import "./profile.css";
 
 const ProfilePage = ({

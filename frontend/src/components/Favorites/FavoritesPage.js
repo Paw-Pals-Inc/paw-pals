@@ -5,6 +5,17 @@ import ProfileCard from "../Home/ProfileCard";
 import OtherProfilePage from "../Profile/OtherProfilePage";
 import PageHeader from "../Home/PageHeader";
 import FilterBar from "../Filters/FilterBar";
+import LoadingProgress from "../Loading/LoadingProgress";
+import {
+  getSizeBoundsArr,
+  getAgeBoundsArr,
+  getCompatibilityScore,
+} from "../../utils/functions";
+import {
+  getUserProfile,
+  getOtherUserProfiles,
+  getFavoriteProfiles,
+} from "../../utils/fetchRequests";
 
 const FavoritesPage = ({
   isLoggedIn,
@@ -57,30 +68,24 @@ const FavoritesPage = ({
   }, []);
 
   useEffect(() => {
-    // get favorites data on favorites page load
-    const getFavorites = async () => {
-      if (localStorage.getItem("user") !== null) {
-        let userAccount = JSON.parse(localStorage.getItem("user"));
-        const jwt = localStorage.getItem("token");
-        const favorites = await fetch(
-          `http://localhost:4000/favorites/${userAccount.id}`,
-          {
-            headers: {
-              Accept: "application/json, text/plain, */*",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${jwt}`,
-            },
-          }
-        );
+    // get other user's data on home page load
+    (async () => {
+      const response = await getOtherUserProfiles(
+        JSON.parse(localStorage.getItem("user")).id
+      );
+      updateUserProfiles(response);
+      setFilteredProfiles(
+        response.filter((prof) => favoriteProfiles.includes(prof.userID))
+      );
+    })();
+  }, []);
 
-        if (favorites.ok) {
-          let favResp = await favorites.json();
-          let favProfiles = favResp.favorites ? favResp.favorites : [];
-          updateFavoriteProfiles(favProfiles);
-          localStorage.setItem(
-            "favoriteProfiles",
-            JSON.stringify([...favProfiles])
-          );
+  useEffect(() => {
+    // get favorites data on favorites page load
+    (async () => {
+      const response = await getFavoriteProfiles(
+        JSON.parse(localStorage.getItem("user")).id
+      );
         } else {
           let error = await favorites.json();
           console.log(error.message);
@@ -91,66 +96,6 @@ const FavoritesPage = ({
     getFavorites();
   }, []);
 
-  const getSizeBoundsArr = (sizeFilterArr) => {
-    let minWeight;
-    let maxWeight;
-    // manipulate array
-    if (sizeFilterArr.includes("Small")) {
-      minWeight = 0;
-      if (sizeFilterArr.includes("Medium")) {
-        if (sizeFilterArr.includes("Large")) {
-          maxWeight = 1000;
-        } else {
-          maxWeight = 58;
-        }
-      } else {
-        maxWeight = 23;
-      }
-    } else if (sizeFilterArr.includes("Medium")) {
-      minWeight = 24;
-      if (sizeFilterArr.includes("Large")) {
-        maxWeight = 1000;
-      } else {
-        maxWeight = 58;
-      }
-    } else if (sizeFilterArr.includes("Large")) {
-      minWeight = 59;
-      maxWeight = 1000;
-    }
-
-    return [minWeight, maxWeight];
-  };
-
-  const getAgeBoundsArr = (ageFilterArr) => {
-    let minAge;
-    let maxAge;
-    // manipulate array
-    if (ageFilterArr.includes("Puppy")) {
-      minAge = 0;
-      if (ageFilterArr.includes("Adult")) {
-        if (ageFilterArr.includes("Senior")) {
-          maxAge = 1000;
-        } else {
-          maxAge = 12;
-        }
-      } else {
-        maxAge = 2;
-      }
-    } else if (ageFilterArr.includes("Adult")) {
-      minAge = 3;
-      if (ageFilterArr.includes("Senior")) {
-        maxAge = 1000;
-      } else {
-        maxAge = 12;
-      }
-    } else if (ageFilterArr.includes("Senior")) {
-      minAge = 13;
-      maxAge = 1000;
-    }
-
-    return [minAge, maxAge];
-  };
-
   const handleFilter = (selectedFilters) => {
     const { sizeFilter, genderFilter, personalityFilter, ageFilter } =
       selectedFilters;
@@ -160,7 +105,7 @@ const FavoritesPage = ({
     filteredProfiles = userProfiles
       .filter((prof) => {
         // first get favorite profiles
-        return favorites.includes(prof.userID);
+        return favoriteProfiles.includes(prof.userID);
       })
       .filter((profile) => {
         if (profile.petWeight === null || profile.petWeight === "") return true;
@@ -246,6 +191,10 @@ const FavoritesPage = ({
           <PageHeader pageName={location.pathname} profile={userProfile} />
           {profileSelected ? (
             <OtherProfilePage
+              isFavorite={favoriteProfiles.includes(selectedProfile.userID)}
+              addFavorite={addFavorite}
+              removeFavorite={removeFavorite}
+              favoriteProfiles={favoriteProfiles}
               userProfile={userProfiles.filter(
                 (profile) => profile.userID === selectedProfile
               )}
@@ -254,7 +203,8 @@ const FavoritesPage = ({
                 getCompatibilityScore(
                   userProfiles.filter(
                     (profile) => profile.userID === selectedProfile
-                  )[0]
+                  )[0],
+                  compatibilityScores
                 )
               }
             />
@@ -267,18 +217,25 @@ const FavoritesPage = ({
                 resetClearFilter={resetClearFilter}
               />
               <div className="data">
-                {!userProfiles || !favorites || favorites.length === 0 ? (
+                {!userProfiles ||
+                !favoriteProfiles ||
+                favoriteProfiles.length === 0 ? (
                   <div>
                     No favorites yet! Go to the home tab to favorite a profile!
                   </div>
                 ) : (
                   filteredProfiles.map((profile, idx) => {
-                    let compatibilityScore = getCompatibilityScore(profile);
+                    console.log(profile);
+                    let isFavorite = favoriteProfiles.includes(profile.userID);
+                    let compatibilityScore = getCompatibilityScore(
+                      profile,
+                      compatibilityScores
+                    );
                     return (
                       <ProfileCard
                         key={idx}
                         profileData={profile}
-                        isFavorite={true}
+                        isFavorite={isFavorite}
                         addFavorite={addFavorite}
                         removeFavorite={removeFavorite}
                         enterProfile={enterProfile}

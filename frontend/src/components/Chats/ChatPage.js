@@ -7,6 +7,11 @@ import PageHeader from "../Home/PageHeader";
 import UsersList from "./UsersList";
 import OtherProfilePage from "../Profile/OtherProfilePage";
 import { getCompatibilityScore } from "../../utils/functions";
+import {
+  getUserProfile,
+  getOtherUserProfiles,
+  getFavoriteProfiles,
+} from "../../utils/fetchRequests";
 import "./chat.css";
 
 const ChatsPage = ({
@@ -59,48 +64,22 @@ const ChatsPage = ({
 
   useEffect(() => {
     // on homepage load, get user profile data
-    const getUserProfile = async () => {
-      if (localStorage.getItem("user") !== null) {
-        let userID = JSON.parse(localStorage.getItem("user")).id;
-        const jwt = localStorage.getItem("token");
-        const response = await fetch(`http://localhost:4000/users/${userID}`, {
-          headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwt}`,
-          },
-        });
-        if (response.ok) {
-          response.json().then((data) => {
-            // localStorage.setItem("userProfile", JSON.stringify(data));
-            updateUserProfile(data);
-          });
-        } else {
-          onLogout();
-        }
-      }
-    };
-    getUserProfile();
+    (async () => {
+      const response = await getUserProfile(
+        JSON.parse(localStorage.getItem("user")).id
+      );
+      updateUserProfile(response);
+      console.log(response);
+      if (!response) onLogout(); // logout if I don't get a response
+    })();
   }, []);
 
   useEffect(() => {
     // get other user's data on home page load
-    const getOtherProfiles = async () => {
-      if (localStorage.getItem("user") !== null) {
-        const jwt = localStorage.getItem("token");
-        const response = await fetch(`http://localhost:4000/users/`, {
-          headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwt}`,
-          },
-        });
-        if (response.ok) {
-          response.json().then((data) => {
-            let filteredData = data.filter(
-              (profile) =>
-                profile.userID !== JSON.parse(localStorage.getItem("user")).id
-            );
+    (async () => {
+      const response = await getOtherUserProfiles(
+        JSON.parse(localStorage.getItem("user")).id
+      );
             updateUserProfiles(filteredData);
           });
         }
@@ -112,37 +91,13 @@ const ChatsPage = ({
 
   useEffect(() => {
     // get favorites data on favorites page load
-    const getFavorites = async () => {
-      if (localStorage.getItem("user") !== null) {
-        let userAccount = JSON.parse(localStorage.getItem("user"));
-        const jwt = localStorage.getItem("token");
-        const favorites = await fetch(
-          `http://localhost:4000/favorites/${userAccount.id}`,
-          {
-            headers: {
-              Accept: "application/json, text/plain, */*",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${jwt}`,
-            },
-          }
-        );
-
-        if (favorites.ok) {
-          let favResp = await favorites.json();
-          let favProfiles = favResp.favorites ? favResp.favorites : [];
-          updateFavoriteProfiles(favProfiles);
-          localStorage.setItem(
-            "favoriteProfiles",
-            JSON.stringify([...favProfiles])
-          );
-        } else {
-          let error = await favorites.json();
-          console.log(error.message);
-        }
-      }
-    };
-
-    getFavorites();
+    (async () => {
+      const response = await getFavoriteProfiles(
+        JSON.parse(localStorage.getItem("user")).id
+      );
+      updateFavoriteProfiles(response);
+      localStorage.setItem("favoriteProfiles", JSON.stringify(response));
+    })();
   }, []);
 
   const handleUserSelect = async (user) => {
