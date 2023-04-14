@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Navbar from "../Navbar/Navbar";
 import SideNavbar from "../Home/SideNavbar";
 import UserProfile from "./UserProfile";
 import PageHeader from "../Home/PageHeader";
@@ -24,33 +23,33 @@ const ProfilePage = ({
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // on page load, get user profile data
-    const getUserProfile = async () => {
-      if (localStorage.getItem("user") !== null) {
-        let userID = JSON.parse(localStorage.getItem("user")).id;
-        const jwt = localStorage.getItem("token");
-        const response = await fetch(`http://localhost:4000/users/${userID}`, {
-          headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwt}`,
-          },
-        });
-        if (response.ok) {
-          response.json().then((data) => {
-            // localStorage.setItem("userProfile", JSON.stringify(data));
-            updateUserProfile(data);
-          });
-        } else {
-          onLogout();
-        }
-      }
-    };
-    getUserProfile();
+    if (!userProfile) {
+      setIsLoading(true);
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 600);
+    }
+  }, [userProfile]);
+
+  useEffect(() => {
+    // on homepage load, get user profile data
+    (async () => {
+      const response = await getUserProfile(
+        JSON.parse(localStorage.getItem("user")).id
+      );
+      updateUserProfile(response);
+      console.log(response);
+      if (!response) onLogout(); // logout if I don't get a response
+    })();
   }, []);
-  return (
+
+  return isLoading ? (
+    <LoadingProgress />
+  ) : (
     <div className="homepage">
       <div className="content">
         <div className="sideNav">

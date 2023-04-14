@@ -6,6 +6,7 @@ import ChatRoom from "./ChatRoom";
 import PageHeader from "../Home/PageHeader";
 import UsersList from "./UsersList";
 import OtherProfilePage from "../Profile/OtherProfilePage";
+import LoadingProgress from "../Loading/LoadingProgress";
 import { getCompatibilityScore } from "../../utils/functions";
 import {
   getUserProfile,
@@ -32,6 +33,17 @@ const ChatsPage = ({
   const [selectedUser, setSelectedUser] = useState(null); // used to go to that user's chat room
   const [profileSelected, setProfileSelected] = useState(false); // used to render a specific profile page or homepage stuff
   const [selectedProfile, setSelectedProfile] = useState(null); // used to go to that user's profile page
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!userProfile || !userProfiles) {
+      setIsLoading(true);
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 600);
+    }
+  }, [userProfile, userProfiles]);
 
   useEffect(() => {
     // Connect to socket.io server
@@ -80,13 +92,8 @@ const ChatsPage = ({
       const response = await getOtherUserProfiles(
         JSON.parse(localStorage.getItem("user")).id
       );
-            updateUserProfiles(filteredData);
-          });
-        }
-      }
-    };
-
-    getOtherProfiles();
+      updateUserProfiles(response);
+    })();
   }, []);
 
   useEffect(() => {
@@ -114,7 +121,9 @@ const ChatsPage = ({
     setSelectedProfile((prev) => null);
   };
 
-  return (
+  return isLoading ? (
+    <LoadingProgress />
+  ) : (
     <div className="homepage">
       <div className="content">
         <div className="sideNav">

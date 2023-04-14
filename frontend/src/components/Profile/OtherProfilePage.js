@@ -3,6 +3,7 @@ import Navbar from "../Navbar/Navbar";
 import SideNavbar from "../Home/SideNavbar";
 import OtherUserProfile from "./OtherUserProfile";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+import LoadingProgress from "../Loading/LoadingProgress";
 
 const OtherProfilePage = ({
   isLoggedIn,
@@ -17,7 +18,21 @@ const OtherProfilePage = ({
   isFavorite,
   favoriteProfiles,
 }) => {
-  return (
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!userProfile) {
+      setIsLoading(true);
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 600);
+    }
+  }, [userProfile]);
+
+  return isLoading ? (
+    <LoadingProgress />
+  ) : (
     <div className="mainContainer-otherProfile">
       <ArrowCircleLeftIcon
         onClick={leaveProfile}

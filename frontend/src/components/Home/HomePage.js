@@ -16,9 +16,11 @@ import {
   getFavoriteProfiles,
 } from "../../utils/fetchRequests";
 import "./home.css";
+import LoadingProgress from "../Loading/LoadingProgress";
 
 const HomePage = ({
   onLogout,
+  userData,
   userProfile,
   userProfiles,
   updateUserProfile,
@@ -33,33 +35,18 @@ const HomePage = ({
   const [filteredProfiles, setFilteredProfiles] = useState(userProfiles);
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [clearFilters, setClearFilters] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
   const location = useLocation();
+
   useEffect(() => {
-    // on homepage load, get user profile data
-    const getUserProfile = async () => {
-      if (localStorage.getItem("user") !== null) {
-        let userID = JSON.parse(localStorage.getItem("user")).id;
-        const jwt = localStorage.getItem("token");
-        const response = await fetch(`http://localhost:4000/users/${userID}`, {
-          headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwt}`,
-          },
-        });
-        if (response.ok) {
-          response.json().then((data) => {
-            // localStorage.setItem("userProfile", JSON.stringify(data));
-            updateUserProfile(data);
-          });
-        } else {
-          onLogout();
-        }
-      }
-    };
-    getUserProfile();
-  }, [userProfiles]);
+    if (!userProfile || !userProfiles) {
+      setIsLoading(true);
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 600);
+    }
+  }, [userProfile, userProfiles]);
 
   useEffect(() => {
     // on homepage load, get user profile data
@@ -100,10 +87,6 @@ const HomePage = ({
     if (!filteredProfiles) {
       setFilteredProfiles(userProfiles);
     }
-      }
-    };
-
-    getFavorites();
   }, []);
 
   const handleFilter = (selectedFilters) => {
@@ -179,7 +162,9 @@ const HomePage = ({
     setSelectedProfile((prev) => null);
   };
 
-  return (
+  return isLoading ? (
+    <LoadingProgress />
+  ) : (
     <div className="homepage">
       <div className="content">
         <div className="sideNav">

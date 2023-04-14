@@ -1,11 +1,23 @@
 import { Avatar } from "@mui/material";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import LoadingProgress from "../Loading/LoadingProgress";
 
 function PageHeader(props) {
   const navigate = useNavigate();
   const { pageName, profile } = props;
   const { firstName, petName, profilePic } = profile ? profile : "";
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!profilePic || !profile) {
+      setIsLoading(true);
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 600);
+    }
+  }, [profile, profilePic]);
 
   let pageTitle = pageName.slice(1);
   let upperFirstLetter = pageTitle[0].toUpperCase();
@@ -14,7 +26,9 @@ function PageHeader(props) {
   // render page name in top left
   // render profile info and profile pic in top right
 
-  return (
+  return isLoading ? (
+    <LoadingProgress />
+  ) : (
     <div className="pageHeader">
       <div className="pageName">
         <h1>{upperPageTitle}</h1>

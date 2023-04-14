@@ -37,34 +37,33 @@ const FavoritesPage = ({
   );
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [clearFilters, setClearFilters] = useState(false);
-  const [favorites, setFavorites] = useState(
-    JSON.parse(localStorage.getItem("favoriteProfiles"))
-  );
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (
+      !userProfile ||
+      !userProfiles ||
+      !favoriteProfiles ||
+      !compatibilityScores
+    ) {
+      setIsLoading(true);
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 600);
+    }
+  }, [userProfile, userProfiles, favoriteProfiles]);
 
   useEffect(() => {
     // on homepage load, get user profile data
-    const getUserProfile = async () => {
-      if (localStorage.getItem("user") !== null) {
-        let userID = JSON.parse(localStorage.getItem("user")).id;
-        const jwt = localStorage.getItem("token");
-        const response = await fetch(`http://localhost:4000/users/${userID}`, {
-          headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwt}`,
-          },
-        });
-        if (response.ok) {
-          response.json().then((data) => {
-            // localStorage.setItem("userProfile", JSON.stringify(data));
-            updateUserProfile(data);
-          });
-        } else {
-          onLogout();
-        }
-      }
-    };
-    getUserProfile();
+    (async () => {
+      const response = await getUserProfile(
+        JSON.parse(localStorage.getItem("user")).id
+      );
+      updateUserProfile(response);
+      console.log(response);
+      if (!response) onLogout(); // logout if I don't get a response
+    })();
   }, []);
 
   useEffect(() => {
@@ -86,14 +85,9 @@ const FavoritesPage = ({
       const response = await getFavoriteProfiles(
         JSON.parse(localStorage.getItem("user")).id
       );
-        } else {
-          let error = await favorites.json();
-          console.log(error.message);
-        }
-      }
-    };
-
-    getFavorites();
+      updateFavoriteProfiles(response);
+      localStorage.setItem("favoriteProfiles", JSON.stringify(response));
+    })();
   }, []);
 
   const handleFilter = (selectedFilters) => {
@@ -172,16 +166,9 @@ const FavoritesPage = ({
     setSelectedProfile((prev) => null);
   };
 
-  const getCompatibilityScore = (profile) => {
-    if (profile) {
-      let compatibilityScore = compatibilityScores.filter(
-        (prof) => prof.userId === profile.userID
-      )[0]?.score;
-      return compatibilityScore;
-    }
-  };
-
-  return (
+  return isLoading ? (
+    <LoadingProgress />
+  ) : (
     <div className="homepage">
       <div className="content">
         <div className="sideNav">
