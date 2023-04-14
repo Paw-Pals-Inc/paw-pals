@@ -48,17 +48,10 @@ const LandingPage = ({
       <div className="main">
         <div className="contentContainer">
           <h1 className="welcome">Welcome</h1>
-          <p>
-            Welcome to our PawPals 🐶! Do you have a furry friend who could use
-            some socialization? Our app makes it easy to connect with other dog
-            owners in your area and schedule playdates for your pups. Whether
-            you're looking for a new dog park buddy, or hoping to find a
-            playmate for your shy dog, our app can help. Simply create a profile
-            for yourself and your dog, browse other profiles, and send playdate
-            requests with just a few clicks. We know how important your dog's
-            happiness is to you, so we've designed our app with safety and
-            convenience in mind. Join today and start making new friends – both
-            for you and your dog!
+          <p className="subtext">
+            Do you have a furry friend who could use some socialization? Our app
+            makes it easy to connect with other dog owners in your area and
+            schedule playdates for your pups 🐶.
           </p>
           <MaterialButton onClick={handleSignupButton}>Sign up</MaterialButton>
         </div>
