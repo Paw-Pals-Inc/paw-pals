@@ -10,14 +10,14 @@ import {
 function PetProfileSection({ data, updateUserProfile }) {
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
-    petName: data?.petName,
-    petAge: data?.petAge,
-    petGender: data?.petGender,
-    petVaccinated: data?.petVaccinated,
-    petNeutered: data?.petNeutered,
-    petWeight: data?.petWeight,
-    petBreed: data?.petBreed,
-    petGallery: data?.petGallery,
+    petName: data.petName,
+    petAge: data.petAge,
+    petGender: data.petGender,
+    petVaccinated: data.petVaccinated,
+    petNeutered: data.petNeutered,
+    petWeight: data.petWeight,
+    petBreed: data.petBreed,
+    petGallery: data.petGallery,
   });
   const [errors, setErrors] = useState({
     petName: "",
@@ -34,9 +34,7 @@ function PetProfileSection({ data, updateUserProfile }) {
   const [femaleSelected, setFemaleSelected] = useState(false);
 
   useEffect(() => {
-    setFormData((prev) => ({
-      petGallery: data.petGallery,
-    }));
+    setFormData((prev) => ({ ...formData, petGallery: data.petGallery }));
   }, [data.petGallery]);
 
   const toggleStyle = {

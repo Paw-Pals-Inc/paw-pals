@@ -24,14 +24,16 @@ function App() {
   );
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [userData, setUserData] = useState(
-    JSON.parse(localStorage.getItem("user"))
+    localStorage.getItem("user") && JSON.parse(localStorage.getItem("user"))
   );
   const [userProfile, setUserProfile] = useState(
-    JSON.parse(localStorage.getItem("userProfile"))
+    localStorage.getItem("userProfile") &&
+      JSON.parse(localStorage.getItem("userProfile"))
   );
 
   const [userProfiles, setUserProfiles] = useState(
-    JSON.parse(localStorage.getItem("userProfiles"))
+    localStorage.getItem("userProfiles") &&
+      JSON.parse(localStorage.getItem("userProfiles"))
   );
   const [favoriteProfiles, setFavoriteProfiles] = useState([]);
   const [compatibilityScores, setCompatibilityScores] = useState([]);
@@ -203,6 +205,7 @@ function App() {
           element={
             isLoggedIn ? (
               <HomePage
+                userData={userData}
                 isLoggedIn={isLoggedIn}
                 onLogout={handleLogout}
                 userProfile={userProfile}
