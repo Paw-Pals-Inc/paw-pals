@@ -26,7 +26,7 @@ const ProfilePage = ({
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (!userProfile) {
+    if (!userProfile || !userProfile.profilePic) {
       setIsLoading(true);
     } else {
       setTimeout(() => {
