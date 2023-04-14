@@ -30,29 +30,27 @@ const FavoritesPage = ({
   updateUserProfiles,
   updateFavoriteProfiles,
 }) => {
+  const favoriteProfileIds = favoriteProfiles;
   const location = useLocation();
   const [profileSelected, setProfileSelected] = useState(false); // used to render a specific profile page or homepage stuff
   const [filteredProfiles, setFilteredProfiles] = useState(
-    userProfiles.filter((prof) => favoriteProfiles.includes(prof.userID))
+    userProfiles.filter((prof) => favoriteProfileIds.includes(prof.userID))
   );
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [clearFilters, setClearFilters] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (
-      !userProfile ||
-      !userProfiles ||
-      !favoriteProfiles ||
-      !compatibilityScores
-    ) {
+    if (favoriteProfiles.length > 0 && !filteredProfiles.length > 0) {
       setIsLoading(true);
+      // handleClearFilter();
+      setFilteredProfiles(
+        userProfiles.filter((prof) => favoriteProfileIds.includes(prof.userID))
+      );
     } else {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 600);
+      setIsLoading(false);
     }
-  }, [userProfile, userProfiles, favoriteProfiles]);
+  }, [favoriteProfiles, filteredProfiles]);
 
   useEffect(() => {
     // on homepage load, get user profile data
@@ -73,8 +71,9 @@ const FavoritesPage = ({
         JSON.parse(localStorage.getItem("user")).id
       );
       updateUserProfiles(response);
+
       setFilteredProfiles(
-        response.filter((prof) => favoriteProfiles.includes(prof.userID))
+        response.filter((prof) => favoriteProfileIds.includes(prof.userID))
       );
     })();
   }, []);
@@ -89,6 +88,11 @@ const FavoritesPage = ({
       localStorage.setItem("favoriteProfiles", JSON.stringify(response));
     })();
   }, []);
+
+  useEffect(() => {
+    console.log("clearing filter on refresh");
+    handleClearFilter();
+  }, [favoriteProfiles]);
 
   const handleFilter = (selectedFilters) => {
     const { sizeFilter, genderFilter, personalityFilter, ageFilter } =
@@ -146,7 +150,10 @@ const FavoritesPage = ({
 
   const handleClearFilter = () => {
     // clear filters
-    setFilteredProfiles(userProfiles);
+    console.log("clearing filters");
+    setFilteredProfiles(
+      userProfiles.filter((prof) => favoriteProfileIds.includes(prof.userID))
+    );
     setClearFilters((prev) => true);
   };
 
@@ -213,25 +220,33 @@ const FavoritesPage = ({
                     No favorites yet! Go to the home tab to favorite a profile!
                   </div>
                 ) : (
-                  filteredProfiles.map((profile, idx) => {
-                    console.log(profile);
-                    let isFavorite = favoriteProfiles.includes(profile.userID);
-                    let compatibilityScore = getCompatibilityScore(
-                      profile,
-                      compatibilityScores
-                    );
-                    return (
-                      <ProfileCard
-                        key={idx}
-                        profileData={profile}
-                        isFavorite={isFavorite}
-                        addFavorite={addFavorite}
-                        removeFavorite={removeFavorite}
-                        enterProfile={enterProfile}
-                        compatibilityScore={compatibilityScore}
-                      />
-                    );
-                  })
+                  filteredProfiles
+                    .sort(
+                      (a, b) =>
+                        getCompatibilityScore(b, compatibilityScores) -
+                        getCompatibilityScore(a, compatibilityScores)
+                    )
+                    .map((profile, idx) => {
+                      console.log(profile);
+                      let isFavorite = favoriteProfiles.includes(
+                        profile.userID
+                      );
+                      let compatibilityScore = getCompatibilityScore(
+                        profile,
+                        compatibilityScores
+                      );
+                      return (
+                        <ProfileCard
+                          key={idx}
+                          profileData={profile}
+                          isFavorite={isFavorite}
+                          addFavorite={addFavorite}
+                          removeFavorite={removeFavorite}
+                          enterProfile={enterProfile}
+                          compatibilityScore={compatibilityScore}
+                        />
+                      );
+                    })
                 )}
               </div>
             </div>
