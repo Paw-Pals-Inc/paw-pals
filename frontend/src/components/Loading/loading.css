@@ -1,0 +1,42 @@
+.loading-progress {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  padding: 3%;
+}
+
+.loading-spinner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10vh;
+  width: 100%;
+  height: 100%;
+}
+
+.loadingIcon {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.dogIcon {
+  position: absolute;
+  top: 65px;
+  left: 70px;
+  width: 30%;
+}
+
+.loadingCircle {
+  position: absolute;
+  width: 100%;
+  animation: spinner 5s infinite linear; /* Add spinning animation */
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
