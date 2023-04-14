@@ -41,7 +41,13 @@ function PageHeader(props) {
         <div className="profilePic">
           <Avatar
             src={profile && profilePic}
-            sx={{ width: 50, height: 50, cursor: "pointer" }}
+            sx={{
+              width: 50,
+              height: 50,
+              cursor: "pointer",
+              boxShadow:
+                "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)",
+            }}
             onClick={() => navigate("/profile")}
           >
             {profile && firstName && firstName[0]}

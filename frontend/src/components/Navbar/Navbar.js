@@ -30,7 +30,10 @@ function Navbar(props) {
               className="logo-container"
               sizes="large"
               component="img"
-              sx={{ maxHeight: imgHt }}
+              sx={{
+                maxHeight: imgHt,
+                boxShadow: "none",
+              }}
               alt="Logo"
               src={logo_middle}
             />

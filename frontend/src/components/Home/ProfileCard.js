@@ -51,8 +51,10 @@ function ProfileCard({
       fontSize: "1.5rem",
       width: "40px",
       height: "40px",
-      border: "1px solid black",
+      border: "none",
       borderRadius: "50%",
+      boxShadow:
+        "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)",
     },
   }));
   return (
@@ -65,11 +67,17 @@ function ProfileCard({
           padding: "20px 30px",
           backgroundColor: "#ffd29d",
           borderRadius: "40px",
+          boxShadow:
+            "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)",
         }}
       >
         <CardMedia
           image={petGallery && petGallery[0]}
-          sx={{ borderRadius: "20px" }}
+          sx={{
+            borderRadius: "20px",
+            boxShadow:
+              "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)",
+          }}
           children={
             <StyledBadge
               badgeContent={compatibilityScore}
