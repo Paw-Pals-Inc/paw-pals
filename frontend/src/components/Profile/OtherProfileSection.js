@@ -1,8 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import MaterialButton from "../MaterialComponents/MaterialButton";
+import LoadingProgress from "../Loading/LoadingProgress";
 
 function OtherProfileSection({ userProfile }) {
-  return (
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    if (!userProfile || !userProfile.petGallery) {
+      setIsLoading(true);
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 600);
+    }
+  }, [userProfile]);
+
+  return isLoading ? (
+    <LoadingProgress />
+  ) : (
     <div style={{ width: "100%" }}>
       <div className="section-header">
         <h2>{userProfile.petName}</h2>

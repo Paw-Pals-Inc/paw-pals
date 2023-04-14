@@ -182,9 +182,11 @@ const FavoritesPage = ({
               addFavorite={addFavorite}
               removeFavorite={removeFavorite}
               favoriteProfiles={favoriteProfiles}
-              userProfile={userProfiles.filter(
-                (profile) => profile.userID === selectedProfile
-              )}
+              userProfile={
+                userProfiles.filter(
+                  (profile) => profile.userID === selectedProfile
+                )[0]
+              }
               leaveProfile={leaveProfile}
               compatibilityScore={() =>
                 getCompatibilityScore(

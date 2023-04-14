@@ -6,8 +6,10 @@ import {
   saveUserProfileLocalStorage,
   validFileType,
 } from "../../utils/functions";
+import LoadingProgress from "../Loading/LoadingProgress";
 
 function PetProfileSection({ data, updateUserProfile }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
     petName: data.petName,
@@ -32,6 +34,16 @@ function PetProfileSection({ data, updateUserProfile }) {
 
   const [maleSelected, setMaleSelected] = useState(false);
   const [femaleSelected, setFemaleSelected] = useState(false);
+
+  useEffect(() => {
+    if (!data || !data.petGallery) {
+      setIsLoading(true);
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 600);
+    }
+  }, [data]);
 
   useEffect(() => {
     setFormData((prev) => ({ ...formData, petGallery: data.petGallery }));
@@ -221,7 +233,9 @@ function PetProfileSection({ data, updateUserProfile }) {
     }
   };
 
-  return (
+  return isLoading ? (
+    <LoadingProgress />
+  ) : (
     <div className="personalProfileSection">
       <form className="personalProfile-form" onSubmit={handleSubmit}>
         <div>
@@ -371,7 +385,10 @@ function PetProfileSection({ data, updateUserProfile }) {
         </div>
       </form>
       <div className="profilePictureSection">
-        <img src={formData.petGallery[0]} alt="pet profile pic" />
+        <img
+          src={formData.petGallery && formData.petGallery[0]}
+          alt="pet profile pic"
+        />
         {editMode && (
           <div>
             <label htmlFor="petProfilePic" className="uploadPic-button">

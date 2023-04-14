@@ -8,6 +8,7 @@ import {
 } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
 import { useNavigate, useLocation } from "react-router";
+import LoadingProgress from "../Loading/LoadingProgress";
 
 function OtherUserProfile({
   userProfile,
@@ -19,6 +20,7 @@ function OtherUserProfile({
 }) {
   const navigate = useNavigate();
   const currentPage = useLocation().pathname;
+  const [isLoading, setIsLoading] = useState(false);
   const [isProfileFavorite, setIsProfileFavorite] = useState(isFavorite);
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
@@ -37,12 +39,24 @@ function OtherUserProfile({
   }));
 
   useEffect(() => {
+    if (!userProfile || !userProfile.petGallery || !userProfile.profilePic) {
+      setIsLoading(true);
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 600);
+    }
+  }, [userProfile]);
+
+  useEffect(() => {
     // check if favorite again
     if (favoriteProfiles.includes(userProfile.userID))
       setIsProfileFavorite(true);
   }, [isFavorite, favoriteProfiles]);
 
-  return (
+  return isLoading ? (
+    <LoadingProgress />
+  ) : (
     <div className="otherProfile-container">
       <div className="picture-section">
         <StyledBadge

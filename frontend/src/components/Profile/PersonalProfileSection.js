@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EditIcon from "@mui/icons-material/EditOutlined";
 import {
   saveUserProfileLocalStorage,
   validFileType,
 } from "../../utils/functions";
+import LoadingProgress from "../Loading/LoadingProgress";
 
 function PersonalProfileSection({ data, updateUserProfile }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
     firstName: data?.firstName,
@@ -23,6 +25,16 @@ function PersonalProfileSection({ data, updateUserProfile }) {
     phoneNumber: "",
     profilePic: "",
   });
+
+  useEffect(() => {
+    if (!data || !data.profilePic) {
+      setIsLoading(true);
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 600);
+    }
+  }, [data]);
 
   const toggleEditMode = () => {
     setEditMode((prev) => !prev);
@@ -161,7 +173,9 @@ function PersonalProfileSection({ data, updateUserProfile }) {
     }
   };
 
-  return (
+  return isLoading ? (
+    <LoadingProgress />
+  ) : (
     <div className="personalProfileSection">
       {/* text boxes filled with user profile data */}
       {/* implement edit user data functionalilty*/}

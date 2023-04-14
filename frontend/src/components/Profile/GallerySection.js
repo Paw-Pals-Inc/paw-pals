@@ -7,9 +7,11 @@ import EditIcon from "@mui/icons-material/EditOutlined";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Badge } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import LoadingProgress from "../Loading/LoadingProgress";
 
 function GallerySection({ data, updateUserProfile }) {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
     petGallery: data.petGallery,
@@ -17,6 +19,16 @@ function GallerySection({ data, updateUserProfile }) {
   const [errors, setErrors] = useState({
     petGallery: "",
   });
+
+  useEffect(() => {
+    if (!data || !data.petGallery) {
+      setIsLoading(true);
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 600);
+    }
+  }, [data]);
 
   useEffect(() => {
     setFormData((prev) => ({
@@ -115,7 +127,9 @@ function GallerySection({ data, updateUserProfile }) {
     });
   };
 
-  return (
+  return isLoading ? (
+    <LoadingProgress />
+  ) : (
     <div className="personalProfileSection">
       {/* text boxes filled with user profile data */}
       {/* implement edit user data functionalilty*/}
