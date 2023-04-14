@@ -26,15 +26,9 @@ function App() {
   const [userData, setUserData] = useState(
     localStorage.getItem("user") && JSON.parse(localStorage.getItem("user"))
   );
-  const [userProfile, setUserProfile] = useState(
-    localStorage.getItem("userProfile") &&
-      JSON.parse(localStorage.getItem("userProfile"))
-  );
+  const [userProfile, setUserProfile] = useState({});
 
-  const [userProfiles, setUserProfiles] = useState(
-    localStorage.getItem("userProfiles") &&
-      JSON.parse(localStorage.getItem("userProfiles"))
-  );
+  const [userProfiles, setUserProfiles] = useState([]);
   const [favoriteProfiles, setFavoriteProfiles] = useState([]);
   const [compatibilityScores, setCompatibilityScores] = useState([]);
 
