@@ -8,6 +8,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { Badge } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import LoadingProgress from "../Loading/LoadingProgress";
+import ImageGallery from "../ImageGallery/ImageGallery";
 
 function GallerySection({ data, updateUserProfile }) {
   const navigate = useNavigate();
@@ -19,6 +20,14 @@ function GallerySection({ data, updateUserProfile }) {
   const [errors, setErrors] = useState({
     petGallery: "",
   });
+  const [images, setImages] = useState(
+    data?.petGallery?.map((imgUrl) => {
+      return {
+        src: imgUrl,
+        alt: "pet image",
+      };
+    })
+  );
 
   useEffect(() => {
     if (!data || !data.petGallery) {
@@ -28,13 +37,21 @@ function GallerySection({ data, updateUserProfile }) {
         setIsLoading(false);
       }, 600);
     }
-  }, [data]);
+  }, []);
 
   useEffect(() => {
     setFormData((prev) => ({
       petGallery: data.petGallery,
     }));
-  }, [data.petGallery]);
+    setImages(
+      data.petGallery?.map((imgUrl) => {
+        return {
+          src: imgUrl,
+          alt: "pet image",
+        };
+      })
+    );
+  }, [data.petGallery, formData.petGallery]);
 
   const toggleEditMode = () => {
     setEditMode((prev) => !prev);
@@ -145,25 +162,29 @@ function GallerySection({ data, updateUserProfile }) {
           </h2>
           {errors.petGallery && <div>{errors.petGallery}</div>}
           <div className="galleryPictureSection">
-            {formData.petGallery &&
+            {formData.petGallery && editMode ? (
               formData.petGallery.map((pic, idx) => (
                 <div key={idx} className="galleryImageDiv">
-                  {editMode ? (
-                    <Badge
-                      badgeContent={
-                        <ClearIcon
-                          fontSize="large"
-                          onClick={() => removePicture(idx)}
-                        />
-                      }
-                    >
-                      <img src={pic} alt={`doggie${idx}`} />
-                    </Badge>
-                  ) : (
-                    <img src={pic} alt={`doggie${idx}`} />
-                  )}
+                  <Badge
+                    badgeContent={
+                      <ClearIcon
+                        fontSize="large"
+                        onClick={() => removePicture(idx)}
+                      />
+                    }
+                  >
+                    <img
+                      style={{ width: "100%" }}
+                      src={pic}
+                      alt={`doggie${idx}`}
+                    />
+                  </Badge>
                 </div>
-              ))}
+              ))
+            ) : (
+              <ImageGallery images={images} />
+            )}
+
             {editMode && (
               <div>
                 <label htmlFor="petGallery" className="uploadPic-button">

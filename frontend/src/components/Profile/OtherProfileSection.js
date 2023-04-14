@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from "react";
 import MaterialButton from "../MaterialComponents/MaterialButton";
 import LoadingProgress from "../Loading/LoadingProgress";
+import ImageGallery from "../ImageGallery/ImageGallery";
 
 function OtherProfileSection({ userProfile }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [images, setImages] = useState(
+    userProfile?.petGallery?.map((imgUrl) => {
+      return {
+        src: imgUrl,
+        alt: "pet image",
+      };
+    })
+  );
   useEffect(() => {
     if (!userProfile || !userProfile.petGallery) {
       setIsLoading(true);
@@ -13,6 +22,17 @@ function OtherProfileSection({ userProfile }) {
       }, 600);
     }
   }, [userProfile]);
+
+  useEffect(() => {
+    setImages(
+      userProfile.petGallery?.map((imgUrl) => {
+        return {
+          src: imgUrl,
+          alt: "pet image",
+        };
+      })
+    );
+  }, [userProfile.petGallery]);
 
   return isLoading ? (
     <LoadingProgress />
@@ -60,12 +80,7 @@ function OtherProfileSection({ userProfile }) {
           <h3>Gallery</h3>
         </div>
         <div className="galleryPictureSection">
-          {userProfile.petGallery &&
-            userProfile.petGallery.map((pic, idx) => (
-              <div key={idx} className="galleryImageDiv">
-                <img src={pic} alt={`doggie${idx}`} />
-              </div>
-            ))}
+          {userProfile.petGallery && <ImageGallery images={images} />}
         </div>
       </div>
     </div>
