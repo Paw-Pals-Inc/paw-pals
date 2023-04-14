@@ -20,6 +20,7 @@ const ProfilePage = ({
   addFavorite,
   removeFavorite,
   compatibilityScores,
+  buttonVariant,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -56,7 +57,11 @@ const ProfilePage = ({
           <SideNavbar onLogout={onLogout} userProfile={userProfile} />
         </div>
         <div className="contentRight">
-          <PageHeader pageName={location.pathname} profile={userProfile} />
+          <PageHeader
+            pageName={location.pathname}
+            profile={userProfile}
+            buttonVariant={buttonVariant}
+          />
           <div className="mainContainer">
             <UserProfile
               updateUserProfile={updateUserProfile}

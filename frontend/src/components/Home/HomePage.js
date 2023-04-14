@@ -30,6 +30,7 @@ const HomePage = ({
   addFavorite,
   removeFavorite,
   compatibilityScores,
+  buttonVariant,
 }) => {
   const [profileSelected, setProfileSelected] = useState(false); // used to render a specific profile page or homepage stuff
   const [filteredProfiles, setFilteredProfiles] = useState(userProfiles);
@@ -175,6 +176,7 @@ const HomePage = ({
           <PageHeader pageName={location.pathname} profile={userProfile} />
           {profileSelected ? (
             <OtherProfilePage
+              buttonVariant={buttonVariant}
               isFavorite={favoriteProfiles.includes(selectedProfile.userID)}
               addFavorite={addFavorite}
               removeFavorite={removeFavorite}
@@ -230,6 +232,7 @@ const HomePage = ({
                           removeFavorite={removeFavorite}
                           enterProfile={enterProfile}
                           compatibilityScore={compatibilityScore}
+                          buttonVariant={buttonVariant}
                         />
                       );
                     })

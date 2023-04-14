@@ -27,6 +27,7 @@ const ChatsPage = ({
   addFavorite,
   removeFavorite,
   compatibilityScores,
+  buttonVariant,
 }) => {
   const location = useLocation();
   const [socket, setSocket] = useState(null);
@@ -137,6 +138,7 @@ const ChatsPage = ({
           <PageHeader pageName={location.pathname} profile={userProfile} />
           {profileSelected ? (
             <OtherProfilePage
+              buttonVariant={buttonVariant}
               userProfile={
                 userProfiles.filter(
                   (profile) => profile.userID === selectedProfile

@@ -17,6 +17,14 @@ import {
   calculateCompatibility,
 } from "./utils/functions";
 
+const buttonVariant = {
+  whileHover: {
+    scale: 1.5,
+    transition: { duration: 0.1 },
+  },
+  whileTap: { scale: 0.7 },
+};
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("user") !== null &&
@@ -211,6 +219,7 @@ function App() {
                 addFavorite={addFavorite}
                 removeFavorite={removeFavorite}
                 compatibilityScores={compatibilityScores}
+                buttonVariant={buttonVariant}
               />
             ) : (
               <Navigate replace to={"/"} />
@@ -234,6 +243,7 @@ function App() {
                 addFavorite={addFavorite}
                 removeFavorite={removeFavorite}
                 compatibilityScores={compatibilityScores}
+                buttonVariant={buttonVariant}
               />
             ) : (
               <Navigate replace to={"/"} />
@@ -257,6 +267,7 @@ function App() {
                 updateUserProfile={updateUserProfile}
                 updateUserProfiles={updateUserProfiles}
                 updateFavoriteProfiles={updateFavoriteProfiles}
+                buttonVariant={buttonVariant}
               />
             ) : (
               <Navigate replace to={"/"} />
@@ -281,6 +292,7 @@ function App() {
                 addFavorite={addFavorite}
                 removeFavorite={removeFavorite}
                 compatibilityScores={compatibilityScores}
+                buttonVariant={buttonVariant}
               />
             ) : (
               <Navigate replace to={"/"} />

@@ -7,21 +7,25 @@ import {
   Style,
 } from "@mui/icons-material";
 import {
-  Avatar,
-  Button,
   Card,
   CardContent,
   CardMedia,
-  CardActionArea,
   CardActions,
   Typography,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Badge,
-  BadgeUnstyled,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { motion } from "framer-motion";
+
+const profileCardVariant = {
+  initial: { y: 800 },
+  animate: { y: 0, transition: { ease: "easeOut", duration: 0.5 } },
+  whileInView: { y: 0, transition: { ease: "easeOut", duration: 1 } },
+  exit: {
+    x: "-100vw",
+    transition: { type: "tween", ease: "easeInOut", duration: 3 },
+  },
+};
 
 function ProfileCard({
   profileData,
@@ -30,6 +34,7 @@ function ProfileCard({
   removeFavorite,
   enterProfile,
   compatibilityScore,
+  buttonVariant,
 }) {
   const {
     petName,
@@ -58,7 +63,13 @@ function ProfileCard({
     },
   }));
   return (
-    <div>
+    <motion.div
+      variants={profileCardVariant}
+      initial="initial"
+      animate="animate"
+      // whileInView="whileInView"
+      exit="exit"
+    >
       <Card
         key={userID}
         className="profileCard"
@@ -120,27 +131,41 @@ function ProfileCard({
             width: "15%",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
             {isFavorite ? "favorited" : "favorite"}
-            {isFavorite ? (
-              <StarIcon
-                onClick={() => removeFavorite(userID)}
-                sx={{ width: "30px", height: "30px", cursor: "pointer" }}
-              />
-            ) : (
-              <StarBorderIcon
-                onClick={() => addFavorite(userID)}
-                sx={{ width: "30px", height: "30px", cursor: "pointer" }}
-              />
-            )}
+            <motion.div
+              variants={buttonVariant}
+              whileHover="whileHover"
+              whileTap="whileTap"
+              style={{ display: "flex", alignItems: "center", gap: "5px" }}
+            >
+              {isFavorite ? (
+                <StarIcon
+                  onClick={() => removeFavorite(userID)}
+                  sx={{ width: "30px", height: "30px", cursor: "pointer" }}
+                />
+              ) : (
+                <StarBorderIcon
+                  onClick={() => addFavorite(userID)}
+                  sx={{ width: "30px", height: "30px", cursor: "pointer" }}
+                />
+              )}
+            </motion.div>
           </div>
-          <ArrowCircleRightIcon
-            sx={{ width: "45px", height: "45px", cursor: "pointer" }}
-            onClick={() => enterProfile(userID)}
-          />
+
+          <motion.div
+            variants={buttonVariant}
+            whileHover="whileHover"
+            whileTap="whileTap"
+          >
+            <ArrowCircleRightIcon
+              sx={{ width: "45px", height: "45px", cursor: "pointer" }}
+              onClick={() => enterProfile(userID)}
+            />
+          </motion.div>
         </CardActions>
       </Card>
-    </div>
+    </motion.div>
   );
 }
 

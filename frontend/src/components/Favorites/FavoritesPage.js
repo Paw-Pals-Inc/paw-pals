@@ -29,6 +29,7 @@ const FavoritesPage = ({
   updateUserProfile,
   updateUserProfiles,
   updateFavoriteProfiles,
+  buttonVariant,
 }) => {
   const favoriteProfileIds = favoriteProfiles;
   const location = useLocation();
@@ -185,6 +186,7 @@ const FavoritesPage = ({
           <PageHeader pageName={location.pathname} profile={userProfile} />
           {profileSelected ? (
             <OtherProfilePage
+              buttonVariant={buttonVariant}
               isFavorite={favoriteProfiles.includes(selectedProfile.userID)}
               addFavorite={addFavorite}
               removeFavorite={removeFavorite}
@@ -244,6 +246,7 @@ const FavoritesPage = ({
                           removeFavorite={removeFavorite}
                           enterProfile={enterProfile}
                           compatibilityScore={compatibilityScore}
+                          buttonVariant={buttonVariant}
                         />
                       );
                     })
