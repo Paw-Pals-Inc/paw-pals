@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Select, MenuItem, ListItemText, Checkbox } from "@mui/material";
+import {
+  Select,
+  MenuItem,
+  ListItemText,
+  Checkbox,
+  FormControl,
+} from "@mui/material";
 
 const ages = ["Puppy", "Adult", "Senior"];
 
@@ -29,23 +35,25 @@ const AgeFilter = ({ value, onChange }) => {
 
   return (
     <div className="age-filter">
-      <Select
-        value={value}
-        onChange={handleAgeChange}
-        displayEmpty
-        multiple
-        renderValue={(selected) => {
-          return <em>Age</em>;
-        }}
-        size="small"
-      >
-        {ages.map((age, idx) => (
-          <MenuItem key={age} value={age}>
-            <Checkbox checked={value.indexOf(age) > -1} />
-            <ListItemText primary={renderAgeLabels(idx)} />
-          </MenuItem>
-        ))}
-      </Select>
+      <FormControl sx={{ m: 1, width: 300, backgroundColor: "white" }}>
+        <Select
+          value={value}
+          onChange={handleAgeChange}
+          displayEmpty
+          multiple
+          renderValue={(selected) => {
+            return <em>Age</em>;
+          }}
+          size="small"
+        >
+          {ages.map((age, idx) => (
+            <MenuItem key={age} value={age}>
+              <Checkbox checked={value.indexOf(age) > -1} />
+              <ListItemText primary={renderAgeLabels(idx)} />
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </div>
   );
 };

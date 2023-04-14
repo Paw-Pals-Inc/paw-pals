@@ -21,7 +21,7 @@ const GenderFilter = ({ value, onChange }) => {
 
   return (
     <div className="gender-filter">
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ m: 1, width: 300, backgroundColor: "white" }}>
         <Select
           size="small"
           value={value}

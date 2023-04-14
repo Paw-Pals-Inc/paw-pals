@@ -42,7 +42,7 @@ const PersonalityFilter = ({ value, onChange }) => {
 
   return (
     <div className="personality-filter">
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ m: 1, width: 300, backgroundColor: "white" }}>
         <Select
           id="multiple-checkbox"
           size="small"

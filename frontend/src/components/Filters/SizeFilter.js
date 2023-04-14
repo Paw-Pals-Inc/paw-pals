@@ -35,7 +35,7 @@ const SizeFilter = ({ value, onChange }) => {
 
   return (
     <div className="size-filter">
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ m: 1, width: 300, backgroundColor: "white" }}>
         <Select
           id="multiple-checkbox"
           size="small"
