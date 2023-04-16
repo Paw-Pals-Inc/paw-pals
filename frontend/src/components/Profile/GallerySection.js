@@ -51,7 +51,7 @@ function GallerySection({ data, updateUserProfile }) {
         };
       })
     );
-  }, [data.petGallery, formData.petGallery]);
+  }, [data.petGallery]);
 
   const toggleEditMode = () => {
     setEditMode((prev) => !prev);
