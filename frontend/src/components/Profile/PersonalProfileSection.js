@@ -14,13 +14,14 @@ const uriBase =
 function PersonalProfileSection({ data, updateUserProfile }) {
   const [isLoading, setIsLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [profilePic, setProfilePic] = useState(data?.profilePic);
+  const [picUpdated, setPicUpdated] = useState(false);
   const [formData, setFormData] = useState({
     firstName: data?.firstName,
     lastName: data?.lastName,
     phoneNumber: data?.phoneNumber,
     city: data?.city,
     state: data?.state,
-    profilePic: data?.profilePic,
   });
   const [errors, setErrors] = useState({
     firstName: "",
@@ -60,7 +61,8 @@ function PersonalProfileSection({ data, updateUserProfile }) {
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      setFormData((prev) => ({ ...formData, profilePic: reader.result }));
+      setProfilePic((prev) => reader.result);
+      setPicUpdated(true);
     };
 
     if (file) {
@@ -137,7 +139,7 @@ function PersonalProfileSection({ data, updateUserProfile }) {
     }
 
     // profile pic
-    if (!formData.profilePic) {
+    if (!profilePic) {
       newErrors.profilePic = "Profile picture is required.";
       isValid = false;
     }
@@ -150,13 +152,16 @@ function PersonalProfileSection({ data, updateUserProfile }) {
     try {
       const userId = JSON.parse(localStorage.getItem("user")).id;
       const token = localStorage.getItem("token");
+      const newData = picUpdated
+        ? { ...formData, profilePic: profilePic }
+        : formData;
       await fetch(`${uriBase}/users/${userId}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(newData),
       }).then(async (resp) => {
         if (resp.ok) {
           // User created successfully
@@ -280,7 +285,7 @@ function PersonalProfileSection({ data, updateUserProfile }) {
         </div>
       </form>
       <div className="profilePictureSection">
-        <img src={formData.profilePic} alt="profile pic" />
+        <img src={profilePic} alt="profile pic" />
         {editMode && (
           <div>
             <label htmlFor="profilePic" className="uploadPic-button">

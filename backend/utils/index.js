@@ -51,7 +51,7 @@ function saveImage(baseImage, userID) {
     fs.mkdirSync(`${uploadPath}`, { recursive: true });
   }
   if (!fs.existsSync(localPath)) {
-    fs.mkdirSync(localPath, { recursive: true });
+    fs.mkdirSync(localPath);
   }
   fs.writeFileSync(localPath + filename, base64Data, "base64");
   return filename;
