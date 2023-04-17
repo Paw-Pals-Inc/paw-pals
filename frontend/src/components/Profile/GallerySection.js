@@ -155,7 +155,7 @@ function GallerySection({ data, updateUserProfile }) {
     <div className="personalProfileSection">
       {/* text boxes filled with user profile data */}
       {/* implement edit user data functionalilty*/}
-      <form onSubmit={handleSubmit} className="profileDescription-form">
+      <form onSubmit={handleSubmit} className="profileGallery-form">
         <div>
           <h2 className="section-header">
             Gallery

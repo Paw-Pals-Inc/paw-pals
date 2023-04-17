@@ -6,6 +6,7 @@ import PageHeader from "../Home/PageHeader";
 import { getUserProfile } from "../../utils/fetchRequests";
 import LoadingProgress from "../Loading/LoadingProgress";
 import "./profile.css";
+import { motion } from "framer-motion";
 
 const ProfilePage = ({
   isLoggedIn,
@@ -56,7 +57,14 @@ const ProfilePage = ({
         <div className="sideNav">
           <SideNavbar onLogout={onLogout} userProfile={userProfile} />
         </div>
-        <div className="contentRight">
+        <motion.div
+          className="contentRight"
+          key="profilePage"
+          initial={{ y: 600 }}
+          animate={{ y: 0 }}
+          exit={{ y: -600 }}
+          transition={{ duration: 0.5 }}
+        >
           <PageHeader
             pageName={location.pathname}
             profile={userProfile}
@@ -68,7 +76,7 @@ const ProfilePage = ({
               userProfile={userProfile}
             />
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

@@ -17,6 +17,7 @@ import {
 } from "../../utils/fetchRequests";
 import "./home.css";
 import LoadingProgress from "../Loading/LoadingProgress";
+import { motion } from "framer-motion";
 
 const HomePage = ({
   onLogout,
@@ -172,7 +173,14 @@ const HomePage = ({
           <SideNavbar onLogout={onLogout} userProfile={userProfile} />
         </div>
 
-        <div className="contentRight">
+        <motion.div
+          className="contentRight"
+          key="homepage"
+          initial={{ y: 600 }}
+          animate={{ y: 0 }}
+          exit={{ y: -600, delay: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <PageHeader pageName={location.pathname} profile={userProfile} />
           {profileSelected ? (
             <OtherProfilePage
@@ -240,7 +248,7 @@ const HomePage = ({
               </div>
             </div>
           )}
-        </div>
+        </motion.div>
       </div>
     </div>
   );

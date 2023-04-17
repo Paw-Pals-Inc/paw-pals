@@ -16,6 +16,7 @@ import {
   getOtherUserProfiles,
   getFavoriteProfiles,
 } from "../../utils/fetchRequests";
+import { motion } from "framer-motion";
 
 const FavoritesPage = ({
   isLoggedIn,
@@ -182,7 +183,14 @@ const FavoritesPage = ({
         <div className="sideNav">
           <SideNavbar onLogout={onLogout} userProfile={userProfile} />
         </div>
-        <div className="contentRight">
+        <motion.div
+          className="contentRight"
+          key="favoritesPage"
+          initial={{ y: 600 }}
+          animate={{ y: 0 }}
+          exit={{ y: -600 }}
+          transition={{ duration: 0.5 }}
+        >
           <PageHeader pageName={location.pathname} profile={userProfile} />
           {profileSelected ? (
             <OtherProfilePage
@@ -254,7 +262,7 @@ const FavoritesPage = ({
               </div>
             </div>
           )}
-        </div>
+        </motion.div>
       </div>
     </div>
   );

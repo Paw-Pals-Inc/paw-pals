@@ -23,8 +23,8 @@
 
 /* CSS for the fullscreen image */
 .fullscreen-image {
-  max-width: 90%;
-  max-height: 90%;
+  /* max-width: 90%;
+  max-height: 90%; */
   object-fit: contain;
   cursor: pointer;
 }

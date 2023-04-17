@@ -14,6 +14,7 @@ import {
   getFavoriteProfiles,
 } from "../../utils/fetchRequests";
 import "./chat.css";
+import { motion } from "framer-motion";
 
 const uriBase =
   process.env.NODE_ENV === "development"
@@ -139,7 +140,14 @@ const ChatsPage = ({
             userProfile={userProfile}
           />
         </div>
-        <div className="contentRight">
+        <motion.div
+          className="contentRight"
+          key="chatsPage"
+          initial={{ y: 600 }}
+          animate={{ y: 0 }}
+          exit={{ y: -600 }}
+          transition={{ duration: 0.5 }}
+        >
           <PageHeader pageName={location.pathname} profile={userProfile} />
           {profileSelected ? (
             <OtherProfilePage
@@ -180,7 +188,7 @@ const ChatsPage = ({
               />
             </div>
           )}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
