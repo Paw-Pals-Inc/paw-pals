@@ -2,7 +2,7 @@
   display: flex;
   gap: 5%;
   margin-right: auto;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 
 .profilePictureSection {
@@ -59,9 +59,15 @@
 
 .galleryPictureSection {
   display: flex;
-  gap: 5%;
+  gap: 4%;
   flex-wrap: wrap;
   padding-left: 10px;
+}
+
+@media screen and (max-width: 600px) {
+  .galleryPictureSection {
+    padding-bottom: 20px;
+  }
 }
 
 .profileGallery-form {

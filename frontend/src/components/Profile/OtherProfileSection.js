@@ -79,7 +79,10 @@ function OtherProfileSection({ userProfile }) {
         <div className="field-line">
           <h3>Gallery</h3>
         </div>
-        <div className="galleryPictureSection">
+        <div
+          className="galleryPictureSection"
+          style={{ paddingBottom: "40px" }}
+        >
           {userProfile.petGallery && <ImageGallery images={images} />}
         </div>
       </div>
