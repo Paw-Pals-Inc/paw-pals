@@ -15,6 +15,11 @@ import {
 } from "../../utils/fetchRequests";
 import "./chat.css";
 
+const uriBase =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "https://pawpals-383903.ue.r.appspot.com";
+
 const ChatsPage = ({
   isLoggedIn,
   onLogout,
@@ -48,7 +53,7 @@ const ChatsPage = ({
 
   useEffect(() => {
     // Connect to socket.io server
-    const newSocket = io("http://localhost:4000");
+    const newSocket = io(uriBase);
     setSocket(newSocket);
 
     //sends the user ID and socket ID to the Node.js server

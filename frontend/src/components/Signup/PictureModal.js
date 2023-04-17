@@ -4,6 +4,11 @@ import MaterialButton from "../MaterialComponents/MaterialButton";
 import { fileTypes } from "../../utils/constants";
 import { validFileType } from "../../utils/functions";
 
+const uriBase =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "https://pawpals-383903.ue.r.appspot.com";
+
 const PictureModal = ({
   userData,
   onLogin,
@@ -112,7 +117,7 @@ const PictureModal = ({
 
     try {
       const userId = userProfile.userID;
-      const response = await fetch("http://localhost:4000/users/" + userId, {
+      const response = await fetch(uriBase + "/users/" + userId, {
         method: "PUT",
         headers: {
           Accept: "application/json, text/plain, */*",
@@ -134,7 +139,7 @@ const PictureModal = ({
 
         //login w/ new profile
         let password = localStorage.getItem("password");
-        const login = await fetch("http://localhost:4000/login", {
+        const login = await fetch(uriBase + "/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import EditIcon from "@mui/icons-material/EditOutlined";
 import { saveUserProfileLocalStorage } from "../../utils/functions";
 
+const uriBase =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "https://pawpals-383903.ue.r.appspot.com";
+
 function DescriptionSection({ data, updateUserProfile }) {
   const { petName, firstName } = data;
   const [editMode, setEditMode] = useState(false);
@@ -28,7 +33,7 @@ function DescriptionSection({ data, updateUserProfile }) {
       const userId = JSON.parse(localStorage.getItem("user")).id;
       const token = localStorage.getItem("token");
       // edit profile data
-      await fetch(`http://localhost:4000/users/${userId}`, {
+      await fetch(`${uriBase}/users/${userId}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,

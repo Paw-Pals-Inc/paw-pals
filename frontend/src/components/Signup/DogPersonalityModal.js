@@ -4,6 +4,11 @@ import MaterialButton from "../MaterialComponents/MaterialButton";
 import TagSelectButton from "./TagSelectButton";
 import { petTags } from "../../utils/constants";
 
+const uriBase =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "https://pawpals-383903.ue.r.appspot.com";
+
 const DogPersonalityModal = ({
   userProfile,
   updateUserProfile,
@@ -44,7 +49,7 @@ const DogPersonalityModal = ({
         throw new Error("selected tags array not valid");
       }
 
-      const response = await fetch("http://localhost:4000/users/" + userId, {
+      const response = await fetch(uriBase + "/users/" + userId, {
         method: "PUT",
         headers: {
           Accept: "application/json, text/plain, */*",

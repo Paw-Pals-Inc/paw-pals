@@ -1,5 +1,10 @@
 .DS_Store
 /backend/uploads/images
+/backend/public
+build
+app.yaml
+prod-env.yaml
+cloud-sql-proxy
 
 # Logs
 logs

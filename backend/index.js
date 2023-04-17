@@ -22,8 +22,8 @@ const io = socketio(server, {
   },
 });
 
-const PORT = process.env.PORT;
-
+const PORT = process.env.PORT || 4000;
+app.set("trust proxy", true);
 app.use(bodyParser.urlencoded({ extended: true, limit: "400mb" }));
 app.use(bodyParser.json({ limit: "400mb" }));
 

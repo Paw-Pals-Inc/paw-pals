@@ -10,6 +10,11 @@ import { useNavigate } from "react-router-dom";
 import LoadingProgress from "../Loading/LoadingProgress";
 import ImageGallery from "../ImageGallery/ImageGallery";
 
+const uriBase =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "https://pawpals-383903.ue.r.appspot.com";
+
 function GallerySection({ data, updateUserProfile }) {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -119,7 +124,7 @@ function GallerySection({ data, updateUserProfile }) {
     const token = localStorage.getItem("token");
 
     // edit profile data
-    await fetch(`http://localhost:4000/users/${userId}`, {
+    await fetch(`${uriBase}/users/${userId}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,

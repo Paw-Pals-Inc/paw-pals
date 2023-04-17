@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MaterialButton from "../MaterialComponents/MaterialButton";
 
+const uriBase =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "https://pawpals-383903.ue.r.appspot.com";
+
 const SignupModal = ({
   onLogin,
   createdAccountStatus,
@@ -59,7 +64,7 @@ const SignupModal = ({
     }
 
     try {
-      await fetch("http://localhost:4000/users", {
+      await fetch(`${uriBase}/users`, {
         method: "POST",
         headers: {
           Accept: "application/json, text/plain, */*",

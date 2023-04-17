@@ -3,6 +3,11 @@ const bcrypt = require("bcrypt");
 const { generateAccessToken, saveImage } = require("../utils");
 require("dotenv").config();
 
+const uriBase =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:" + process.env.PORT
+    : "https://pawpals-383903.ue.r.appspot.com";
+
 // create user account and attached blank profile
 const createUser = async (req, res) => {
   try {
@@ -83,8 +88,7 @@ const editProfile = async (req, res) => {
 
     if (req.body.profilePic) {
       let profilePic_filePath =
-        `http://localhost:${process.env.PORT}/${id}/` +
-        saveImage(req.body.profilePic, id);
+        `${uriBase}/${id}/` + saveImage(req.body.profilePic, id);
       fieldsToUpdate.profilePic = profilePic_filePath;
     }
     if (req.body.petGallery) {
@@ -95,9 +99,7 @@ const editProfile = async (req, res) => {
       let filePathArr = images.map((image) => {
         // if we already have image, no need to save it again
         if (image.match(/^http:\/\/localhost:/)) return image;
-        return (
-          `http://localhost:${process.env.PORT}/${id}/` + saveImage(image, id)
-        );
+        return `${uriBase}/${id}/` + saveImage(image, id);
       });
       fieldsToUpdate.petGallery = filePathArr;
     }

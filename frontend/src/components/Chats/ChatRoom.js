@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import MaterialButton from "../MaterialComponents/MaterialButton";
 
+const uriBase =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "https://pawpals-383903.ue.r.appspot.com";
+
 const ChatRoom = ({ socket, currentUser, selectedUser, enterProfile }) => {
   const [messageText, setMessageText] = useState("");
   const [messages, setMessages] = useState([]);
@@ -87,7 +92,7 @@ const ChatRoom = ({ socket, currentUser, selectedUser, enterProfile }) => {
     async function fetchMessages(senderId, receiverId) {
       const jwt = localStorage.getItem("token");
       const response = await fetch(
-        `http://localhost:4000/chat/${senderId}/${receiverId}`,
+        `${uriBase}/chat/${senderId}/${receiverId}`,
         {
           headers: {
             Accept: "application/json, text/plain, */*",

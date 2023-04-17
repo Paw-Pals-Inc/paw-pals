@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import MaterialButton from "../MaterialComponents/MaterialButton";
 
+const uriBase =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "https://pawpals-383903.ue.r.appspot.com";
+
 const ProfileModal = ({
   socket,
   isLoggedIn,
@@ -98,7 +103,7 @@ const ProfileModal = ({
 
     try {
       const userId = userProfile.userID;
-      const response = await fetch("http://localhost:4000/users/" + userId, {
+      const response = await fetch(uriBase + "/users/" + userId, {
         method: "PUT",
         headers: {
           Accept: "application/json, text/plain, */*",

@@ -17,6 +17,11 @@ import {
   calculateCompatibility,
 } from "./utils/functions";
 
+const uriBase =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "https://pawpals-383903.ue.r.appspot.com";
+
 const buttonVariant = {
   whileHover: {
     scale: 1.5,
@@ -45,7 +50,7 @@ function App() {
     const checkLoginStatus = async () => {
       const jwt = localStorage.getItem("token");
       try {
-        await fetch("http://localhost:4000/login/checkTokenValidity", {
+        await fetch(uriBase + "/login/checkTokenValidity", {
           method: "POST",
           headers: {
             Accept: "application/json, text/plain, */*",
@@ -90,18 +95,15 @@ function App() {
     if (localStorage.getItem("user") !== null) {
       let userAccount = JSON.parse(localStorage.getItem("user"));
       const jwt = localStorage.getItem("token");
-      const response = await fetch(
-        `http://localhost:4000/favorites/${userAccount.id}`,
-        {
-          headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${jwt}`,
-          },
-          method: "PUT",
-          body: JSON.stringify({ favorites: newData }),
-        }
-      );
+      const response = await fetch(`${uriBase}/favorites/${userAccount.id}`, {
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+        method: "PUT",
+        body: JSON.stringify({ favorites: newData }),
+      });
 
       if (response.ok) {
         let favResp = await response.json();

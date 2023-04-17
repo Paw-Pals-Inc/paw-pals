@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MaterialButton from "../MaterialComponents/MaterialButton";
 
+const uriBase =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "https://pawpals-383903.ue.r.appspot.com";
+
 function LoginModal({ onLogin }) {
   const navigate = useNavigate();
 
@@ -11,7 +16,7 @@ function LoginModal({ onLogin }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:4000/login", {
+    const response = await fetch(`${uriBase}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

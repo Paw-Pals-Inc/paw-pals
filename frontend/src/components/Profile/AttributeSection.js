@@ -3,6 +3,11 @@ import TagSelectButton from "../Signup/TagSelectButton";
 import { saveUserProfileLocalStorage } from "../../utils/functions";
 import { petTags } from "../../utils/constants";
 
+const uriBase =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "https://pawpals-383903.ue.r.appspot.com";
+
 function AttributeSection({ data, updateUserProfile }) {
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
@@ -53,7 +58,7 @@ function AttributeSection({ data, updateUserProfile }) {
       const token = localStorage.getItem("token");
 
       // edit profile data
-      await fetch(`http://localhost:4000/users/${userId}`, {
+      await fetch(`${uriBase}/users/${userId}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,

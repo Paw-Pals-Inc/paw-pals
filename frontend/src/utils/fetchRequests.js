@@ -1,6 +1,11 @@
+const uriBase =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "https://pawpals-383903.ue.r.appspot.com";
+
 export const getUserProfile = async (currentUserID) => {
   const jwt = localStorage.getItem("token");
-  const response = await fetch(`http://localhost:4000/users/${currentUserID}`, {
+  const response = await fetch(`${uriBase}/users/${currentUserID}`, {
     headers: {
       Accept: "application/json, text/plain, */*",
       "Content-Type": "application/json",
@@ -12,7 +17,7 @@ export const getUserProfile = async (currentUserID) => {
 
 export const getOtherUserProfiles = async (currentUserID) => {
   const jwt = localStorage.getItem("token");
-  const response = await fetch(`http://localhost:4000/users/`, {
+  const response = await fetch(`${uriBase}/users/`, {
     headers: {
       Accept: "application/json, text/plain, */*",
       "Content-Type": "application/json",
@@ -27,16 +32,13 @@ export const getOtherUserProfiles = async (currentUserID) => {
 
 export const getFavoriteProfiles = async (currentUserID) => {
   const jwt = localStorage.getItem("token");
-  const response = await fetch(
-    `http://localhost:4000/favorites/${currentUserID}`,
-    {
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jwt}`,
-      },
-    }
-  );
+  const response = await fetch(`${uriBase}/favorites/${currentUserID}`, {
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${jwt}`,
+    },
+  });
 
   return response.json().then((data) => data.favorites);
 };

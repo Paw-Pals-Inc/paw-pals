@@ -6,6 +6,11 @@ import {
 } from "../../utils/functions";
 import LoadingProgress from "../Loading/LoadingProgress";
 
+const uriBase =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:4000"
+    : "https://pawpals-383903.ue.r.appspot.com";
+
 function PersonalProfileSection({ data, updateUserProfile }) {
   const [isLoading, setIsLoading] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -145,7 +150,7 @@ function PersonalProfileSection({ data, updateUserProfile }) {
     try {
       const userId = JSON.parse(localStorage.getItem("user")).id;
       const token = localStorage.getItem("token");
-      await fetch(`http://localhost:4000/users/${userId}`, {
+      await fetch(`${uriBase}/users/${userId}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
