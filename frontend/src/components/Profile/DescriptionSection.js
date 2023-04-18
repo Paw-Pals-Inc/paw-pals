@@ -11,8 +11,8 @@ function DescriptionSection({ data, updateUserProfile }) {
   const { petName, firstName } = data;
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
-    description: "",
-    petDescription: "",
+    description: data.description || "",
+    petDescription: data.petDescription || "",
   });
 
   const toggleEditMode = () => {
