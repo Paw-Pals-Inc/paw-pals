@@ -42,7 +42,7 @@ const DogProfileModal = ({
   const [femaleSelected, setFemaleSelected] = useState(false);
 
   const toggleStyle = {
-    backgroundColor: "yellow",
+    backgroundColor: "#FF8854",
   };
   const handleGenderButtonClick = (event) => {
     setFormData({
