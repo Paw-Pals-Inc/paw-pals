@@ -94,12 +94,13 @@ function ProfileCard({
                 {petBreed}
               </Typography>
             </div>
-
-            <Typography variant="body2" component="p" color="textSecondary">
-              {(petDescription.length > 250
-                ? petDescription.substr(0, 250) + "..."
-                : petDescription) ||
-                "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid dolorem explicabo laboriosam iure enim sequi, impedit illum recusandae quasi obcaecati atque voluptas vero ipsa voluptatem blanditiis officiis repudiandae deserunt illo odio"}
+            <Typography variant="subtitle1">Personality traits:</Typography>
+            <Typography variant="body2">
+              <span style={{ display: "flex" }}>
+                {petTags.map(
+                  (tag, idx) => tag + (idx != petTags.length - 1 ? ", " : "")
+                )}
+              </span>
             </Typography>
             <Typography>
               <span>Owner: </span>
