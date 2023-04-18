@@ -55,7 +55,10 @@ function PetProfileSection({ data, updateUserProfile }) {
   }, [data.petGallery]);
 
   const toggleStyle = {
-    backgroundColor: "yellow",
+    backgroundColor: "#FF8854",
+  };
+  const defaultStyle = {
+    backgroundColor: "rgba(0, 0, 0, 0.04)",
   };
   const handleGenderButtonClick = (event) => {
     setFormData({
@@ -282,7 +285,7 @@ function PetProfileSection({ data, updateUserProfile }) {
                     name="petGender"
                     value={"Female"}
                     onClick={handleGenderButtonClick}
-                    styleOverrides={femaleSelected && toggleStyle}
+                    styleOverrides={femaleSelected ? toggleStyle : defaultStyle}
                     size="small"
                   >
                     Female
@@ -292,7 +295,7 @@ function PetProfileSection({ data, updateUserProfile }) {
                     name="petGender"
                     value={"Male"}
                     onClick={handleGenderButtonClick}
-                    styleOverrides={maleSelected && toggleStyle}
+                    styleOverrides={maleSelected ? toggleStyle : defaultStyle}
                     placeholder="Male"
                     size="small"
                   >

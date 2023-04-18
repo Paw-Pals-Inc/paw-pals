@@ -19,9 +19,10 @@ const TagSelectButton = (props) => {
 
   const defaultStyle = {
     width: "210px",
+    backgroundColor: "rgba(0, 0, 0, 0.04)",
   };
   const toggleStyle = {
-    backgroundColor: "yellow",
+    backgroundColor: "#FF8854",
     width: "210px",
   };
   const handleClick = (e) => {
