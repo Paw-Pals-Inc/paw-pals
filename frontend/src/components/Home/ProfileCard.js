@@ -12,7 +12,6 @@ import {
   CardMedia,
   CardActions,
   Typography,
-  Badge,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { motion, AnimatePresence } from "framer-motion";
@@ -56,18 +55,6 @@ function ProfileCard({
     petGallery,
   } = profileData;
 
-  const StyledBadge = styled(Badge)(({ theme }) => ({
-    "& .MuiBadge-badge": {
-      backgroundColor: "white",
-      fontSize: "1.5rem",
-      width: "40px",
-      height: "40px",
-      border: "none",
-      borderRadius: "50%",
-      boxShadow:
-        "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)",
-    },
-  }));
   return (
     <AnimatePresence>
       <motion.div
@@ -96,16 +83,6 @@ function ProfileCard({
               boxShadow:
                 "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)",
             }}
-            children={
-              <StyledBadge
-                badgeContent={compatibilityScore}
-                showZero
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-              />
-            }
             style={{ width: "25%", height: 200, objectFit: "cover" }}
           />
           <CardContent className="cardContent">
