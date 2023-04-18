@@ -11,6 +11,7 @@ import LoadingProgress from "../Loading/LoadingProgress";
 
 function OtherUserProfile({
   userProfile,
+  myProfile,
   compatibilityScore,
   isFavorite,
   addFavorite,
@@ -57,7 +58,11 @@ function OtherUserProfile({
         )}
       </div>
       <div className="profile-section">
-        <OtherProfileSection userProfile={userProfile} />
+        <OtherProfileSection
+          userProfile={userProfile}
+          myProfile={myProfile}
+          compatibilityScore={compatibilityScore}
+        />
       </div>
       <div className="favorite-section">
         {isProfileFavorite ? "favorited" : "favorite"}

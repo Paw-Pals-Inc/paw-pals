@@ -3,7 +3,7 @@ import MaterialButton from "../MaterialComponents/MaterialButton";
 import LoadingProgress from "../Loading/LoadingProgress";
 import ImageGallery from "../ImageGallery/ImageGallery";
 
-function OtherProfileSection({ userProfile }) {
+function OtherProfileSection({ userProfile, myProfile, compatibilityScore }) {
   const [isLoading, setIsLoading] = useState(false);
   const [images, setImages] = useState(
     userProfile?.petGallery?.map((imgUrl) => {
@@ -56,7 +56,20 @@ function OtherProfileSection({ userProfile }) {
             </ul>
           </div>
           <div>
-            <h3>Tags:</h3>
+            <h3>
+              Tags: {userProfile.petName} and {myProfile.petName} have{" "}
+              {Math.round((compatibilityScore * myProfile.petTags.length) / 10)}{" "}
+              matching{" "}
+              <span>
+                {Math.round(
+                  (compatibilityScore * myProfile.petTags.length) / 10
+                ) > 1 && "tags"}
+                {Math.round(
+                  (compatibilityScore * myProfile.petTags.length) / 10
+                ) <= 1 && "tag"}
+              </span>
+            </h3>
+            <span></span>
             <div className="tags-list">
               {userProfile.petTags.map((tag, idx) => (
                 <MaterialButton

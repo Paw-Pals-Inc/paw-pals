@@ -10,6 +10,7 @@ const OtherProfilePage = ({
   isLoggedIn,
   onLogout,
   userProfile,
+  myProfile,
   updateUserProfile,
   userData,
   leaveProfile,
@@ -55,6 +56,7 @@ const OtherProfilePage = ({
         addFavorite={addFavorite}
         removeFavorite={removeFavorite}
         favoriteProfiles={favoriteProfiles}
+        myProfile={myProfile}
       />
     </div>
   );

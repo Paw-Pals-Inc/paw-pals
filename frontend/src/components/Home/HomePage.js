@@ -194,6 +194,7 @@ const HomePage = ({
                   (profile) => profile.userID === selectedProfile
                 )[0]
               }
+              myProfile={userProfile}
               leaveProfile={leaveProfile}
               compatibilityScore={() =>
                 getCompatibilityScore(
