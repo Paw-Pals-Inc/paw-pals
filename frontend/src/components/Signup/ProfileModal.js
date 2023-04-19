@@ -179,11 +179,13 @@ const ProfileModal = ({
           />
           <input className="hidden" />
         </div>
-        {errors.firstName && <div>{errors.firstName}</div>}
-        {errors.lastName && <div>{errors.lastName}</div>}
-        {errors.city && <div>{errors.city}</div>}
-        {errors.state && <div>{errors.state}</div>}
-        {errors.phoneNumber && <div>{errors.phoneNumber}</div>}
+        {errors.firstName && <div className="errors">{errors.firstName}</div>}
+        {errors.lastName && <div className="errors">{errors.lastName}</div>}
+        {errors.city && <div className="errors">{errors.city}</div>}
+        {errors.state && <div className="errors">{errors.state}</div>}
+        {errors.phoneNumber && (
+          <div className="errors">{errors.phoneNumber}</div>
+        )}
 
         <div className="form-line">
           <MaterialButton type="submit">Next</MaterialButton>

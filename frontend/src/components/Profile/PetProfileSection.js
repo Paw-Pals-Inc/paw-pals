@@ -250,7 +250,9 @@ function PetProfileSection({ data, updateUserProfile }) {
           <h2 className="section-header">
             Pet Information
             {editMode ? (
-              <button type="submit">Save</button>
+              <button className="uploadPic-button" type="submit">
+                Save
+              </button>
             ) : (
               <EditIcon onClick={toggleEditMode} sx={{ cursor: "pointer" }} />
             )}
@@ -383,13 +385,17 @@ function PetProfileSection({ data, updateUserProfile }) {
               )}
             </div>
           </div>
-          {errors.petName && <div>{errors.petName}</div>}
-          {errors.petAge && <div>{errors.petAge}</div>}
-          {errors.petGender && <div>{errors.petGender}</div>}
-          {errors.petBreed && <div>{errors.petBreed}</div>}
-          {errors.petWeight && <div>{errors.petWeight}</div>}
-          {errors.petVaccinated && <div>{errors.petVaccinated}</div>}
-          {errors.petNeutered && <div>{errors.petNeutered}</div>}
+          {errors.petName && <div className="errors">{errors.petName}</div>}
+          {errors.petAge && <div className="errors">{errors.petAge}</div>}
+          {errors.petGender && <div className="errors">{errors.petGender}</div>}
+          {errors.petBreed && <div className="errors">{errors.petBreed}</div>}
+          {errors.petWeight && <div className="errors">{errors.petWeight}</div>}
+          {errors.petVaccinated && (
+            <div className="errors">{errors.petVaccinated}</div>
+          )}
+          {errors.petNeutered && (
+            <div className="errors">{errors.petNeutered}</div>
+          )}
         </div>
       </form>
       <div className="profilePictureSection">
@@ -398,7 +404,7 @@ function PetProfileSection({ data, updateUserProfile }) {
           alt="pet profile pic"
         />
         {editMode && (
-          <div>
+          <div className="changePicDiv">
             <label htmlFor="petProfilePic" className="uploadPic-button">
               change picture
             </label>
@@ -413,7 +419,7 @@ function PetProfileSection({ data, updateUserProfile }) {
             />
           </div>
         )}
-        {errors.petGallery && <div>{errors.petGallery}</div>}
+        {errors.petGallery && <div className="errors">{errors.petGallery}</div>}
       </div>
     </div>
   );

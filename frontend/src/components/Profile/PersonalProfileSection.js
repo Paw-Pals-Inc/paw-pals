@@ -194,7 +194,9 @@ function PersonalProfileSection({ data, updateUserProfile }) {
           <h2 className="section-header">
             Personal Information
             {editMode ? (
-              <button type="submit">Save</button>
+              <button type="submit" className="uploadPic-button">
+                Save
+              </button>
             ) : (
               <EditIcon onClick={toggleEditMode} sx={{ cursor: "pointer" }} />
             )}
@@ -277,17 +279,19 @@ function PersonalProfileSection({ data, updateUserProfile }) {
               )}
             </div>
           </div>
-          {errors.firstName && <div>{errors.firstName}</div>}
-          {errors.lastName && <div>{errors.lastName}</div>}
-          {errors.city && <div>{errors.city}</div>}
-          {errors.state && <div>{errors.state}</div>}
-          {errors.phoneNumber && <div>{errors.phoneNumber}</div>}
+          {errors.firstName && <div className="errors">{errors.firstName}</div>}
+          {errors.lastName && <div className="errors">{errors.lastName}</div>}
+          {errors.city && <div className="errors">{errors.city}</div>}
+          {errors.state && <div className="errors">{errors.state}</div>}
+          {errors.phoneNumber && (
+            <div className="errors">{errors.phoneNumber}</div>
+          )}
         </div>
       </form>
       <div className="profilePictureSection">
         <img src={profilePic} alt="profile pic" />
         {editMode && (
-          <div>
+          <div className="changePicDiv">
             <label htmlFor="profilePic" className="uploadPic-button">
               change picture
             </label>
@@ -302,7 +306,7 @@ function PersonalProfileSection({ data, updateUserProfile }) {
             />
           </div>
         )}
-        {errors.profilePic && <div>{errors.profilePic}</div>}
+        {errors.profilePic && <div className="errors">{errors.profilePic}</div>}
       </div>
     </div>
   );

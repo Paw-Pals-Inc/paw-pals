@@ -160,12 +160,16 @@ function GallerySection({ data, updateUserProfile }) {
           <h2 className="section-header">
             Gallery
             {editMode ? (
-              <button type="submit">Save</button>
+              <button className="uploadPic-button" type="submit">
+                Save
+              </button>
             ) : (
               <EditIcon onClick={toggleEditMode} sx={{ cursor: "pointer" }} />
             )}
           </h2>
-          {errors.petGallery && <div>{errors.petGallery}</div>}
+          {errors.petGallery && (
+            <div className="errors">{errors.petGallery}</div>
+          )}
           <div className="galleryPictureSection">
             {formData.petGallery && editMode ? (
               formData.petGallery.map((pic, idx) => (

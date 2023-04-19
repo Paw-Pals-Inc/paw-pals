@@ -23,6 +23,7 @@ const TagSelectButton = (props) => {
   };
   const toggleStyle = {
     backgroundColor: "#FF8854",
+    color: "black",
     width: "210px",
   };
   const handleClick = (e) => {

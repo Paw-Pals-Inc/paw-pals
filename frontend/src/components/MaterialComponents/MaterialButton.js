@@ -14,6 +14,10 @@ const MaterialButton = (props) => {
     textTransform: "none",
     padding: "10px",
     width: "80px",
+    "&:hover": {
+      backgroundColor: "#FF8854",
+      color: "white",
+    },
   };
 
   const totalStyles = { ...styles, ...styleOverrides };

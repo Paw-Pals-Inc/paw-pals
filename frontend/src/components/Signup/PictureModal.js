@@ -184,7 +184,7 @@ const PictureModal = ({
                 flexDirection: "column",
               }}
             >
-              <h3>Your Profile Picture:</h3>
+              <h3 style={{ textAlign: "center" }}>Your Profile Picture:</h3>
               <label
                 htmlFor="profilePic"
                 className="uploadPic-button"
@@ -219,7 +219,7 @@ const PictureModal = ({
                 flexDirection: "column",
               }}
             >
-              <h3>Pet Profile Picture:</h3>
+              <h3 style={{ textAlign: "center" }}>Pet Profile Picture:</h3>
               <label
                 htmlFor="petProfilePic"
                 className="uploadPic-button"
@@ -247,8 +247,10 @@ const PictureModal = ({
             )}
           </div>
         </div>
-        {errors.profilePic && <div>{errors.profilePic}</div>}
-        {errors.petProfilePic && <div>{errors.petProfilePic}</div>}
+        {errors.profilePic && <div className="errors">{errors.profilePic}</div>}
+        {errors.petProfilePic && (
+          <div className="errors">{errors.petProfilePic}</div>
+        )}
         <div className="form-line">
           <div className="form-line-left">
             <MaterialButton

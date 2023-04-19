@@ -116,7 +116,7 @@ const SignupModal = ({
           onChange={handleInputChange}
           placeholder="email"
         />
-        {errors.email && <div>{errors.email}</div>}
+        {errors.email && <div className="errors">{errors.email}</div>}
         <br />
         <input
           type="password"
@@ -127,7 +127,7 @@ const SignupModal = ({
           placeholder="password"
           autoComplete="on"
         />
-        {errors.password && <div>{errors.password}</div>}
+        {errors.password && <div className="errors">{errors.password}</div>}
         <br />
         <input
           type="password"
@@ -137,7 +137,7 @@ const SignupModal = ({
           placeholder="confirm password"
           autoComplete="on"
         />
-        {errors.password && <div>{errors.password}</div>}
+        {errors.password && <div className="errors">{errors.password}</div>}
         <br />
         <MaterialButton type="submit">Sign Up</MaterialButton>
       </form>

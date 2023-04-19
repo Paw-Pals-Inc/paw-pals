@@ -95,9 +95,15 @@ function AttributeSection({ data, updateUserProfile }) {
           <h2 className="section-header">
             Attributes
             {editMode ? (
-              <button type="submit">Save</button>
+              <button className="uploadPic-button" type="submit">
+                Save
+              </button>
             ) : (
-              <button type="button" onClick={toggleEditMode}>
+              <button
+                className="uploadPic-button"
+                type="button"
+                onClick={toggleEditMode}
+              >
                 Add More
               </button>
             )}
