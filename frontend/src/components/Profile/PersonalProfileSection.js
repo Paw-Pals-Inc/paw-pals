@@ -287,7 +287,7 @@ function PersonalProfileSection({ data, updateUserProfile }) {
       <div className="profilePictureSection">
         <img src={profilePic} alt="profile pic" />
         {editMode && (
-          <div>
+          <div className="changePicDiv">
             <label htmlFor="profilePic" className="uploadPic-button">
               change picture
             </label>

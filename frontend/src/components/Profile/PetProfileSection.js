@@ -398,7 +398,7 @@ function PetProfileSection({ data, updateUserProfile }) {
           alt="pet profile pic"
         />
         {editMode && (
-          <div>
+          <div className="changePicDiv">
             <label htmlFor="petProfilePic" className="uploadPic-button">
               change picture
             </label>
