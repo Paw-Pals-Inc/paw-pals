@@ -69,7 +69,9 @@ function DescriptionSection({ data, updateUserProfile }) {
           <h2 className="section-header">
             Descriptions
             {editMode ? (
-              <button type="submit">Save</button>
+              <button className="uploadPic-button" type="submit">
+                Save
+              </button>
             ) : (
               <EditIcon onClick={toggleEditMode} sx={{ cursor: "pointer" }} />
             )}

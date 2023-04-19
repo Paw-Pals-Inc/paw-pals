@@ -194,7 +194,9 @@ function PersonalProfileSection({ data, updateUserProfile }) {
           <h2 className="section-header">
             Personal Information
             {editMode ? (
-              <button type="submit">Save</button>
+              <button type="submit" className="uploadPic-button">
+                Save
+              </button>
             ) : (
               <EditIcon onClick={toggleEditMode} sx={{ cursor: "pointer" }} />
             )}

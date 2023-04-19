@@ -250,7 +250,9 @@ function PetProfileSection({ data, updateUserProfile }) {
           <h2 className="section-header">
             Pet Information
             {editMode ? (
-              <button type="submit">Save</button>
+              <button className="uploadPic-button" type="submit">
+                Save
+              </button>
             ) : (
               <EditIcon onClick={toggleEditMode} sx={{ cursor: "pointer" }} />
             )}

@@ -160,7 +160,9 @@ function GallerySection({ data, updateUserProfile }) {
           <h2 className="section-header">
             Gallery
             {editMode ? (
-              <button type="submit">Save</button>
+              <button className="uploadPic-button" type="submit">
+                Save
+              </button>
             ) : (
               <EditIcon onClick={toggleEditMode} sx={{ cursor: "pointer" }} />
             )}
