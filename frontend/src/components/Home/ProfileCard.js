@@ -120,9 +120,10 @@ function ProfileCard({
             <Typography variant="subtitle1">Personality traits:</Typography>
             <Typography variant="body2">
               <span style={{ display: "flex" }}>
-                {petTags.map(
-                  (tag, idx) => tag + (idx != petTags.length - 1 ? ", " : "")
-                )}
+                {petTags &&
+                  petTags.map(
+                    (tag, idx) => tag + (idx != petTags.length - 1 ? ", " : "")
+                  )}
               </span>
             </Typography>
             <Typography>

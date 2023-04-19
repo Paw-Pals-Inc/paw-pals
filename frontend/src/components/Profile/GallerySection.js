@@ -167,7 +167,9 @@ function GallerySection({ data, updateUserProfile }) {
               <EditIcon onClick={toggleEditMode} sx={{ cursor: "pointer" }} />
             )}
           </h2>
-          {errors.petGallery && <div>{errors.petGallery}</div>}
+          {errors.petGallery && (
+            <div className="errors">{errors.petGallery}</div>
+          )}
           <div className="galleryPictureSection">
             {formData.petGallery && editMode ? (
               formData.petGallery.map((pic, idx) => (

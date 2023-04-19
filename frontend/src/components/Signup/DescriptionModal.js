@@ -116,8 +116,12 @@ const DescriptionModal = ({
             style={{ width: "100%" }}
           />
         </div>
-        {errors.description && <div>{errors.description}</div>}
-        {errors.petDescription && <div>{errors.petDescription}</div>}
+        {errors.description && (
+          <div className="errors">{errors.description}</div>
+        )}
+        {errors.petDescription && (
+          <div className="errors">{errors.petDescription}</div>
+        )}
         <div className="form-line">
           <div className="form-line-left">
             <MaterialButton
