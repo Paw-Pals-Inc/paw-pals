@@ -44,8 +44,13 @@ function OtherUserProfile({
   ) : (
     <div className="otherProfile-container">
       <div className="picture-section">
-        <img src={userProfile.petGallery[0]} alt="pet profile pic" />
-        <img src={userProfile.profilePic} alt="profile pic" />
+        <img
+          src={
+            userProfile && userProfile.petGallery && userProfile.petGallery[0]
+          }
+          alt="pet profile pic"
+        />
+        <img src={userProfile && userProfile.profilePic} alt="profile pic" />
         {currentPage !== "/chats" && (
           <MaterialButton
             styleOverrides={{ width: "100%", backgroundColor: "#ffd29d" }}

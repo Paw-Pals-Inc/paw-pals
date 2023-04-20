@@ -50,8 +50,8 @@ function OtherProfileSection({ userProfile, myProfile, compatibilityScore }) {
             <ul className="about-list">
               <li>age: {userProfile.petAge}</li>
               <li>weight: {userProfile.petWeight}</li>
-              <li>vaccinated: {userProfile.petVaccinated}</li>
-              <li>neutered: {userProfile.petNeutered}</li>
+              <li>vaccinated: {userProfile.petVaccinated ? "Yes" : "No"}</li>
+              <li>neutered: {userProfile.petNeutered ? "Yes" : "No"}</li>
               <li>location: {userProfile.city + ", " + userProfile.state}</li>
             </ul>
           </div>
