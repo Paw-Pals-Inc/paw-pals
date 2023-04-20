@@ -96,11 +96,13 @@ const editProfile = async (req, res) => {
       // const user = await Profile.findOne({ where: { userId: id } });
       // let oldGallery = user.petGallery;
       let images = req.body.petGallery;
-      let filePathArr = images.map((image) => {
-        // if we already have image, no need to save it again
-        if (image.match(/^http:\/\/localhost:/)) return image;
-        return `${uriBase}/${id}/` + saveImage(image, id);
-      });
+      let filePathArr = images
+        .filter((img) => img !== null)
+        .map((image) => {
+          // if we already have image, no need to save it again
+          if (image.match(/^http:\/\/localhost:/)) return image;
+          return `${uriBase}/${id}/` + saveImage(image, id);
+        });
       fieldsToUpdate.petGallery = filePathArr;
     }
 
