@@ -11,7 +11,6 @@ const OtherProfilePage = ({
   isLoggedIn,
   onLogout,
   userProfile,
-  myProfile,
   updateUserProfile,
   userData,
   leaveProfile,
