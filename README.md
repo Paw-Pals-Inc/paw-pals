@@ -6,6 +6,8 @@ Web app that allows dog owners to set up playdates for their dogs
 ![pic](./frontend/src/assets/logo_top.png)
 <br>
 
+**_Current status: improving design_**
+
 # Table of Contents
 
 - [paw-pals 🐶](#paw-pals-)
@@ -109,66 +111,68 @@ User {
       state,
       phoneNumber,
       profilePic,
-      petName,
-      petAge,
-      petGender,
-      petWeight,
-      petVaccinated,
-      petNeutered,
-      petGallery,
-      petTags,
-      petDescription,
-      petDescription
+      description
+      name,
+      age,
+      gender,
+      weight,
+      vaccinated,
+      profilePic,
+      gallery,
+      tags,
+      description
   },
-}
 
-Chat {
-  id,
-  message
+  chats: {
+    chatID, (gives you all the chats from this user... not needed)
+    chatChannels: [
+      {
+        id1,
+        messages: []
+      },
+      {
+        id2,
+        messages: []
+      },
+      {
+        id8,
+        messages: []
+      },
+      ...
+    ]
+  }
 }
 ```
 
 ## File Descriptions
 
-| Name                                    | Description                                               |
-| --------------------------------------- | --------------------------------------------------------- |
-| backend/index.js                        | Web server, app logic, and main point of entry for app    |
-| backend/.env                            | Environment variables for database and JWT verification   |
-| backend/routes/\*.js                    | Defines endpoints imported and used by the server         |
-| backend/controllers/\*.js               | Defines the functions used by the route endpoints         |
-| backend/utils/index.js                  | Utility functions to authenticate requests                |
-| backend/config/database.js              | Setup code to map sequelize ORM to database               |
-| backend/models/\*.js                    | Defines database models and the associations between them |
-| frontend/src/App.js                     | Main component for React app                              |
-| frontend/src/utils/\*                   | Helper functions used on the frontend                     |
-| frontend/src/components/\*              | Components used by App.js                                 |
-| frontend/src/components/Landing/\*      | Components used for the Landing page                      |
-| frontend/src/components/Navbar/\*       | Components used for the Navbar                            |
-| frontend/src/components/Signup/\*       | Components used for the Signup page                       |
-| frontend/src/components/Home/\*         | Components used for the user's Home page                  |
-| frontend/src/components/Profile/\*      | Components used for the user's Profile page               |
-| frontend/src/components/Favorites/\*    | Components used for the user's Favorites page             |
-| frontend/src/components/Chats/\*        | Components used for the user's Chats page                 |
-| frontend/src/components/Filters/\*      | Components used for the Filter Bar                        |
-| frontend/src/components/ImageGallery/\* | Components used for the render the pet gallery            |
-| frontend/src/components/Loading/\*      | Components used to render the loading screen              |
+| Name                                 | Description                                               |
+| ------------------------------------ | --------------------------------------------------------- |
+| backend/index.js                     | Web server, app logic, and main point of entry for app    |
+| backend/.env                         | Environment variables for database and JWT verification   |
+| backend/routes/\*.js                 | Defines endpoints imported and used by the server         |
+| backend/controllers/\*.js            | Defines the functions used by the route endpoints         |
+| backend/utils/index.js               | Utility functions to authenticate requests                |
+| backend/config/database.js           | Setup code to map sequelize ORM to database               |
+| backend/models/\*.js                 | Defines database models and the associations between them |
+| frontend/src/App.js                  | Main component for React app                              |
+| frontend/src/components/\*           | Components used by App.js                                 |
+| frontend/src/components/Landing/\*   | Components used for the Landing page                      |
+| frontend/src/components/Navbar/\*    | Components used for the Navbar                            |
+| frontend/src/components/Signup/\*    | Components used for the Signup page                       |
+| frontend/src/components/Home/\*      | Components used for the user's Home page                  |
+| frontend/src/components/Profile/\*   | Components used for the user's Profile page               |
+| frontend/src/components/Favorites/\* | Components used for the user's Favorites page             |
+| frontend/src/components/Chats/\*     | Components used for the user's Chats page                 |
 
 ## Learnings
 
-Implementing real-time chat
+Some things about making an app
 
-Implementing authentication w/ JWT to protect routes
+Some things about storing things in databases
 
-Storing images was challenging. I attempted to do it by storing data URLs in the database, and quickly found out the flaws in that method before changing my approach.
-
-The necessity of a loading state in an application like this. Since I'm making lots of requests to the database, in conjunction to loading lots of images from the file system, there will be many times where the data is not present immediately when I navigate to a page. So loading states and lots of error checking and redundancy makes the application more reliable and smoother.
-
-This was my first time working intimately with a SQL database. I was more familiar with the object style mental model of noSQL databases.
-
-Google Cloud SQL - although I couldn't get our ORM to play nicely with CloudSQL when deploying the app, I learned a lot about Google's product offering. We'll have to either launch the site using a different prod database type like Postgres, change ORMs, or use a different cloud service provider to deploy our site.
+Some things about designing and engineering
 
 ## Credits
 
-👨‍💻 Application development by Brent
-👩‍🎨 Wireframes, designs by Sara
-👨‍💻 Initial static HTML prototype by Stephen and Ian
+Sara, Stephen, Ian, Brent
