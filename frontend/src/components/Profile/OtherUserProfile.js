@@ -10,6 +10,7 @@ import { useNavigate, useLocation } from "react-router";
 import LoadingProgress from "../Loading/LoadingProgress";
 
 function OtherUserProfile({
+  myProfile,
   userProfile,
   myProfile,
   compatibilityScore,
@@ -24,14 +25,19 @@ function OtherUserProfile({
   const [isProfileFavorite, setIsProfileFavorite] = useState(isFavorite);
 
   useEffect(() => {
-    if (!userProfile || !userProfile.petGallery || !userProfile.profilePic) {
+    if (
+      !myProfile ||
+      !userProfile ||
+      !userProfile.petGallery ||
+      !userProfile.profilePic
+    ) {
       setIsLoading(true);
     } else {
       setTimeout(() => {
         setIsLoading(false);
       }, 600);
     }
-  }, [userProfile]);
+  }, [userProfile, myProfile]);
 
   useEffect(() => {
     // check if favorite again

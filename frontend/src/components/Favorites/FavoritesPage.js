@@ -194,6 +194,7 @@ const FavoritesPage = ({
           <PageHeader pageName={location.pathname} profile={userProfile} />
           {profileSelected ? (
             <OtherProfilePage
+              myProfile={userProfile}
               buttonVariant={buttonVariant}
               isFavorite={favoriteProfiles.includes(selectedProfile.userID)}
               addFavorite={addFavorite}

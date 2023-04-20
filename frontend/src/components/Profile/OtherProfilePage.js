@@ -7,6 +7,7 @@ import LoadingProgress from "../Loading/LoadingProgress";
 import { motion } from "framer-motion";
 
 const OtherProfilePage = ({
+  myProfile,
   isLoggedIn,
   onLogout,
   userProfile,
@@ -24,14 +25,14 @@ const OtherProfilePage = ({
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (!userProfile) {
+    if (!userProfile || !myProfile) {
       setIsLoading(true);
     } else {
       setTimeout(() => {
         setIsLoading(false);
       }, 600);
     }
-  }, [userProfile]);
+  }, [userProfile, myProfile]);
 
   return isLoading ? (
     <LoadingProgress />

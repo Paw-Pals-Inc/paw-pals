@@ -189,6 +189,7 @@ const HomePage = ({
               addFavorite={addFavorite}
               removeFavorite={removeFavorite}
               favoriteProfiles={favoriteProfiles}
+              myProfile={userProfile}
               userProfile={
                 userProfiles.filter(
                   (profile) => profile.userID === selectedProfile

@@ -151,6 +151,7 @@ const ChatsPage = ({
           <PageHeader pageName={location.pathname} profile={userProfile} />
           {profileSelected ? (
             <OtherProfilePage
+              myProfile={userProfile}
               buttonVariant={buttonVariant}
               userProfile={
                 userProfiles.filter(
