@@ -21,7 +21,7 @@ function OtherProfileSection({ myProfile, userProfile, compatibilityScore }) {
         setIsLoading(false);
       }, 600);
     }
-  }, [userProfile]);
+  }, [userProfile, myProfile]);
 
   useEffect(() => {
     setImages(
@@ -68,8 +68,8 @@ function OtherProfileSection({ myProfile, userProfile, compatibilityScore }) {
           </div>
           <div>
             <h3>
-              Tags: {userProfile && userProfile.petName} and {myProfile.petName}{" "}
-              have{" "}
+              Tags: {userProfile && userProfile.petName} and{" "}
+              {myProfile && myProfile.petName} have{" "}
               {Math.round((compatibilityScore * myProfile.petTags.length) / 10)}{" "}
               matching{" "}
               <span>
