@@ -89,7 +89,6 @@ Routes:
 - Chats
 
 Database Schema:
-**_update this, as it has changed_**
 
 ```json
 User {
