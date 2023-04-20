@@ -11,6 +11,7 @@ import { useNavigate, useLocation } from "react-router";
 import LoadingProgress from "../Loading/LoadingProgress";
 
 function OtherUserProfile({
+  myProfile,
   userProfile,
   compatibilityScore,
   isFavorite,
@@ -39,14 +40,19 @@ function OtherUserProfile({
   }));
 
   useEffect(() => {
-    if (!userProfile || !userProfile.petGallery || !userProfile.profilePic) {
+    if (
+      !myProfile ||
+      !userProfile ||
+      !userProfile.petGallery ||
+      !userProfile.profilePic
+    ) {
       setIsLoading(true);
     } else {
       setTimeout(() => {
         setIsLoading(false);
       }, 600);
     }
-  }, [userProfile]);
+  }, [userProfile, myProfile]);
 
   useEffect(() => {
     // check if favorite again
@@ -94,7 +100,11 @@ function OtherUserProfile({
         )}
       </div>
       <div className="profile-section">
-        <OtherProfileSection userProfile={userProfile} />
+        <OtherProfileSection
+          userProfile={userProfile}
+          myProfile={myProfile}
+          compatibilityScore={compatibilityScore}
+        />
       </div>
       <div className="favorite-section">
         {isProfileFavorite ? "favorited" : "favorite"}
