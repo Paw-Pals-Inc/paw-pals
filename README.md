@@ -64,7 +64,7 @@ This app is not deployed on a cloud server, so you can only access the app local
 
 ### Views
 
-[Design](https://miro.com/app/board/uXjVPqyAEn4=/)
+⭐️[Design](https://miro.com/app/board/uXjVPqyAEn4=/)⭐️
 
 - Navbars:
   - Navbar for landing, login, signup pages
@@ -169,5 +169,7 @@ Google Cloud SQL - although I couldn't get our ORM to play nicely with CloudSQL 
 ## Credits
 
 👨‍💻 Application development by Brent
+
 👩‍🎨 Wireframes, designs by Sara
+
 👨‍💻 Initial static HTML prototype by Stephen and Ian
