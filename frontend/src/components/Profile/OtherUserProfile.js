@@ -74,7 +74,12 @@ function OtherUserProfile({
             width: "100%",
           }}
         >
-          <img src={userProfile.petGallery[0]} alt="pet profile pic" />
+          <img
+            src={
+              userProfile && userProfile.petGallery && userProfile.petGallery[0]
+            }
+            alt="pet profile pic"
+          />
         </StyledBadge>
         <img src={userProfile.profilePic} alt="profile pic" />
         {currentPage !== "/chats" && (
