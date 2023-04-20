@@ -12,7 +12,6 @@ import LoadingProgress from "../Loading/LoadingProgress";
 function OtherUserProfile({
   myProfile,
   userProfile,
-  myProfile,
   compatibilityScore,
   isFavorite,
   addFavorite,
