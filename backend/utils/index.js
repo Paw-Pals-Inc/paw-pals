@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
+const path = require("path");
 
 /** Login authentication middleware **/
 
@@ -31,10 +32,11 @@ function authenticateToken(req, res, next) {
 
 /*Download the base64 image in the server and returns the filename path of image.*/
 function saveImage(baseImage, userID) {
-  const uploadPath =
-    "/Users/brentonjackson/Documents/College/GSU/CS/CSC 4350 - Software Engineering/Projects/paw-pals/backend/uploads/images";
+  const uploadPath = path.join(__dirname, "/../uploads/images");
+  console.log("upload path: ", uploadPath);
   //path of folder where you want to save the image.
-  const localPath = `${uploadPath}/${userID}/`;
+  const localPath = path.resolve(uploadPath, userID);
+  console.log("local path: ", localPath);
   //Find extension of file
   const ext = getExtensionFromDataURL(baseImage) || "png";
   const fileType = baseImage.substring("data:".length, baseImage.indexOf("/"));
@@ -51,9 +53,9 @@ function saveImage(baseImage, userID) {
     fs.mkdirSync(`${uploadPath}`, { recursive: true });
   }
   if (!fs.existsSync(localPath)) {
-    fs.mkdirSync(localPath);
+    fs.mkdirSync(localPath, { recursive: true });
   }
-  fs.writeFileSync(localPath + filename, base64Data, "base64");
+  fs.writeFileSync(localPath + "/" + filename, base64Data, "base64");
   return filename;
 }
 
