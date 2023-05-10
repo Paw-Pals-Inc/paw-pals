@@ -1,5 +1,8 @@
 const { Sequelize } = require("sequelize");
 require("dotenv").config();
+
+const env = process.env.NODE_ENV || "development";
+
 const sequelize = new Sequelize(
   process.env.MYSQL_DB,
   process.env.MYSQL_USER,
@@ -13,6 +16,8 @@ const sequelize = new Sequelize(
     dialectOptions: {
       timezone: "-04:00",
       connectTimeout: 60000,
+      socketPath:
+        process.env.NODE_ENV !== "development" && process.env.MYSQL_SOCKET_PATH,
     },
     // following line for use with cloud sql proxy to use cloud sql db
     // port: process.env.NODE_ENV === "development" ? 3307 : 3306,
